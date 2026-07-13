@@ -1495,7 +1495,7 @@ function openDetail(id){
     else if(t.status==='done')right='<div class="ev-fee" style="color:var(--green)">🏆 Xong</div>';
     else right='<div class="ev-fee">'+vnd(e.fee)+'</div><div class="ev-cnt">'+e.cap+' suất</div>';
     var click=t.status==='open'?' onclick="openReg(\''+t.id+'\')"':(t.status==='live'||t.status==='done')?' onclick="openBracket(\''+t.id+'\')"':'';
-    return '<div class="ev"'+click+'><div><div class="ev-n">'+e.label+'</div><div class="ev-s">'+{dn:'Đôi nam',dnu:'Đôi nữ',dnn:'Đôi nam nữ',don:'Đơn'}[e.code]+' · Loại trực tiếp</div></div><div class="ev-r">'+right+'</div></div>';
+    return '<div class="ev"'+click+'><div><div class="ev-n">'+e.label+'</div><div class="ev-s">'+{dn:'Đôi nam',dnu:'Đôi nữ',dnn:'Đôi nam nữ',don:'Đơn'}[e.code]+' · <b style="color:var(--brand)">'+bandCapTxt(e.band,e.code)+'</b> · Loại trực tiếp</div></div><div class="ev-r">'+right+'</div></div>';
   }).join('');
   var info='<dt>Cấp độ</dt><dd>'+lvTag+'</dd><dt>Đơn vị</dt><dd>'+t.org+'</dd><dt>Thời gian</dt><dd>'+t.range+'</dd>';
   if(t.status==='open')info+='<dt>Hạn đăng ký</dt><dd>'+t.deadline+'</dd>';
@@ -1819,7 +1819,7 @@ function addEventRow(){
   var wrap=document.getElementById('cvEvents'); if(!wrap)return;
   var div=document.createElement('div'); div.className='evrow';
   div.innerHTML='<select class="sel evD"><option value="dn">Đôi nam</option><option value="dnu">Đôi nữ</option><option value="dnn">Đôi nam nữ</option><option value="don">Đơn</option></select>'
-    +'<select class="sel evB"><option value="b40">Mở</option><option value="b3540">3.5–4.0</option><option value="b3035">3.0–3.5</option><option value="b30">Dưới 3.0</option></select>'
+    +'<select class="sel evB"><option value="b40">Mở (∞)</option><option value="b3540">3.5–4.0 (≤8.0)</option><option value="b3035">3.0–3.5 (≤7.0)</option><option value="b30">Dưới 3.0 (≤6.0)</option></select>'
     +'<input class="inp evF" inputmode="numeric" placeholder="Lệ phí ₫">'
     +'<input class="inp evC" inputmode="numeric" placeholder="Số cặp">'
     +'<button type="button" class="evX" title="Xoá" onclick="this.closest(\'.evrow\').remove()">×</button>';
@@ -1848,6 +1848,12 @@ function submitCreate(){
 
 
 /* ==================== DANH SÁCH ĐĂNG KÝ 1 GIẢI ==================== */
+var BAND_CAP={b30:6.0,b3035:7.0,b3540:8.0,b40:null};
+var BAND_LBL={b30:'Dưới 3.0',b3035:'3.0–3.5',b3540:'3.5–4.0',b40:'Mở'};
+function bandCapTxt(band,code){
+  if(BAND_CAP[band]==null)return code==='don'?'Hạng Mở':'Điểm đôi: Mở (không giới hạn)';
+  return code==='don'?('Điểm đơn ≤ '+(BAND_CAP[band]/2).toFixed(1)):('Điểm đôi ≤ '+BAND_CAP[band].toFixed(1));
+}
 function renderEntrants(t){
   var list=document.getElementById('dRegList'),n=document.getElementById('dRegN'); if(!list)return;
   var tot=sumReg(t); n.textContent=tot?tot+' lượt':'';
