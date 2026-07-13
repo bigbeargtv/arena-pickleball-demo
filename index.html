@@ -865,7 +865,7 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 
 <!-- ========== SƠ ĐỒ LIVE ========== -->
 <div class="page" id="live">
-  <div class="crumb"><a onclick="go('home')">Giải đấu</a> › <a onclick="go('detail')">Vietnam Open 2026</a> › <span style="color:var(--ink-2)">Sơ đồ · Đôi nam Open</span>
+  <div class="crumb"><a onclick="go('home')">Giải đấu</a> › <a id="brkCrumb" onclick="go('detail')">Vietnam Open 2026</a> › <span style="color:var(--ink-2)">Sơ đồ · Kết quả</span>
     <span class="url">/giai-dau/vietnam-open-2026/doi-nam-open</span></div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px">
@@ -1827,6 +1827,7 @@ function openBracket(id){
   var t=TOURN.find(function(x){return x.id===id}); if(!t)return;
   var live=document.getElementById('live');
   document.getElementById('brkTitle').textContent='Sơ đồ — '+t.name;
+  var _bc=document.getElementById('brkCrumb'); if(_bc)_bc.textContent=t.name;
   document.getElementById('brkSub').textContent=(t.events[0]?t.events[0].label:'Đôi nam Open')+' · Loại trực tiếp · Thắng 2/3 ván 11đ';
   var st=document.getElementById('brkStatus');
   if(t.status==='done'){
