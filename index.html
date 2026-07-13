@@ -591,6 +591,36 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 .mh + .why{padding:13px 17px 15px 17px;margin-top:-1px}
 @media(max-width:720px){.mh-rt{display:none}.mh-nm{font-size:13.5px}}
 
+
+/* lịch sử trận — bảng tỉ số 2 hàng ngang */
+.mh{padding:13px 15px;border-bottom:1px solid var(--line-2)}
+.mh:hover{background:var(--bg)}
+.mh-top{display:flex;align-items:center;gap:10px;margin-bottom:9px;flex-wrap:wrap}
+.mh-res{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:6px;letter-spacing:.03em;flex-shrink:0}
+.mh-res.w{background:var(--green-l);color:var(--green)}
+.mh-res.l{background:var(--red-l);color:var(--red)}
+.mh-meta{font-size:12px;color:var(--ink-3);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mh-d{margin-left:auto;font-family:var(--m);font-weight:700;font-size:13.5px;display:flex;align-items:baseline;gap:5px;flex-shrink:0}
+.mh-d.p{color:var(--green)} .mh-d.n{color:var(--red)}
+.mh-dl{font-family:var(--f);font-size:9.5px;font-weight:600;color:var(--ink-4)}
+.ytb{width:28px;height:20px;border-radius:5px;background:#FF0000;display:inline-grid;place-items:center;flex-shrink:0;transition:.14s;box-shadow:0 1px 2px rgba(255,0,0,.3)}
+.ytb:hover{background:#d40000;transform:scale(1.05)}
+.mt-row{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;position:relative}
+.mt-row+.mt-row{margin-top:3px}
+.mt-row.w{background:linear-gradient(90deg,rgba(14,124,69,.07),rgba(14,124,69,0) 70%)}
+.mt-row.w::before{content:"";position:absolute;left:0;top:7px;bottom:7px;width:3px;background:var(--green);border-radius:0 3px 3px 0}
+.mt-av{display:flex;flex-shrink:0}
+.mt-av .a{width:26px;height:26px;border-radius:50%;background:var(--brand-l);color:var(--brand);display:grid;place-items:center;font-size:9.5px;font-weight:800;box-shadow:0 0 0 2px var(--card)}
+.mt-av .a.b{background:var(--bg-2);color:var(--ink-2)}
+.mt-av .a+.a{margin-left:-8px}
+.mt-nm{flex:1;min-width:0;font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mt-row.w .mt-nm{font-weight:700}
+.mt-rt{font-family:var(--m);font-size:11px;color:var(--ink-3);background:var(--bg-2);padding:2px 7px;border-radius:5px;flex-shrink:0}
+.mt-sc{display:flex;gap:3px;flex-shrink:0}
+.mt-sc span{width:30px;text-align:center;font-family:var(--m);font-size:14px;font-weight:500;color:var(--ink-4);background:var(--bg);border-radius:6px;padding:3px 0}
+.mt-sc span.gw{color:var(--ink);font-weight:700;background:var(--bg-2)}
+@media(max-width:720px){.mt-rt{display:none}.mt-nm{font-size:12.5px}.mt-sc span{width:26px;font-size:13px}.mh-meta{width:100%;order:9}}
+
 @media(max-width:1024px){.tc-img{width:120px}.ref-wrap{grid-template-columns:1fr}.phone{position:static;margin:0 auto}}
 @media(max-width:960px){.cols,.dcols{grid-template-columns:1fr}.side{display:none}}
 
@@ -2057,19 +2087,30 @@ function vdv(key){
   var base=parseFloat(d.r);
   [1,2,3,4].forEach(function(i){$('ax'+i).textContent=(base+0.18-(i-1)*0.18).toFixed(2)});
   function _ini(n){return n.split(' ').slice(-2).map(function(x){return x[0]}).join('').toUpperCase();}
-  $('hist').innerHTML=d.h.map(function(m,i){return ''
+  var _pool=RANK.filter(function(p){return p.key!==key});
+  var _pt=_pool.length?_pool[hashStr(key)%_pool.length]:{name:'Đồng đội',key:key};
+  $('hist').innerHTML=d.h.map(function(m,i){
+    var _yt='https://www.youtube.com/results?search_query='+encodeURIComponent((m.t.split('·')[0].trim())+' pickleball');
+    var gms=m.sc.split('·').map(function(x){return x.trim().split('-')});
+    function sc(side){return '<span class="mt-sc">'+gms.map(function(g){
+      var mine=parseInt(g[0],10),opp=parseInt(g[1],10);
+      var mineWin=side===0?(mine>opp):(opp>mine);
+      return '<span'+(mineWin?' class="gw"':'')+'>'+(side===0?g[0]:g[1])+'</span>';}).join('')+'</span>';}
+    var avA='<span class="mt-av"><span class="a">'+_ini(d.n)+'</span><span class="a">'+_ini(_pt.name)+'</span></span>';
+    var avB='<span class="mt-av"><span class="a b">'+_ini(m.o[0])+'</span><span class="a b">'+_ini(m.o[2])+'</span></span>';
+    var nmA='<span class="mt-nm"><b>'+d.n+'</b> / <a class="p" onclick="vdv(\''+_pt.key+'\')">'+_pt.name+'</a></span>';
+    var nmB='<span class="mt-nm"><a class="p" onclick="vdv(\''+m.o[1]+'\')">'+m.o[0]+'</a> / <a class="p" onclick="vdv(\''+m.o[3]+'\')">'+m.o[2]+'</a></span>';
+    return ''
     +'<div class="mh">'
-    +'<div class="mh-h"><span class="mh-res '+(m.w?'w':'l')+'">'+(m.w?'✓ THẮNG':'✕ THUA')+'</span>'
-    +'<span class="mh-sc">'+m.sc+'</span>'
+    +'<div class="mh-top"><span class="mh-res '+(m.w?'w':'l')+'">'+(m.w?'✓ THẮNG':'✕ THUA')+'</span>'
+    +'<span class="mh-meta">'+m.t+'</span>'
     +'<span class="mh-d '+(m.d[0]==='+'?'p':'n')+'">'+m.d+' <span class="mh-dl">điểm trình</span></span>'
+    +'<a class="ytb" href="'+_yt+'" target="_blank" rel="noopener" title="Xem video trận đấu"><svg viewBox="0 0 24 24" width="12" height="12" fill="#fff"><path d="M9 7.5v9l7.5-4.5z"/></svg></a>'
     +'<button class="wbtn" onclick="tw('+i+')" title="Vì sao điểm đổi?">?</button></div>'
-    +'<div class="mh-b"><span class="mh-vs">Đối thủ</span>'
-    +'<span class="mh-avs"><span class="mh-av">'+_ini(m.o[0])+'</span><span class="mh-av">'+_ini(m.o[2])+'</span></span>'
-    +'<span class="mh-nm"><a class="p" onclick="vdv(\''+m.o[1]+'\')">'+m.o[0]+'</a> / <a class="p" onclick="vdv(\''+m.o[3]+'\')">'+m.o[2]+'</a></span>'
-    +'<span class="mh-rt">ĐT đôi '+m.or+'</span></div>'
-    +'<div class="mh-m">'+m.t+'</div>'
+    +'<div class="mt-row'+(m.w?' w':'')+'">'+avA+nmA+'<span class="mt-rt">'+d.r+'</span>'+sc(0)+'</div>'
+    +'<div class="mt-row'+(m.w?'':' w')+'">'+avB+nmB+'<span class="mt-rt">'+m.or+'</span>'+sc(1)+'</div>'
     +'</div>'
-    +'<div class="why" id="wh'+i+'">'+m.why+'</div>'}).join('');
+    +'<div class="why" id="wh'+i+'">'+m.why+'</div>';}).join('');
   showPage('profile');
   document.querySelectorAll('.bn').forEach(function(a){a.classList.toggle('on',!a.dataset.p)});
   rec({t:'vdv',k:key});
