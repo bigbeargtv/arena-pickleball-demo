@@ -568,6 +568,29 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 .evX:hover{background:var(--red-l)}
 @media(max-width:520px){.evrow{grid-template-columns:1fr 1fr}.evrow .evX{grid-column:span 2;height:30px}}
 
+
+/* lịch sử trận đấu — dễ hiểu + avatar 2 người */
+.mh{padding:14px 17px;border-bottom:1px solid var(--line-2);transition:background .12s}
+.mh:hover{background:var(--bg)}
+.mh-h{display:flex;align-items:center;gap:10px}
+.mh-res{font-size:11px;font-weight:800;padding:3px 9px;border-radius:6px;letter-spacing:.03em;flex-shrink:0}
+.mh-res.w{background:var(--green-l);color:var(--green)}
+.mh-res.l{background:var(--red-l);color:var(--red)}
+.mh-sc{font-family:var(--m);font-size:13.5px;color:var(--ink-2);font-weight:600}
+.mh-d{margin-left:auto;font-family:var(--m);font-weight:700;font-size:14px;display:flex;align-items:baseline;gap:5px}
+.mh-d.p{color:var(--green)} .mh-d.n{color:var(--red)}
+.mh-dl{font-family:var(--f);font-size:10px;font-weight:600;color:var(--ink-4);letter-spacing:.02em}
+.mh-b{display:flex;align-items:center;gap:8px;margin-top:11px}
+.mh-vs{font-size:11px;color:var(--ink-3);font-weight:600;flex-shrink:0}
+.mh-avs{display:flex;flex-shrink:0}
+.mh-av{width:28px;height:28px;border-radius:50%;background:var(--brand-l);color:var(--brand);display:grid;place-items:center;font-size:10px;font-weight:800;box-shadow:0 0 0 2px var(--card)}
+.mh-av+.mh-av{margin-left:-9px}
+.mh-nm{font-size:14px;font-weight:600;min-width:0;line-height:1.3}
+.mh-rt{font-family:var(--m);font-size:11px;color:var(--ink-3);background:var(--bg-2);padding:3px 8px;border-radius:6px;margin-left:auto;white-space:nowrap;flex-shrink:0}
+.mh-m{font-size:12px;color:var(--ink-3);margin-top:9px}
+.mh + .why{padding:13px 17px 15px 17px;margin-top:-1px}
+@media(max-width:720px){.mh-rt{display:none}.mh-nm{font-size:13.5px}}
+
 @media(max-width:1024px){.tc-img{width:120px}.ref-wrap{grid-template-columns:1fr}.phone{position:static;margin:0 auto}}
 @media(max-width:960px){.cols,.dcols{grid-template-columns:1fr}.side{display:none}}
 
@@ -2033,16 +2056,18 @@ function vdv(key){
   $('pfAch').innerHTML=_ac.length?_ac.map(function(a){return '<div class="ach"><div class="amedal">'+a.p+'</div><div><div class="at">'+a.r+'</div><div class="ap">'+a.t+'</div></div><div class="ayr">'+(a.y||'2026')+'</div></div>'}).join(''):'<div style="padding:16px 17px;color:var(--ink-3);font-size:13.5px">Chưa có thành tích nổi bật — hãy tham gia giải để ghi dấu ấn.</div>';
   var base=parseFloat(d.r);
   [1,2,3,4].forEach(function(i){$('ax'+i).textContent=(base+0.18-(i-1)*0.18).toFixed(2)});
+  function _ini(n){return n.split(' ').slice(-2).map(function(x){return x[0]}).join('').toUpperCase();}
   $('hist').innerHTML=d.h.map(function(m,i){return ''
-    +'<div class="hrow">'
-    +'<div class="wl '+(m.w?'w':'l')+'">'+(m.w?'T':'B')+'</div>'
-    +'<div class="hm"><div class="ho"><a class="p" onclick="vdv(\''+m.o[1]+'\')">'+m.o[0]+'</a> / '
-    +'<a class="p" onclick="vdv(\''+m.o[3]+'\')">'+m.o[2]+'</a>'
-    +'<span style="color:var(--ink-4);font-weight:400" class="mono"> · ĐT '+m.or+'</span></div>'
-    +'<div class="hs2">'+m.t+'</div></div>'
-    +'<div class="hsc">'+m.sc+'</div>'
-    +'<div class="hd2 '+(m.d[0]==='+'?'p2':'n')+'">'+m.d+'</div>'
-    +'<button class="wbtn" onclick="tw('+i+')" title="Vì sao điểm đổi?">?</button>'
+    +'<div class="mh">'
+    +'<div class="mh-h"><span class="mh-res '+(m.w?'w':'l')+'">'+(m.w?'✓ THẮNG':'✕ THUA')+'</span>'
+    +'<span class="mh-sc">'+m.sc+'</span>'
+    +'<span class="mh-d '+(m.d[0]==='+'?'p':'n')+'">'+m.d+' <span class="mh-dl">điểm trình</span></span>'
+    +'<button class="wbtn" onclick="tw('+i+')" title="Vì sao điểm đổi?">?</button></div>'
+    +'<div class="mh-b"><span class="mh-vs">Đối thủ</span>'
+    +'<span class="mh-avs"><span class="mh-av">'+_ini(m.o[0])+'</span><span class="mh-av">'+_ini(m.o[2])+'</span></span>'
+    +'<span class="mh-nm"><a class="p" onclick="vdv(\''+m.o[1]+'\')">'+m.o[0]+'</a> / <a class="p" onclick="vdv(\''+m.o[3]+'\')">'+m.o[2]+'</a></span>'
+    +'<span class="mh-rt">ĐT đôi '+m.or+'</span></div>'
+    +'<div class="mh-m">'+m.t+'</div>'
     +'</div>'
     +'<div class="why" id="wh'+i+'">'+m.why+'</div>'}).join('');
   showPage('profile');
