@@ -559,6 +559,15 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 .etag.ok{background:var(--green-l);color:var(--green)} .etag.over{background:var(--red-l);color:var(--red)} .etag.mo{background:var(--brand-l);color:var(--brand)}
 @media(max-width:720px){.etot{width:74px;padding-left:10px}.etot-n{font-size:17px}.epc{display:none}.epr{font-size:13px;min-width:40px}}
 
+
+/* tạo giải — hàng nội dung động */
+.modal{max-height:92vh;overflow:auto}
+.evrow{display:grid;grid-template-columns:1.05fr 1fr 0.85fr 0.7fr 32px;gap:6px;margin-bottom:7px;align-items:center}
+.evrow .sel,.evrow .inp{padding:8px 8px;font-size:12.5px;width:100%}
+.evX{border:1px solid var(--line);background:#fff;border-radius:8px;height:34px;cursor:pointer;color:var(--red);font-size:17px;line-height:1}
+.evX:hover{background:var(--red-l)}
+@media(max-width:520px){.evrow{grid-template-columns:1fr 1fr}.evrow .evX{grid-column:span 2;height:30px}}
+
 @media(max-width:1024px){.tc-img{width:120px}.ref-wrap{grid-template-columns:1fr}.phone{position:static;margin:0 auto}}
 @media(max-width:960px){.cols,.dcols{grid-template-columns:1fr}.side{display:none}}
 
@@ -1166,8 +1175,9 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
       <div class="ff"><label>Địa điểm <span class="req">*</span></label><input id="cvVenue" class="inp" placeholder="NTĐ / CLB, Quận, Tỉnh"></div>
       <div style="display:flex;gap:10px"><div class="ff" style="flex:1"><label>Khu vực</label><select class="sel" id="cvProv" style="width:100%"><option>TP. Hồ Chí Minh</option><option>Hà Nội</option><option>Đà Nẵng</option><option>Bình Dương</option><option>Cần Thơ</option></select></div>
         <div class="ff" style="flex:1"><label>Ngày (dd/mm/yyyy) <span class="req">*</span></label><input id="cvDate" class="inp" placeholder="30/09/2026"></div></div>
-      <div style="display:flex;gap:10px"><div class="ff" style="flex:1"><label>Lệ phí/cặp (₫)</label><input id="cvFee" class="inp" inputmode="numeric" placeholder="600000"></div>
-        <div class="ff" style="flex:1"><label>Số cặp tối đa</label><input id="cvCap" class="inp" inputmode="numeric" placeholder="64"></div></div>
+      <div class="ff"><label>Nội dung thi đấu <span class="req">*</span> <span style="font-weight:400;color:var(--ink-3);font-size:11.5px">— mỗi hạng có lệ phí &amp; số cặp riêng</span></label>
+        <div id="cvEvents"></div>
+        <button class="btn btn-o btn-sm" type="button" onclick="addEventRow()" style="margin-top:8px">+ Thêm nội dung</button></div>
       <div class="ferr" id="createErr"></div>
       <div class="modal-foot"><button class="btn btn-o" onclick="document.getElementById('createModal').classList.remove('on')">Huỷ</button><button class="btn btn-p" onclick="submitCreate()">Tạo &amp; mở đăng ký</button></div>
     </div>
@@ -1805,18 +1815,30 @@ function submitLogin(){
   document.getElementById('loginModal').classList.remove('on');
   var btn=document.getElementById('loginBtn'); if(btn){btn.textContent='👤 '+ph;btn.onclick=function(){alert('Đã đăng nhập (demo). Đăng xuất?')};}
 }
-function openCreate(){document.getElementById('createErr').textContent='';document.getElementById('createModal').classList.add('on');document.getElementById('createDone').style.display='none';document.getElementById('createForm').style.display='';}
+function addEventRow(){
+  var wrap=document.getElementById('cvEvents'); if(!wrap)return;
+  var div=document.createElement('div'); div.className='evrow';
+  div.innerHTML='<select class="sel evD"><option value="dn">Đôi nam</option><option value="dnu">Đôi nữ</option><option value="dnn">Đôi nam nữ</option><option value="don">Đơn</option></select>'
+    +'<select class="sel evB"><option value="b40">Mở</option><option value="b3540">3.5–4.0</option><option value="b3035">3.0–3.5</option><option value="b30">Dưới 3.0</option></select>'
+    +'<input class="inp evF" inputmode="numeric" placeholder="Lệ phí ₫">'
+    +'<input class="inp evC" inputmode="numeric" placeholder="Số cặp">'
+    +'<button type="button" class="evX" title="Xoá" onclick="this.closest(\'.evrow\').remove()">×</button>';
+  wrap.appendChild(div);
+}
+function openCreate(){document.getElementById('createErr').textContent='';var ev=document.getElementById('cvEvents');if(ev&&!ev.children.length){addEventRow();addEventRow();}document.getElementById('createModal').classList.add('on');document.getElementById('createDone').style.display='none';document.getElementById('createForm').style.display='';}
 function submitCreate(){
   var nm=document.getElementById('cvName').value.trim(),ve=document.getElementById('cvVenue').value.trim(),
-      pr=document.getElementById('cvProv').value,dt=document.getElementById('cvDate').value.trim(),
-      fee=parseInt(document.getElementById('cvFee').value,10)||0,cap=parseInt(document.getElementById('cvCap').value,10)||64;
+      pr=document.getElementById('cvProv').value,dt=document.getElementById('cvDate').value.trim();
   if(nm.length<4){document.getElementById('createErr').textContent='⚠ Nhập tên giải.';return;}
   if(ve.length<3){document.getElementById('createErr').textContent='⚠ Nhập địa điểm.';return;}
   if(!/^\d{2}\/\d{2}\/\d{4}$/.test(dt)){document.getElementById('createErr').textContent='⚠ Ngày dạng dd/mm/yyyy.';return;}
+  var rows=document.querySelectorAll('#cvEvents .evrow');
+  if(!rows.length){document.getElementById('createErr').textContent='⚠ Thêm ít nhất một nội dung thi đấu.';return;}
+  var bandLbl={b40:'Mở',b3540:'3.5–4.0',b3035:'3.0–3.5',b30:'Dưới 3.0'},discLbl={dn:'Đôi nam',dnu:'Đôi nữ',dnn:'Đôi nam nữ',don:'Đơn'},events=[];
+  [].forEach.call(rows,function(r){var d=r.querySelector('.evD').value,b=r.querySelector('.evB').value,f=parseInt(r.querySelector('.evF').value,10)||0,c=parseInt(r.querySelector('.evC').value,10)||64;events.push({code:d,label:discLbl[d]+' · '+bandLbl[b],band:b,fee:f,cap:c,reg:0});});
   var dd=dt.split('/'),mo='Th'+parseInt(dd[1],10);
   var id='tao-'+Date.now();
-  TOURN.unshift({id:id,name:nm,bnr:'b'+(1+Math.floor(Math.random()*6)),pad:'🏓',mo:mo,dy:dd[0],yr:dd[2],range:dt,venue:ve,prov:pr,org:'BTC của bạn',level:'clb',status:'open',prize:0,deadline:dt,dl:9,
-    events:[{code:'dn',label:'Đôi nam · Mở',band:'b3540',fee:fee,cap:cap,reg:0}],spon:[],champ:''});
+  TOURN.unshift({id:id,name:nm,bnr:'b'+(1+Math.floor(Math.random()*6)),pad:'🏓',mo:mo,dy:dd[0],yr:dd[2],range:dt,venue:ve,prov:pr,org:'BTC của bạn',level:'clb',status:'open',prize:0,deadline:dt,dl:9,events:events,spon:[],champ:''});
   document.getElementById('createForm').style.display='none';
   document.getElementById('createDone').style.display='';
   document.getElementById('createDoneMsg').innerHTML='Giải <b>'+nm+'</b> đã được tạo và đang mở đăng ký. Bạn có thể xem ở tab "Sắp diễn ra".';
