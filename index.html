@@ -343,15 +343,109 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 .ft a{display:block;padding:3px 0;transition:color .14s;cursor:pointer}
 .ft a:hover{color:var(--brand)}
 
+/* ===== BOTTOM NAV (chỉ mobile) ===== */
+.bnav{display:none;position:fixed;left:0;right:0;bottom:0;z-index:80;background:rgba(255,255,255,.96);backdrop-filter:saturate(180%) blur(14px);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom));box-shadow:0 -2px 16px -6px rgba(15,22,32,.14)}
+.bnav-in{display:flex;justify-content:space-around;max-width:560px;margin:0 auto}
+.bnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;color:var(--ink-3);font-size:10.5px;font-weight:600;border-radius:10px;transition:.15s var(--e);cursor:pointer}
+.bnav a svg{width:21px;height:21px;stroke-width:1.9}
+.bnav a.on{color:var(--brand)}
+.bnav a.on svg{stroke-width:2.3}
+.bnav a:active{background:var(--bg-2)}
+
 @media(max-width:1024px){.tc-img{width:120px}.ref-wrap{grid-template-columns:1fr}.phone{position:static;margin:0 auto}}
 @media(max-width:960px){.cols,.dcols{grid-template-columns:1fr}.side{display:none}}
+
 @media(max-width:720px){
-  nav.main,.srch,.util{display:none}
+  html,body{overflow-x:hidden;max-width:100%}
+  .util,nav.main,.srch{display:none}
+  .bnav{display:block}
+  body{padding-bottom:66px}
+  .page{padding:18px 0 30px}
+
+  /* header gọn lại */
+  .hd{gap:10px;height:56px}
+  .logo{font-size:18px}
+  .hd-r{gap:7px}
+
+  /* thẻ giải đấu */
   .tc-img{display:none}
-  .tc-date{width:64px}.tc-foot{gap:13px}.hd{gap:12px}
-  .tc-act{margin-left:0;width:100%}
+  .tc-date{width:58px;padding:12px 0}
+  .tc-date .dy{font-size:22px}
+  .tc-body{padding:12px 13px}
+  .tc-name{font-size:15.5px}
+  .tc-top{flex-direction:column;gap:6px}
+  .tags{margin-left:0;justify-content:flex-start}
+  .tc-meta{gap:3px 12px;font-size:12.5px}
+  .tc-foot{gap:12px 14px}
+  .slot{min-width:100%;max-width:100%;order:9}
+  .tc-act{margin-left:0;width:100%;justify-content:space-between}
+  .tc-act .btn{flex:1;justify-content:center}
+
+  /* thanh tab — cuộn ngang thay vì bị cắt */
+  .tabbar{overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .tabbar::-webkit-scrollbar{display:none}
+  .tabbar>div{display:none!important}
+  .tb{padding:10px 12px;font-size:14px}
+
+  /* tiêu đề */
+  h1{font-size:23px}
   .crumb .url{display:none}
-  .phone{width:100%;max-width:340px}
+  .crumb{font-size:12px}
+
+  /* hero giải đấu */
+  .hero-band{height:84px;padding:0 16px}
+  .hero-b{padding:16px;gap:16px}
+  .hero-stats{gap:14px 20px;width:100%}
+  .hero-b>.btn-lg{width:100%;justify-content:center}
+
+  /* BẢNG XẾP HẠNG — ẩn cột phụ để không bị cắt */
+  thead th:nth-child(3),tbody td:nth-child(3),
+  thead th:nth-child(4),tbody td:nth-child(4),
+  thead th:nth-child(5),tbody td:nth-child(5){display:none}
+  thead th,tbody td{padding:11px 10px;font-size:13.5px}
+  .pc{font-size:11px}
+  .av{width:29px;height:29px}
+  .panel[style*="flex-wrap"]{gap:8px}
+  .panel[style*="flex-wrap"] .btn{width:100%}
+
+  /* hồ sơ VĐV */
+  .pf{padding:16px;gap:14px}
+  .pf-av{width:60px;height:60px;font-size:21px}
+  .pf>div:last-child{width:100%}
+  .pf>div:last-child .btn{flex:1;justify-content:center}
+  .rcards{grid-template-columns:repeat(2,1fr);gap:9px}
+  .rc{padding:13px}
+  .rc .v{font-size:26px}
+  .rc.pri .v{font-size:30px}
+  .rc .k{font-size:9.5px}
+  .rc .ci{font-size:10.5px;flex-direction:column;align-items:flex-start;gap:2px}
+
+  /* lịch sử trận */
+  .hrow{gap:9px;padding:11px 13px}
+  .hsc{display:none}
+  .ho{font-size:13px;white-space:normal}
+  .why{padding:12px 13px 13px 44px;font-size:12.5px}
+
+  /* lịch thi đấu */
+  .mr{padding:10px 13px;gap:9px}
+  .mr-p{font-size:12.5px}
+
+  /* trọng tài */
+  .phone{width:100%;max-width:340px;border-radius:28px;padding:8px}
+  .tmsc{font-size:44px;min-width:54px}
+  .rstep p{font-size:13px}
+
+  .box-h{font-size:14px;padding:12px 14px}
+  .box-b{padding:14px}
+  .note{font-size:12px;padding:11px 13px}
+  .pgn{flex-wrap:wrap}
+  .ft{gap:26px}
+}
+
+@media(max-width:390px){
+  .tc-date{width:52px}
+  .rcards{grid-template-columns:1fr}
+  .hd-r .btn-o{display:none}
 }
 </style>
 </head>
@@ -935,6 +1029,25 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 
 </div>
 
+<!-- ===== THANH ĐIỀU HƯỚNG DƯỚI — CHỈ MOBILE ===== -->
+<nav class="bnav"><div class="bnav-in">
+  <a class="bn on" data-p="home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>
+    Giải đấu</a>
+  <a class="bn" data-p="live">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M5.6 5.6a9 9 0 0 0 0 12.8M18.4 5.6a9 9 0 0 1 0 12.8M2.8 2.8a13 13 0 0 0 0 18.4M21.2 2.8a13 13 0 0 1 0 18.4"/></svg>
+    Trực tiếp</a>
+  <a class="bn" data-p="rank">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+    Điểm trình</a>
+  <a class="bn" data-p="ref">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg>
+    Trọng tài</a>
+  <a class="bn" onclick="vdv('toi')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+    Hồ sơ</a>
+</div></nav>
+
 <footer><div class="wrap">
   <div class="ft">
     <div style="min-width:190px">
@@ -1034,9 +1147,11 @@ function go(p){
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('on')});
   document.getElementById(p).classList.add('on');
   document.querySelectorAll('.nv').forEach(function(a){a.classList.toggle('on',a.dataset.p===p)});
+  document.querySelectorAll('.bn').forEach(function(a){a.classList.toggle('on',a.dataset.p===p)});
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('.nv').forEach(function(a){a.onclick=function(e){e.preventDefault();go(a.dataset.p)}});
+document.querySelectorAll('.bn').forEach(function(a){if(a.dataset.p)a.onclick=function(e){e.preventDefault();go(a.dataset.p)}});
 document.querySelectorAll('.tabbar').forEach(function(bar){
   bar.querySelectorAll('.tb').forEach(function(t){t.addEventListener('click',function(){
     bar.querySelectorAll('.tb').forEach(function(x){x.classList.remove('on')});t.classList.add('on');})})});
@@ -1053,21 +1168,20 @@ function vdv(key){
   $('pfWL').textContent=d.wl; $('pfWR').textContent=d.wr;
   var base=parseFloat(d.r);
   [1,2,3,4].forEach(function(i){$('ax'+i).textContent=(base+0.18-(i-1)*0.18).toFixed(2)});
-
-  $('hist').innerHTML=d.h.map(function(m,i){return '\
-    <div class="hrow">\
-      <div class="wl '+(m.w?'w':'l')+'">'+(m.w?'T':'B')+'</div>\
-      <div class="hm">\
-        <div class="ho"><a class="p" onclick="vdv(\''+m.o[1]+'\')">'+m.o[0]+'</a> / <a class="p" onclick="vdv(\''+m.o[3]+'\')">'+m.o[2]+'</a>\
-          <span style="color:var(--ink-4);font-weight:400" class="mono">· ĐT '+m.or+'</span></div>\
-        <div class="hs2">'+m.t+'</div>\
-      </div>\
-      <div class="hsc">'+m.sc+'</div>\
-      <div class="hd2 '+(m.d[0]==='+'?'p2':'n')+'">'+m.d+'</div>\
-      <button class="wbtn" onclick="tw('+i+')" title="Vì sao điểm đổi?">?</button>\
-    </div>\
-    <div class="why" id="wh'+i+'">'+m.why+'</div>'}).join('');
+  $('hist').innerHTML=d.h.map(function(m,i){return ''
+    +'<div class="hrow">'
+    +'<div class="wl '+(m.w?'w':'l')+'">'+(m.w?'T':'B')+'</div>'
+    +'<div class="hm"><div class="ho"><a class="p" onclick="vdv(\''+m.o[1]+'\')">'+m.o[0]+'</a> / '
+    +'<a class="p" onclick="vdv(\''+m.o[3]+'\')">'+m.o[2]+'</a>'
+    +'<span style="color:var(--ink-4);font-weight:400" class="mono"> · ĐT '+m.or+'</span></div>'
+    +'<div class="hs2">'+m.t+'</div></div>'
+    +'<div class="hsc">'+m.sc+'</div>'
+    +'<div class="hd2 '+(m.d[0]==='+'?'p2':'n')+'">'+m.d+'</div>'
+    +'<button class="wbtn" onclick="tw('+i+')" title="Vì sao điểm đổi?">?</button>'
+    +'</div>'
+    +'<div class="why" id="wh'+i+'">'+m.why+'</div>'}).join('');
   go('profile');
+  document.querySelectorAll('.bn').forEach(function(a){a.classList.toggle('on',!a.dataset.p)});
 }
 function tw(i){
   var w=document.getElementById('wh'+i);
@@ -1075,7 +1189,6 @@ function tw(i){
   w.classList.toggle('on');
 }
 
-/* Trọng tài */
 var sA=9,sB=8,undoStack=[],queue=2;
 function sync(){
   ['tA','bA','dA','rA'].forEach(function(i){var e=document.getElementById(i);if(e)e.textContent=sA});
