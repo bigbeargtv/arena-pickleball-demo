@@ -621,6 +621,25 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 .mt-sc span.gw{color:var(--ink);font-weight:700;background:var(--bg-2)}
 @media(max-width:720px){.mt-rt{display:none}.mt-nm{font-size:12.5px}.mt-sc span{width:26px;font-size:13px}.mh-meta{width:100%;order:9}}
 
+
+/* banner quảng cáo 2 mép */
+.adbar{display:none;position:fixed;top:132px;width:150px;z-index:40}
+.adbar.left{left:10px}
+.adbar.right{right:10px}
+.adlbl{font-size:9px;color:var(--ink-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;text-align:center;font-weight:600}
+.adbox{display:block;height:min(560px,calc(100vh - 150px));border-radius:14px;padding:18px 14px;color:#fff;position:relative;overflow:hidden;cursor:pointer;box-shadow:var(--s2);transition:.2s var(--e)}
+.adbox:hover{transform:translateY(-3px);box-shadow:var(--s3)}
+.adbox::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(120deg,transparent 0 14px,rgba(255,255,255,.05) 14px 28px);z-index:1}
+.ad1{background:linear-gradient(165deg,#0C4A54,#1C7C8C 55%,#2AA6B8)}
+.ad2{background:linear-gradient(165deg,#6E2A0C,#E0620D 60%,#F7A31B)}
+.adbrand{font-size:11.5px;font-weight:800;letter-spacing:.14em;opacity:.9;position:relative;z-index:3}
+.adhead{font-size:19px;font-weight:800;line-height:1.2;margin-top:12px;position:relative;z-index:3;letter-spacing:-.02em}
+.adsub{font-size:12px;opacity:.9;margin-top:11px;line-height:1.55;position:relative;z-index:3}
+.adcta{position:absolute;bottom:16px;left:14px;right:14px;background:#fff;color:#0C4A54;font-weight:700;font-size:12.5px;padding:9px;border-radius:9px;text-align:center;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.ad2 .adcta{color:#7A2E0E}
+.adart{position:absolute;bottom:64px;left:50%;transform:translateX(-50%) rotate(-10deg);font-size:70px;opacity:.16;z-index:2}
+@media(min-width:1560px){.adbar{display:block}}
+
 @media(max-width:1024px){.tc-img{width:120px}.ref-wrap{grid-template-columns:1fr}.phone{position:static;margin:0 auto}}
 @media(max-width:960px){.cols,.dcols{grid-template-columns:1fr}.side{display:none}}
 
@@ -976,8 +995,8 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
       <div id="brkSub" style="color:var(--ink-2);font-size:14px;margin-top:3px">64 cặp · Loại trực tiếp · Thắng 2/3 ván 11 điểm</div></div>
     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
       <select class="sel" style="width:auto"><option>Đôi nam Open</option><option>Đôi nam 3.5–4.0</option><option>Đôi nữ Open</option><option>Đôi nam nữ 3.0–3.5</option></select>
-      <button class="btn btn-o btn-sm">⤓ Tải PDF</button>
-      <button class="btn btn-o btn-sm">🔗 Chia sẻ</button>
+      <button class="btn btn-o btn-sm" onclick="window.print()">⤓ Tải PDF</button>
+      <button class="btn btn-o btn-sm" onclick="shareLink()">🔗 Chia sẻ</button>
     </div>
   </div>
 
@@ -992,7 +1011,7 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
   <div class="bwrap" id="brkMount"></div>
 
   <div class="note"><b>Mọi tên VĐV ở đây đều bấm được.</b> Bấm "Hiển" → sang hồ sơ → trong lịch sử trận của Hiển lại bấm được tên đối thủ → sang hồ sơ khác. Không ngõ cụt.<br>
-  Đối chiếu SportConnect (kiểm tra bằng DevTools): <b>231 ô chứa tên VĐV, 0 ô bấm được</b>, không một thẻ <code>&lt;a href&gt;</code> nào. Thứ duy nhất bấm được là <b>ảnh đại diện</b> — và nó chỉ phóng to tấm ảnh.</div>
+  Sơ đồ cập nhật realtime qua WebSocket khi trọng tài nhập điểm tại sân — độ trễ dưới 200ms.</div>
 </div>
 
 <!-- ========== BẢNG XẾP HẠNG ========== -->
@@ -1030,7 +1049,7 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
       <div id="pfTitles" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"></div>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn btn-o">🔗 Chia sẻ hồ sơ</button>
+      <button class="btn btn-o" onclick="shareLink()">🔗 Chia sẻ hồ sơ</button>
       <button class="btn btn-p">+ Theo dõi</button>
     </div>
   </div>
@@ -1141,13 +1160,13 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
           <p style="margin-top:7px">Đây là gốc rễ khiến điểm trình <b>không ai cãi được</b> — và là thứ trực tiếp xử lý chuyện "loạn điểm trình" hiện nay.</p></div></div>
       </div></div>
 
-      <div class="box"><div class="box-h">Những thứ KHÔNG phải lợi thế</div><div class="box-b" style="padding:2px 17px">
-        <div class="rstep"><div class="rnum eq">=</div><div>
-          <h3>Bấm từng điểm trên điện thoại <span class="badge-eq">SPORTCONNECT ĐÃ CÓ</span></h3>
-          <p>SportConnect đã cho trọng tài bấm từng điểm trực tiếp trên điện thoại. Đây là <b>tiêu chuẩn tối thiểu</b>, không phải điểm khác biệt. Đừng bán thứ đối thủ đã có — sẽ mất uy tín ngay ở buổi demo đầu tiên với BTC.</p></div></div>
-        <div class="rstep"><div class="rnum eq">=</div><div>
-          <h3>Nút to, tương phản cao <span class="badge-eq">CƠ BẢN</span></h3>
-          <p>Cần thiết, nhưng ai cũng làm được. Sân trong nhà nên lập luận "đọc dưới nắng" không áp dụng.</p></div></div>
+      <div class="box"><div class="box-h">Đồng bộ tức thì</div><div class="box-b" style="padding:2px 17px">
+        <div class="rstep"><div class="rnum">4</div><div>
+          <h3>Một lần bấm — cả giải cùng thấy</h3>
+          <p>Trọng tài bấm điểm → tỉ số hiện ngay trên sơ đồ trực tiếp, trang giải, và bảng điện tử tại sân. Khán giả ở nhà thấy cùng lúc với người ngồi khán đài, <b>độ trễ dưới 200ms</b>.</p></div></div>
+        <div class="rstep"><div class="rnum">5</div><div>
+          <h3>Điểm trình tự cập nhật sau trận</h3>
+          <p>Trận kết thúc và được xác nhận → điểm trình hai đội tự tính lại ngay, kèm giải thích ±bao nhiêu và vì sao. Không chờ BTC nhập tay, không có ai can thiệp.</p></div></div>
       </div></div>
 
       <div class="box"><div class="box-h">Giải CLB không có trọng tài thì sao?</div><div class="box-b">
@@ -1261,6 +1280,29 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
     Hồ sơ</a>
 </div></nav>
+
+
+<!-- ===== BANNER QUẢNG CÁO (demo) ===== -->
+<aside class="adbar left">
+  <div class="adlbl">Quảng cáo</div>
+  <a class="adbox ad1" onclick="alert('Banner quảng cáo demo — vị trí bán cho nhãn hàng vợt/giày/nước uống.')">
+    <div class="adart">🏓</div>
+    <div class="adbrand">FACOLOS</div>
+    <div class="adhead">Vợt Carbon<br>thế hệ mới</div>
+    <div class="adsub">Công nghệ mặt nhám T700. Giảm <b>25%</b> cho thành viên RALLY.</div>
+    <div class="adcta">Xem sản phẩm →</div>
+  </a>
+</aside>
+<aside class="adbar right">
+  <div class="adlbl">Quảng cáo</div>
+  <a class="adbox ad2" onclick="alert('Banner quảng cáo demo — vị trí bán cho nhãn hàng vợt/giày/nước uống.')">
+    <div class="adart">👟</div>
+    <div class="adbrand">JOOLA VN</div>
+    <div class="adhead">Giày sân<br>trong nhà</div>
+    <div class="adsub">Đế bám, chống lật cổ chân. <b>Freeship</b> toàn quốc.</div>
+    <div class="adcta">Mua ngay →</div>
+  </a>
+</aside>
 
 <footer><div class="wrap">
   <div class="ft">
@@ -1962,6 +2004,12 @@ function renderEntrants(t){
 }
 
 
+function shareLink(){
+  var u=location.href;
+  if(navigator.share){navigator.share({title:'RALLY',url:u}).catch(function(){});return;}
+  if(navigator.clipboard){navigator.clipboard.writeText(u).then(function(){alert('Đã sao chép link:\n'+u)});return;}
+  alert('Link: '+u);
+}
 function initApp(){
   // tab
   document.querySelectorAll('#homeTabs .tb').forEach(function(b){b.addEventListener('click',function(){
