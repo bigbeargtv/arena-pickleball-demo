@@ -1175,7 +1175,7 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
       <div class="ff"><label>Địa điểm <span class="req">*</span></label><input id="cvVenue" class="inp" placeholder="NTĐ / CLB, Quận, Tỉnh"></div>
       <div style="display:flex;gap:10px"><div class="ff" style="flex:1"><label>Khu vực</label><select class="sel" id="cvProv" style="width:100%"><option>TP. Hồ Chí Minh</option><option>Hà Nội</option><option>Đà Nẵng</option><option>Bình Dương</option><option>Cần Thơ</option></select></div>
         <div class="ff" style="flex:1"><label>Ngày (dd/mm/yyyy) <span class="req">*</span></label><input id="cvDate" class="inp" placeholder="30/09/2026"></div></div>
-      <div class="ff"><label>Nội dung thi đấu <span class="req">*</span> <span style="font-weight:400;color:var(--ink-3);font-size:11.5px">— mỗi hạng có lệ phí &amp; số cặp riêng</span></label>
+      <div class="ff"><label>Nội dung thi đấu <span class="req">*</span> <span style="font-weight:400;color:var(--ink-3);font-size:11.5px">— nhập giới hạn điểm đôi (vd 6.5), để trống = Mở</span></label>
         <div id="cvEvents"></div>
         <button class="btn btn-o btn-sm" type="button" onclick="addEventRow()" style="margin-top:8px">+ Thêm nội dung</button></div>
       <div class="ferr" id="createErr"></div>
@@ -1495,7 +1495,7 @@ function openDetail(id){
     else if(t.status==='done')right='<div class="ev-fee" style="color:var(--green)">🏆 Xong</div>';
     else right='<div class="ev-fee">'+vnd(e.fee)+'</div><div class="ev-cnt">'+e.cap+' suất</div>';
     var click=t.status==='open'?' onclick="openReg(\''+t.id+'\')"':(t.status==='live'||t.status==='done')?' onclick="openBracket(\''+t.id+'\')"':'';
-    return '<div class="ev"'+click+'><div><div class="ev-n">'+e.label+'</div><div class="ev-s">'+{dn:'Đôi nam',dnu:'Đôi nữ',dnn:'Đôi nam nữ',don:'Đơn'}[e.code]+' · <b style="color:var(--brand)">'+bandCapTxt(e.band,e.code)+'</b> · Loại trực tiếp</div></div><div class="ev-r">'+right+'</div></div>';
+    return '<div class="ev"'+click+'><div><div class="ev-n">'+e.label+'</div><div class="ev-s">'+{dn:'Đôi nam',dnu:'Đôi nữ',dnn:'Đôi nam nữ',don:'Đơn'}[e.code]+' · <b style="color:var(--brand)">'+evCapTxt(e)+'</b> · Loại trực tiếp</div></div><div class="ev-r">'+right+'</div></div>';
   }).join('');
   var info='<dt>Cấp độ</dt><dd>'+lvTag+'</dd><dt>Đơn vị</dt><dd>'+t.org+'</dd><dt>Thời gian</dt><dd>'+t.range+'</dd>';
   if(t.status==='open')info+='<dt>Hạn đăng ký</dt><dd>'+t.deadline+'</dd>';
@@ -1819,7 +1819,7 @@ function addEventRow(){
   var wrap=document.getElementById('cvEvents'); if(!wrap)return;
   var div=document.createElement('div'); div.className='evrow';
   div.innerHTML='<select class="sel evD"><option value="dn">Đôi nam</option><option value="dnu">Đôi nữ</option><option value="dnn">Đôi nam nữ</option><option value="don">Đơn</option></select>'
-    +'<select class="sel evB"><option value="b40">Mở (∞)</option><option value="b3540">3.5–4.0 (≤8.0)</option><option value="b3035">3.0–3.5 (≤7.0)</option><option value="b30">Dưới 3.0 (≤6.0)</option></select>'
+    +'<input class="inp evB" inputmode="decimal" placeholder="Giới hạn ĐT" title="Giới hạn điểm đôi, vd 6.5 — để trống = Mở">'
     +'<input class="inp evF" inputmode="numeric" placeholder="Lệ phí ₫">'
     +'<input class="inp evC" inputmode="numeric" placeholder="Số cặp">'
     +'<button type="button" class="evX" title="Xoá" onclick="this.closest(\'.evrow\').remove()">×</button>';
@@ -1834,8 +1834,17 @@ function submitCreate(){
   if(!/^\d{2}\/\d{2}\/\d{4}$/.test(dt)){document.getElementById('createErr').textContent='⚠ Ngày dạng dd/mm/yyyy.';return;}
   var rows=document.querySelectorAll('#cvEvents .evrow');
   if(!rows.length){document.getElementById('createErr').textContent='⚠ Thêm ít nhất một nội dung thi đấu.';return;}
-  var bandLbl={b40:'Mở',b3540:'3.5–4.0',b3035:'3.0–3.5',b30:'Dưới 3.0'},discLbl={dn:'Đôi nam',dnu:'Đôi nữ',dnn:'Đôi nam nữ',don:'Đơn'},events=[];
-  [].forEach.call(rows,function(r){var d=r.querySelector('.evD').value,b=r.querySelector('.evB').value,f=parseInt(r.querySelector('.evF').value,10)||0,c=parseInt(r.querySelector('.evC').value,10)||64;events.push({code:d,label:discLbl[d]+' · '+bandLbl[b],band:b,fee:f,cap:c,reg:0});});
+  var discLbl={dn:'Đôi nam',dnu:'Đôi nữ',dnn:'Đôi nam nữ',don:'Đơn'},events=[],bad=false;
+  [].forEach.call(rows,function(r){
+    var d=r.querySelector('.evD').value;
+    var raw=(r.querySelector('.evB').value||'').trim().replace(',','.');
+    var lim=raw===''?null:parseFloat(raw);
+    if(raw!==''&&(isNaN(lim)||lim<2||lim>20))bad=true;
+    var band=lim==null?'b40':(lim<6?'b30':lim<7?'b3035':lim<8?'b3540':'b40');
+    var f=parseInt(r.querySelector('.evF').value,10)||0,c=parseInt(r.querySelector('.evC').value,10)||64;
+    events.push({code:d,label:discLbl[d]+' · '+(lim==null?'Mở':lim.toFixed(1)),band:band,lim:lim,fee:f,cap:c,reg:0});
+  });
+  if(bad){document.getElementById('createErr').textContent='⚠ Giới hạn điểm trình phải là số (vd 6.5). Để trống = Mở.';return;}
   var dd=dt.split('/'),mo='Th'+parseInt(dd[1],10);
   var id='tao-'+Date.now();
   TOURN.unshift({id:id,name:nm,bnr:'b'+(1+Math.floor(Math.random()*6)),pad:'🏓',mo:mo,dy:dd[0],yr:dd[2],range:dt,venue:ve,prov:pr,org:'BTC của bạn',level:'clb',status:'open',prize:0,deadline:dt,dl:9,events:events,spon:[],champ:''});
@@ -1850,9 +1859,11 @@ function submitCreate(){
 /* ==================== DANH SÁCH ĐĂNG KÝ 1 GIẢI ==================== */
 var BAND_CAP={b30:6.0,b3035:7.0,b3540:8.0,b40:null};
 var BAND_LBL={b30:'Dưới 3.0',b3035:'3.0–3.5',b3540:'3.5–4.0',b40:'Mở'};
-function bandCapTxt(band,code){
-  if(BAND_CAP[band]==null)return code==='don'?'Hạng Mở':'Điểm đôi: Mở (không giới hạn)';
-  return code==='don'?('Điểm đơn ≤ '+(BAND_CAP[band]/2).toFixed(1)):('Điểm đôi ≤ '+BAND_CAP[band].toFixed(1));
+function evCap(e){return (e.lim!=null&&!isNaN(e.lim))?e.lim:BAND_CAP[e.band];}
+function evCapTxt(e){
+  var c=evCap(e);
+  if(c==null)return e.code==='don'?'Hạng Mở':'Điểm đôi: Mở (không giới hạn)';
+  return e.code==='don'?('Điểm đơn ≤ '+(c/2).toFixed(1)):('Điểm đôi ≤ '+c.toFixed(1));
 }
 function renderEntrants(t){
   var list=document.getElementById('dRegList'),n=document.getElementById('dRegN'); if(!list)return;
@@ -1873,7 +1884,7 @@ function renderEntrants(t){
     }).join('')+'</div>';
   }
   t.events.forEach(function(e){
-    var cap=CAP[e.band],win=WIN[e.band]||[2.5,5.4];
+    var cap=evCap(e),win=cap!=null?[Math.max(2.5,cap/2-0.45),Math.min(5.4,cap/2+0.45)]:[3.9,5.4];
     var sub=pool.filter(function(p){return p.r>=win[0]&&p.r<=win[1]});
     if(sub.length<6)sub=pool.slice();
     sub=sub.slice().sort(function(){return rng()-0.5});
