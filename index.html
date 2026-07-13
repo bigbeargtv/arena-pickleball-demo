@@ -473,6 +473,15 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 #live.brkdone .bm-h .lv~span,#live.brkdone .bm.live .bm-h{color:var(--ink-3)}
 @media(max-width:720px){.regc .ract{width:100%}.regc .ract .btn{flex:1;justify-content:center}}
 
+
+/* thành tích cá nhân + phân trang rank */
+.ach{display:flex;align-items:center;gap:12px;padding:12px 17px;border-bottom:1px solid var(--line-2)}
+.ach:last-child{border-bottom:0}
+.ach .amedal{font-size:22px;width:32px;text-align:center;flex-shrink:0}
+.ach .at{font-weight:600;font-size:14px}
+.ach .ap{font-size:12.5px;color:var(--ink-3);margin-top:1px}
+.ach .ayr{margin-left:auto;font-family:var(--m);font-size:12px;color:var(--ink-4)}
+
 @media(max-width:1024px){.tc-img{width:120px}.ref-wrap{grid-template-columns:1fr}.phone{position:static;margin:0 auto}}
 @media(max-width:960px){.cols,.dcols{grid-template-columns:1fr}.side{display:none}}
 
@@ -895,7 +904,7 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
   <div id="rankSub" style="color:var(--ink-2);font-size:14px;margin:3px 0 18px">—</div>
   <div class="panel" style="padding:14px 17px;margin-bottom:16px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">
     <select class="sel" id="rDisc" style="width:auto"><option value="dn">Đôi nam</option><option value="don">Đơn nam</option></select>
-    <select class="sel" id="rProv" style="width:auto"><option value="all">Toàn quốc</option><option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option><option value="Hà Nội">Hà Nội</option><option value="Đà Nẵng">Đà Nẵng</option><option value="Bình Dương">Bình Dương</option></select>
+    <select class="sel" id="rProv" style="width:auto"><option value="all">Toàn quốc</option><option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option><option value="Hà Nội">Hà Nội</option><option value="Đà Nẵng">Đà Nẵng</option><option value="Bình Dương">Bình Dương</option><option value="Cần Thơ">Cần Thơ</option></select>
     <label class="chk" style="margin-left:6px"><input type="checkbox" id="rMin10" checked>Chỉ VĐV có ≥10 trận</label>
     <button class="btn btn-o btn-sm" style="margin-left:auto" onclick="alert('Xuất Excel — có trong bản đầy đủ.')">⤓ Xuất Excel</button>
   </div>
@@ -905,6 +914,7 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
       <tbody id="rankBody"></tbody>
     </table>
   </div>
+  <div class="pgn" id="rankPg"></div>
   <div class="note">Cột <b>Độ tin cậy</b>: hai người điểm gần nhau nhưng số trận khác nhau thì độ chắc chắn khác nhau. Lọc theo nội dung và khu vực đều hoạt động.</div>
 </div>
 
@@ -938,6 +948,8 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
     <div class="rc"><div class="k">Thành tích</div><div class="v" id="pfWL" style="font-size:28px">—</div><div class="d f">Thắng – Bại</div>
       <div class="ci"><span>Tỉ lệ thắng</span><span class="mono" id="pfWR">—</span></div></div>
   </div>
+
+  <div class="box" id="pfAchBox"><div class="box-h">Thành tích cá nhân <span id="pfAchN" style="font-size:12.5px;color:var(--ink-3);font-weight:500"></span></div><div id="pfAch"></div></div>
 
   <div class="box"><div class="box-h">Diễn biến điểm trình <span style="font-size:12.5px;font-weight:500;color:var(--ink-3)">12 tháng gần nhất</span></div>
     <div class="box-b">
@@ -1448,15 +1460,111 @@ var RANK=[
  {key:'bao',name:'Trần Lê Bảo',club:'Saigon Smash',prov:'TP. Hồ Chí Minh',rel:91,relTxt:'±.12',relCls:'',m:110,wl:'76–34',mv:'▲ .03',mvc:'u',r:4.41,r2:4.15},
  {key:'toi',name:'Trần Minh Hoàng',club:'Saigon Smash',prov:'TP. Hồ Chí Minh',rel:68,relTxt:'±.25',relCls:'mid',m:18,wl:'11–7',mv:'▲ .08',mvc:'u',r:3.42,r2:3.16,me:true}
 ];
+
+/* ==================== KHỞI TẠO ==================== */
+
+/* ==================== SINH 100 VĐV DEMO ==================== */
+var CORE_RANK=RANK.slice();  // 7 VĐV gốc có hồ sơ chi tiết
+function _seed(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function genPlayers(){
+  var rnd=_seed(20260713);
+  var HO=['Nguyễn','Trần','Lê','Phạm','Vũ','Hoàng','Đặng','Bùi','Đỗ','Ngô','Dương','Lý','Phan','Võ','Trương','Đinh','Lương','Tô','Hồ','Mai'];
+  var DEM=['Văn','Hữu','Minh','Quang','Thành','Đức','Công','Xuân','Bá','Gia','Nhật','Đăng','Anh','Ngọc','Thanh','Khánh','Hoàng','Trọng','Duy','Hải'];
+  var TEN=['Anh','Bảo','Cường','Dũng','Đạt','Hùng','Hiếu','Khoa','Long','Minh','Nam','Phúc','Quân','Sơn','Tài','Thắng','Trung','Tú','Việt','Vinh','Kiên','Lâm','Hưng','Duy','Phong','Tân','Bình','Kỳ','Lộc','Thiện'];
+  var PV=[['TP. Hồ Chí Minh',['Saigon Smash','Saigon Night','Thảo Điền PC','Phú Nhuận Dinkers','Quận 7 Rally','Gò Vấp PC']],
+          ['Hà Nội',['Hanoi Dinkers','Ba Đình PC','Cầu Giấy Smash','Tây Hồ Rally','Long Biên PC']],
+          ['Đà Nẵng',['Đà Nẵng Rally','Mỹ Khê PC','Sơn Trà Smash']],
+          ['Bình Dương',['Bình Dương PC','Thủ Dầu Một Dinkers']],
+          ['Cần Thơ',['Mekong Pickleball','Ninh Kiều PC']]];
+  var pw=[0,0,0,0,0,1,1,1,1,1,2,2,3,3,4]; // trọng số tỉnh
+  var mvs=[['▲ .14','u'],['▲ .09','u'],['▲ .05','u'],['▲ .02','u'],['— .00','f'],['▼ .03','d'],['▼ .07','d'],['▲ .18','u'],['▼ .11','d'],['▲ .06','u']];
+  var toens=['Vietnam Open 2026','Saigon Summer Slam','Đà Nẵng Beach Cup','Bình Dương Open','Hanoi Summer','Mekong Delta Open','Saigon Night League','Hanoi Spring Cup'];
+  var rounds=['Vòng bảng','Vòng 1/16','Vòng 1/8','Tứ kết','Bán kết','Chung kết'];
+  var gen=[];
+  for(var i=0;i<93;i++){
+    var pv=PV[pw[Math.floor(rnd()*pw.length)]];
+    var prov=pv[0], club=pv[1][Math.floor(rnd()*pv[1].length)];
+    var name=HO[Math.floor(rnd()*HO.length)]+' '+DEM[Math.floor(rnd()*DEM.length)]+' '+TEN[Math.floor(rnd()*TEN.length)];
+    var r=+(2.55+rnd()*2.55).toFixed(2);          // 2.55 – 5.10
+    var r2=+(r-0.15-rnd()*0.25).toFixed(2);
+    var m=8+Math.floor(rnd()*150);
+    var wins=Math.round(m*(0.42+rnd()*0.32)), losses=m-wins;
+    var rel=Math.min(97,Math.round(34+m*0.46));
+    var rd=(0.40-Math.min(0.30,m*0.0021)).toFixed(2);
+    var relCls=rel>=82?'':rel>=62?'mid':'low';
+    var mv=mvs[Math.floor(rnd()*mvs.length)];
+    var key='g'+i;
+    var slug=name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/g,'d').replace(/\s+/g,'-')+'-'+i;
+    gen.push({key:key,name:name,club:club,prov:prov,rel:rel,relTxt:'±'+rd,relCls:relCls,m:m,wl:wins+'–'+losses,mv:mv[0],mvc:mv[1],r:r,r2:r2,_wins:wins,_rnd:rnd});
+  }
+  // gộp + sắp theo điểm đôi để gán hạng
+  RANK=CORE_RANK.concat(gen);
+  RANK.slice().sort(function(a,b){return b.r-a.r}).forEach(function(p,idx){p._rank=idx+1;});
+  // tạo hồ sơ (DB) cho từng VĐV sinh ra
+  var pool=RANK;
+  function pOpp(self){var o;do{o=pool[Math.floor(rnd()*pool.length)]}while(o.key===self.key);return o;}
+  gen.forEach(function(p,i){
+    var hist=[];
+    var nm=Math.min(4,2+Math.floor(rnd()*3));
+    for(var j=0;j<nm;j++){
+      var o1=pOpp(p),o2=pOpp(p);
+      var oavg=(o1.r+o2.r)/2;
+      var pwin=1/(1+Math.pow(10,(oavg-p.r)/2));
+      var win=rnd()<pwin?1:0;
+      var base=(win-pwin);
+      var giai=toens[Math.floor(rnd()*toens.length)];
+      var rd2=rounds[Math.floor(rnd()*rounds.length)];
+      var d=(base*0.14); var ds=(d>=0?'+':'−')+Math.abs(d).toFixed(2);
+      var s1=win?11:[6,7,8,9][Math.floor(rnd()*4)], s2=win?[5,6,7,8,9][Math.floor(rnd()*5)]:11;
+      var sc=win?('11-'+s2+' · 11-'+[6,7,8,9][Math.floor(rnd()*4)]):(s1+'-11 · '+[6,7,8,9][Math.floor(rnd()*4)]+'-11');
+      var why='Đối thủ trung bình <b>'+oavg.toFixed(2)+'</b> (bạn '+p.r.toFixed(2)+') → xác suất thắng dự kiến <b>'+Math.round(pwin*100)+'%</b>. '+(win?'Thắng':'Thua')+' → <b>'+ds+'</b>.'+(Math.abs(oavg-p.r)>1.2&&!win?'<br><b style="color:var(--green)">Không bị phạt nặng vì đối thủ mạnh hơn nhiều.</b>':'');
+      hist.push({w:win,o:[o1.name,o1.key,o2.name,o2.key],or:oavg.toFixed(2),t:giai+' · '+rd2+' · '+(1+Math.floor(rnd()*28))+'/0'+(6+Math.floor(rnd()*3))+'/2026',sc:sc,d:ds,why:why});
+    }
+    DB[p.key]={n:p.name,s:p.slug||'vdv-'+i,av:p.name.split(' ').slice(-2).map(function(x){return x[0]}).join('').toUpperCase(),
+      c:p.club+' · '+p.prov+' · '+(rnd()>0.25?'Tay phải':'Tay trái'),
+      r:p.r.toFixed(2),d:p.mv.replace(/\./,' 0.')+' trong 30 ngày',dc:p.mvc,
+      ci:'Khoảng '+(p.r-0.01*(40-p.rel*0.4)).toFixed(2)+' – '+(p.r+0.01*(40-p.rel*0.4)).toFixed(2),m:p.m+' trận',
+      r2:p.r2.toFixed(2),d2:p.mv.replace(/\./,' 0.')+' trong 30 ngày',ci2:'Khoảng '+(p.r2-0.2).toFixed(2)+' – '+(p.r2+0.2).toFixed(2),
+      rk:'#'+p._rank,rkd:p.mvc==='u'?'▲ tăng hạng':p.mvc==='d'?'▼ giảm hạng':'— giữ hạng',rkn:'#'+p._rank,
+      wl:p.wl,wr:Math.round(p._wins/p.m*100)+'%',h:hist};
+  });
+  var TT=['Vietnam Open 2026','Saigon Summer Slam 2026','Đà Nẵng Beach Cup','Bình Dương Open 2026','Hanoi Summer 2026','Mekong Delta Open 2026','Hanoi Spring Cup 2026'];
+  gen.forEach(function(p){
+    var a=[];
+    if(p.r>=4.6){a.push({p:'🥇',r:'Vô địch đôi nam',t:TT[Math.floor(rnd()*TT.length)]});a.push({p:'🥈',r:'Á quân',t:TT[Math.floor(rnd()*TT.length)]});}
+    else if(p.r>=3.8){a.push({p:'🥈',r:'Á quân',t:TT[Math.floor(rnd()*TT.length)]});a.push({p:'🎯',r:'Vào Tứ kết',t:TT[Math.floor(rnd()*TT.length)]});}
+    else if(p.r>=3.2){a.push({p:'🎯',r:'Top 8',t:TT[Math.floor(rnd()*TT.length)]});a.push({p:'🎽',r:'Tham dự',t:TT[Math.floor(rnd()*TT.length)]});}
+    else{a.push({p:'🎽',r:'Tham dự',t:TT[Math.floor(rnd()*TT.length)]});}
+    if(rnd()>0.6)a.push({p:'🥉',r:'Hạng 3',t:TT[Math.floor(rnd()*TT.length)]});
+    DB[p.key].ach=a;
+  });
+  var CORE_ACH={
+   hien:[{p:'🥇',r:'Vô địch đôi nam',t:'Mekong Delta Open 2026'},{p:'🥇',r:'Vô địch đôi nam',t:'Hanoi Masters 2026'},{p:'🥈',r:'Á quân',t:'PPA Asia Vietnam 2026'}],
+   quan:[{p:'🥇',r:'Vô địch đôi nam',t:'Mekong Delta Open 2026'},{p:'🥇',r:'Vô địch đôi nam nữ',t:'Hanoi Spring Cup 2026'},{p:'🥉',r:'Hạng 3',t:'Vietnam Open 2026'}],
+   nam:[{p:'🥈',r:'Á quân',t:'PPA Asia Beijing 2026'},{p:'🥇',r:'Vô địch',t:'Bình Dương Open 2026'}],
+   phuc:[{p:'🥇',r:'Vô địch đôi nam nữ',t:'Hanoi Spring Cup 2026'},{p:'🎯',r:'Tứ kết',t:'Saigon Masters 2026'}],
+   khoa:[{p:'🥇',r:'Vô địch',t:'Đà Nẵng Open 2026'},{p:'🎽',r:'Tân binh nổi bật',t:'Mùa 2026'}],
+   bao:[{p:'🥇',r:'Vô địch',t:'Saigon Smash Ladder V10'},{p:'🥈',r:'Á quân',t:'Saigon Night League 2026'}],
+   toi:[{p:'🎯',r:'Top 16',t:'Saigon Summer Slam 2026'},{p:'🎽',r:'Tham dự',t:'Vietnam Open 2026'}]
+  };
+  Object.keys(CORE_ACH).forEach(function(k){if(DB[k])DB[k].ach=CORE_ACH[k]});
+}
+
+/* ==================== BẢNG XẾP HẠNG (phân trang) ==================== */
+var rPage=1, RSIZE=25;
+function rGo(pg){ if(pg<1)return; rPage=pg; renderRank(); var r=document.getElementById('rank'); if(r)window.scrollTo({top:0,behavior:'smooth'}); }
 function renderRank(){
   var disc=(document.getElementById('rDisc')||{}).value||'dn';
   var prov=(document.getElementById('rProv')||{}).value||'all';
   var min10=(document.getElementById('rMin10')||{}).checked;
   var list=RANK.filter(function(p){return (prov==='all'||p.prov===prov)&&(!min10||p.m>=10)});
   list.sort(function(a,b){return (disc==='dn'?b.r:b.r2)-(disc==='dn'?a.r:a.r2)});
+  var total=list.length, pages=Math.max(1,Math.ceil(total/RSIZE));
+  if(rPage>pages)rPage=pages;
+  var start=(rPage-1)*RSIZE, pageList=list.slice(start,start+RSIZE);
   var body=document.getElementById('rankBody');
-  body.innerHTML=list.map(function(p,i){
-    var rk=i+1;
+  body.innerHTML=pageList.map(function(p,idx){
+    var rk=start+idx+1;
     var rkCell=rk<=3?'<td><span class="medal m'+rk+'">'+rk+'</span></td>':'<td class="rk" style="padding-left:16px">'+rk+'</td>';
     var rt=(disc==='dn'?p.r:p.r2).toFixed(2);
     var av='<div class="av"'+(p.me?' style="background:var(--brand);color:#fff"':'')+'>'+p.name.split(' ').slice(-2).map(function(x){return x[0]}).join('').toUpperCase()+'</div>';
@@ -1466,11 +1574,21 @@ function renderRank(){
       +'<td class="r mono" style="color:var(--ink-2)">'+p.m+'</td><td class="r mono" style="color:var(--ink-2)">'+p.wl+'</td>'
       +'<td class="r"><span class="mv '+p.mvc+'">'+p.mv+'</span></td><td class="r"><span class="pt"'+(p.me?' style="color:var(--brand)"':(rk===1?' style="color:var(--brand)"':''))+'>'+rt+'</span></td></tr>';
   }).join('');
+  var pg=document.getElementById('rankPg');
+  if(pg){
+    if(pages<=1)pg.innerHTML='';
+    else{
+      var h='<button onclick="rGo('+(rPage-1)+')"'+(rPage===1?' disabled':'')+'>‹</button>';
+      var arr=[]; for(var k=1;k<=pages;k++){if(k===1||k===pages||Math.abs(k-rPage)<=1)arr.push(k);else if(arr[arr.length-1]!=='…')arr.push('…');}
+      arr.forEach(function(k){h+= k==='…'?'<button disabled>…</button>':'<button class="'+(k===rPage?'on':'')+'" onclick="rGo('+k+')">'+k+'</button>';});
+      h+='<button onclick="rGo('+(rPage+1)+')"'+(rPage===pages?' disabled':'')+'>›</button>';
+      pg.innerHTML=h;
+    }
+  }
   var sub=document.getElementById('rankSub');
-  if(sub)sub.textContent=list.length+' VĐV · '+({dn:'Đôi nam',don:'Đơn nam'}[disc])+(prov==='all'?' · toàn quốc':' · '+prov)+' · cập nhật sau mỗi trận';
+  if(sub)sub.textContent=total+' VĐV · '+({dn:'Đôi nam',don:'Đơn nam'}[disc])+(prov==='all'?' · toàn quốc':' · '+prov)+' · trang '+rPage+'/'+pages;
 }
 
-/* ==================== KHỞI TẠO ==================== */
 function initApp(){
   // tab
   document.querySelectorAll('#homeTabs .tb').forEach(function(b){b.addEventListener('click',function(){
@@ -1490,7 +1608,8 @@ function initApp(){
   var gs=document.getElementById('globalSearch');
   if(gs)gs.addEventListener('input',function(){UI.q=this.value;if(this.value)go('home');renderTournaments()});
   // rank
-  ['rDisc','rProv','rMin10'].forEach(function(i){var e=document.getElementById(i);if(e)e.addEventListener('change',renderRank)});
+  ['rDisc','rProv','rMin10'].forEach(function(i){var e=document.getElementById(i);if(e)e.addEventListener('change',function(){rPage=1;renderRank()})});
+  genPlayers();
   renderTournaments();renderRank();updateBackBtns();
 }
 
@@ -1588,6 +1707,9 @@ function vdv(key){
   $('pfWL').textContent=d.wl; $('pfWR').textContent=d.wr;
   var _tt=TOURN.filter(function(t){return t.status==='done'&&t.champKeys&&t.champKeys.indexOf(key)>=0});
   $('pfTitles').innerHTML=_tt.map(function(t){return '<span class="tag" style="background:var(--gold-l);color:var(--gold)">🏆 Vô địch '+t.name.replace(/ 2026$/,'')+'</span>'}).join('');
+  var _ac=d.ach||[];
+  $('pfAchN').textContent=_ac.length?_ac.length+' thành tích':'';
+  $('pfAch').innerHTML=_ac.length?_ac.map(function(a){return '<div class="ach"><div class="amedal">'+a.p+'</div><div><div class="at">'+a.r+'</div><div class="ap">'+a.t+'</div></div><div class="ayr">'+(a.y||'2026')+'</div></div>'}).join(''):'<div style="padding:16px 17px;color:var(--ink-3);font-size:13.5px">Chưa có thành tích nổi bật — hãy tham gia giải để ghi dấu ấn.</div>';
   var base=parseFloat(d.r);
   [1,2,3,4].forEach(function(i){$('ax'+i).textContent=(base+0.18-(i-1)*0.18).toFixed(2)});
   $('hist').innerHTML=d.h.map(function(m,i){return ''
