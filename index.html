@@ -416,6 +416,41 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 .lp-final p{color:rgba(255,255,255,.75);margin-top:10px;font-size:15px;max-width:52ch;margin-left:auto;margin-right:auto}
 @media(max-width:820px){.lp-grid3{grid-template-columns:1fr}.biz{grid-template-columns:1fr}.cmp{overflow-x:auto}.cmp table{min-width:520px}.lp-kpis{gap:22px}}
 
+
+/* ===== MODAL ĐĂNG KÝ + FORM ===== */
+.modal-ov{position:fixed;inset:0;z-index:200;background:rgba(15,22,32,.55);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:20px;animation:mfade .2s var(--e)}
+.modal-ov.on{display:flex}
+@keyframes mfade{from{opacity:0}to{opacity:1}}
+.modal{background:var(--card);border-radius:18px;width:100%;max-width:440px;box-shadow:0 24px 60px -12px rgba(15,22,32,.5);overflow:hidden;animation:mpop .22s var(--e)}
+@keyframes mpop{from{transform:translateY(14px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+.modal-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 14px}
+.modal-t{font-size:19px;font-weight:800;letter-spacing:-.02em}
+.modal-s{font-size:13px;color:var(--ink-3);margin-top:3px}
+.modal-x{background:var(--bg-2);border:0;width:32px;height:32px;border-radius:9px;cursor:pointer;font-size:14px;color:var(--ink-2);flex-shrink:0;transition:.14s}
+.modal-x:hover{background:var(--line);color:var(--ink)}
+.modal-b{padding:4px 22px 22px}
+.ff{margin-bottom:15px}
+.ff label{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+.ff .req{color:var(--red)}
+.inp{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-family:var(--f);font-size:14.5px;color:var(--ink);outline:0;transition:.15s;background:#fff}
+.inp:focus{border-color:var(--brand);box-shadow:0 0 0 3.5px var(--brand-l)}
+.inp.bad{border-color:var(--red);box-shadow:0 0 0 3.5px var(--red-l)}
+.ferr{color:var(--red);font-size:13px;font-weight:600;min-height:18px;margin:-4px 0 10px}
+.modal-foot{display:flex;gap:10px;margin-top:6px}
+.modal-foot .btn{flex:1;justify-content:center;padding:12px}
+.ok{text-align:center;padding:8px 4px 4px}
+.ok-ic{width:56px;height:56px;border-radius:50%;background:var(--green-l);color:var(--green);display:grid;place-items:center;font-size:28px;font-weight:800;margin:0 auto 14px}
+.ok h3{font-size:19px;font-weight:800}
+.ok-msg{font-size:14px;color:var(--ink-2);margin-top:8px;line-height:1.6}
+.ok-msg b{color:var(--ink)}
+.ok-note{font-size:12px;color:var(--ink-3);background:var(--bg);border-radius:10px;padding:11px 13px;margin:16px 0 18px;line-height:1.6}
+.ok .btn{width:100%;justify-content:center;padding:12px}
+.empty{text-align:center;padding:52px 20px;color:var(--ink-3)}
+.empty .ei{font-size:40px;opacity:.5}
+.empty h3{font-size:16px;font-weight:700;color:var(--ink-2);margin-top:10px}
+.empty p{font-size:13.5px;margin-top:5px}
+.reg-badge{display:inline-flex;align-items:center;gap:5px;background:var(--green-l);color:var(--green);font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px}
+
 @media(max-width:1024px){.tc-img{width:120px}.ref-wrap{grid-template-columns:1fr}.phone{position:static;margin:0 auto}}
 @media(max-width:960px){.cols,.dcols{grid-template-columns:1fr}.side{display:none}}
 
@@ -516,7 +551,7 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 <body>
 
 <div class="util"><div class="wrap">
-  <span class="cur">🏓 Pickleball</span><a>Tennis</a><a>Cầu lông</a>
+  <span class="cur">🏓 Pickleball Việt Nam</span>
   <div class="sp"><a onclick="go('ref')">Dành cho Trọng tài / BTC</a><a>Trợ giúp</a><a>🇻🇳 Tiếng Việt</a></div>
 </div></div>
 
@@ -533,10 +568,10 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
   <div class="hd-r">
     <label class="srch">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7A879A" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <input placeholder="Tìm giải, VĐV, CLB…">
+      <input id="globalSearch" placeholder="Tìm giải, VĐV, CLB…">
     </label>
-    <button class="btn btn-o btn-sm">Đăng nhập</button>
-    <button class="btn btn-p btn-sm">+ Tạo giải</button>
+    <button class="btn btn-o btn-sm" onclick="alert('Đăng nhập — có trong bản đầy đủ.')">Đăng nhập</button>
+    <button class="btn btn-p btn-sm" onclick="alert('Tạo giải dành cho BTC — có trong bản đầy đủ.')">+ Tạo giải</button>
   </div>
 </div></header>
 
@@ -684,247 +719,79 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 <div class="page" id="home">
   <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px">
     <div><h1>Giải đấu Pickleball</h1>
-      <div style="color:var(--ink-2);font-size:14px;margin-top:3px">142 giải đang mở đăng ký trên toàn quốc · cập nhật 13/07/2026</div></div>
-    <button class="btn btn-p btn-lg">+ Đăng giải đấu của bạn</button>
+      <div id="homeSub" style="color:var(--ink-2);font-size:14px;margin-top:3px">—</div></div>
+    <button class="btn btn-p btn-lg" onclick="alert('Chức năng đăng giải dành cho BTC — mở trong bản có tài khoản.')">+ Đăng giải đấu của bạn</button>
   </div>
-
   <div class="cols">
     <aside class="side">
       <div class="panel">
-        <div class="panel-h">Bộ lọc <a style="font-size:11px;color:var(--brand);text-transform:none;letter-spacing:0;cursor:pointer">Xoá</a></div>
+        <div class="panel-h">Bộ lọc <a id="clearFilters" style="font-size:11px;color:var(--brand);text-transform:none;letter-spacing:0;cursor:pointer">Xoá</a></div>
         <div class="panel-b">
           <div class="fgrp"><label class="flbl">Khu vực</label>
-            <select class="sel"><option>Toàn quốc</option><option selected>TP. Hồ Chí Minh</option><option>Hà Nội</option><option>Đà Nẵng</option><option>Bình Dương</option><option>Cần Thơ</option></select></div>
-          <div class="fgrp"><label class="flbl">Thời gian</label>
-            <select class="sel"><option>3 tháng tới</option><option>Tuần này</option><option>Tháng này</option><option>Đã kết thúc</option></select></div>
+            <select class="sel" id="fRegion"><option>Toàn quốc</option><option>TP. Hồ Chí Minh</option><option>Hà Nội</option><option>Đà Nẵng</option><option>Bình Dương</option><option>Cần Thơ</option></select></div>
           <div class="fgrp"><label class="flbl">Cấp độ giải</label>
-            <label class="chk"><input type="checkbox" checked>Quốc gia <span class="n">6</span></label>
-            <label class="chk"><input type="checkbox" checked>Khu vực / Tỉnh <span class="n">31</span></label>
-            <label class="chk"><input type="checkbox" checked>CLB / Phong trào <span class="n">105</span></label></div>
+            <label class="chk"><input type="checkbox" class="fLevel" value="qg" checked>Quốc gia <span class="n" id="cLqg">0</span></label>
+            <label class="chk"><input type="checkbox" class="fLevel" value="kv" checked>Khu vực / Tỉnh <span class="n" id="cLkv">0</span></label>
+            <label class="chk"><input type="checkbox" class="fLevel" value="clb" checked>CLB / Phong trào <span class="n" id="cLclb">0</span></label></div>
           <div class="fgrp"><label class="flbl">Nội dung</label>
-            <label class="chk"><input type="checkbox" checked>Đôi nam <span class="n">128</span></label>
-            <label class="chk"><input type="checkbox" checked>Đôi nữ <span class="n">96</span></label>
-            <label class="chk"><input type="checkbox" checked>Đôi nam nữ <span class="n">112</span></label>
-            <label class="chk"><input type="checkbox">Đơn <span class="n">24</span></label></div>
+            <label class="chk"><input type="checkbox" class="fDisc" value="dn" checked>Đôi nam</label>
+            <label class="chk"><input type="checkbox" class="fDisc" value="dnu" checked>Đôi nữ</label>
+            <label class="chk"><input type="checkbox" class="fDisc" value="dnn" checked>Đôi nam nữ</label>
+            <label class="chk"><input type="checkbox" class="fDisc" value="don" checked>Đơn</label></div>
           <div class="fgrp"><label class="flbl">Hạng điểm trình</label>
-            <label class="chk"><input type="checkbox">Dưới 3.0 <span class="n">44</span></label>
-            <label class="chk"><input type="checkbox" checked>3.0 – 3.5 <span class="n">78</span></label>
-            <label class="chk"><input type="checkbox" checked>3.5 – 4.0 <span class="n">61</span></label>
-            <label class="chk"><input type="checkbox">4.0+ / Mở <span class="n">29</span></label></div>
-          <div class="fgrp"><label class="chk" style="font-weight:600;color:var(--ink)"><input type="checkbox" checked>Chỉ hiện giải còn slot</label></div>
+            <label class="chk"><input type="checkbox" class="fBand" value="b30" checked>Dưới 3.0</label>
+            <label class="chk"><input type="checkbox" class="fBand" value="b3035" checked>3.0 – 3.5</label>
+            <label class="chk"><input type="checkbox" class="fBand" value="b3540" checked>3.5 – 4.0</label>
+            <label class="chk"><input type="checkbox" class="fBand" value="b40" checked>4.0+ / Mở</label></div>
+          <div class="fgrp"><label class="chk" style="font-weight:600;color:var(--ink)"><input type="checkbox" id="fSlot">Chỉ hiện giải còn slot</label></div>
         </div>
       </div>
     </aside>
-
     <main>
-      <div class="tabbar">
-        <button class="tb on">Sắp diễn ra <span class="cnt">142</span></button>
-        <button class="tb">Đang diễn ra <span class="cnt">4</span></button>
-        <button class="tb">Đã kết thúc <span class="cnt">318</span></button>
-        <button class="tb">Giải của tôi <span class="cnt">2</span></button>
+      <div class="tabbar" id="homeTabs">
+        <button class="tb on" data-tab="upcoming">Sắp diễn ra <span class="cnt" id="bUp">0</span></button>
+        <button class="tb" data-tab="live">Đang diễn ra <span class="cnt" id="bLive">0</span></button>
+        <button class="tb" data-tab="done">Đã kết thúc <span class="cnt" id="bDone">0</span></button>
+        <button class="tb" data-tab="mine">Giải của tôi <span class="cnt" id="bMine">0</span></button>
         <div style="margin-left:auto;display:flex;align-items:center;gap:8px;padding-bottom:6px">
           <span style="font-size:12.5px;color:var(--ink-3)">Sắp xếp:</span>
-          <select class="sel" style="width:auto;padding:5px 8px;font-size:13px"><option>Gần nhất</option><option>Sắp hết hạn ĐK</option><option>Giải thưởng cao</option></select>
+          <select class="sel" id="sortSel" style="width:auto;padding:5px 8px;font-size:13px"><option value="date">Gần nhất</option><option value="deadline">Sắp hết hạn ĐK</option><option value="prize">Giải thưởng cao</option></select>
         </div>
       </div>
-
-      <div class="tlist">
-        <div class="tc" onclick="go('detail')">
-          <div class="tc-date live"><div class="mo">Th7</div><div class="dy">18</div><div class="yr">2026</div></div>
-          <div class="tc-img"><div class="bnr b1"><span class="paddle">🏓</span><span class="ovl tag live"><span class="dot"></span>LIVE</span><div class="bt2">VIETNAM<br>OPEN 2026</div><div class="bs2">NTĐ Phú Thọ</div></div></div>
-          <div class="tc-body">
-            <div class="tc-top"><div class="tc-name">Vietnam Pickleball Open 2026</div>
-              <div class="tags"><span class="tag live"><span class="dot"></span>ĐANG DIỄN RA</span><span class="tag lvl">QUỐC GIA</span></div></div>
-            <div class="tc-meta"><span><i>📍</i>NTĐ Phú Thọ, Q.11, TP.HCM</span><span><i>📅</i>18 – 21/07/2026</span><span><i>🏓</i>8 nội dung · 12 sân</span></div>
-            <div class="tc-foot">
-              <div class="stat"><span class="k">Giải thưởng</span><span class="v">500.000.000₫</span></div>
-              <div class="stat"><span class="k">VĐV</span><span class="v">512</span></div>
-              <div class="stat"><span class="k">Đang đánh</span><span class="v" style="color:var(--red)">3 trận</span></div>
-              <div class="tc-act">
-                <button class="btn btn-o btn-sm" onclick="event.stopPropagation();go('live')">Xem sơ đồ</button>
-                <button class="btn btn-p btn-sm" onclick="event.stopPropagation();go('live')">▶ Trực tiếp</button></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="tc" onclick="go('detail')">
-          <div class="tc-date"><div class="mo">Th7</div><div class="dy">25</div><div class="yr">2026</div></div>
-          <div class="tc-img"><div class="bnr b2"><span class="paddle">☀️</span><div class="bt2">SAIGON<br>SUMMER SLAM</div><div class="bs2">Thảo Điền</div></div></div>
-          <div class="tc-body">
-            <div class="tc-top"><div class="tc-name">Saigon Summer Slam 2026</div>
-              <div class="tags"><span class="tag open">MỞ ĐĂNG KÝ</span><span class="tag gray">KHU VỰC</span></div></div>
-            <div class="tc-meta"><span><i>📍</i>Pickle Center Thảo Điền, TP. Thủ Đức</span><span><i>📅</i>25 – 27/07/2026</span><span><i>🏓</i>Đôi nam · Đôi nữ · Đôi nam nữ</span></div>
-            <div class="tc-foot">
-              <div class="stat"><span class="k">Giải thưởng</span><span class="v">120.000.000₫</span></div>
-              <div class="stat"><span class="k">Lệ phí</span><span class="v">600.000₫/cặp</span></div>
-              <div class="slot"><div style="display:flex;justify-content:space-between;font-size:11px"><span style="color:var(--ink-3);font-weight:700;letter-spacing:.04em">ĐÃ ĐĂNG KÝ</span><span class="mono" style="font-weight:700;color:var(--amber)">168 / 192 cặp</span></div><div class="bar"><i class="warn" style="width:87%"></i></div></div>
-              <div class="tc-act"><span style="font-size:12px;color:var(--amber);font-weight:600">⏳ Còn 3 ngày</span><button class="btn btn-p btn-sm" onclick="event.stopPropagation()">Đăng ký</button></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="tc" onclick="go('detail')">
-          <div class="tc-date"><div class="mo">Th8</div><div class="dy">02</div><div class="yr">2026</div></div>
-          <div class="tc-img"><div class="bnr b3"><span class="paddle">🌊</span><div class="bt2">ĐÀ NẴNG<br>BEACH CUP</div><div class="bs2">Biển Mỹ Khê</div></div></div>
-          <div class="tc-body">
-            <div class="tc-top"><div class="tc-name">Đà Nẵng Beach Pickleball Cup</div>
-              <div class="tags"><span class="tag open">MỞ ĐĂNG KÝ</span><span class="tag gray">KHU VỰC</span></div></div>
-            <div class="tc-meta"><span><i>📍</i>Bãi biển Mỹ Khê, Đà Nẵng</span><span><i>📅</i>02 – 03/08/2026</span><span><i>🏓</i>Đôi nam nữ · Hạng 3.0 – 4.0</span></div>
-            <div class="tc-foot">
-              <div class="stat"><span class="k">Giải thưởng</span><span class="v">60.000.000₫</span></div>
-              <div class="stat"><span class="k">Lệ phí</span><span class="v">450.000₫/cặp</span></div>
-              <div class="slot"><div style="display:flex;justify-content:space-between;font-size:11px"><span style="color:var(--ink-3);font-weight:700;letter-spacing:.04em">ĐÃ ĐĂNG KÝ</span><span class="mono" style="font-weight:700">54 / 128 cặp</span></div><div class="bar"><i style="width:42%"></i></div></div>
-              <div class="tc-act"><span style="font-size:12px;color:var(--ink-3)">Hạn 28/07</span><button class="btn btn-p btn-sm" onclick="event.stopPropagation()">Đăng ký</button></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="tc" onclick="go('detail')">
-          <div class="tc-date"><div class="mo">Th7</div><div class="dy">16</div><div class="yr">2026</div></div>
-          <div class="tc-img"><div class="bnr b4"><span class="paddle">🌙</span><div class="bt2">SAIGON<br>NIGHT LEAGUE</div><div class="bs2">Vòng 12</div></div></div>
-          <div class="tc-body">
-            <div class="tc-top"><div class="tc-name">Saigon Night League — Vòng 12</div>
-              <div class="tags"><span class="tag open">MỞ ĐĂNG KÝ</span><span class="tag gray">CLB · HÀNG TUẦN</span></div></div>
-            <div class="tc-meta"><span><i>📍</i>CLB Sài Gòn Smash, Q. Bình Thạnh</span><span><i>📅</i>Thứ 4 hằng tuần · 19:00 – 22:00</span><span><i>⚡</i>Có tính điểm trình (×0.7)</span></div>
-            <div class="tc-foot">
-              <div class="stat"><span class="k">Thể thức</span><span class="v">Ladder</span></div>
-              <div class="stat"><span class="k">Lệ phí</span><span class="v">80.000₫/buổi</span></div>
-              <div class="slot"><div style="display:flex;justify-content:space-between;font-size:11px"><span style="color:var(--ink-3);font-weight:700;letter-spacing:.04em">ĐÃ ĐĂNG KÝ</span><span class="mono" style="font-weight:700;color:var(--red)">32 / 32 người</span></div><div class="bar"><i class="full" style="width:100%"></i></div></div>
-              <div class="tc-act"><button class="btn btn-o btn-sm" onclick="event.stopPropagation()">+ Danh sách chờ</button></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="tc" onclick="go('detail')">
-          <div class="tc-date"><div class="mo">Th9</div><div class="dy">12</div><div class="yr">2026</div></div>
-          <div class="tc-img"><div class="bnr b5"><span class="paddle">🏆</span><div class="bt2">VPA TOUR<br>FINALS 2026</div><div class="bs2">Top 32 · Hà Nội</div></div></div>
-          <div class="tc-body">
-            <div class="tc-top"><div class="tc-name">VPA Tour Finals 2026</div>
-              <div class="tags"><span class="tag soon">SẮP MỞ ĐK</span><span class="tag lvl">QUỐC GIA</span></div></div>
-            <div class="tc-meta"><span><i>📍</i>Cung TT Quần Ngựa, Ba Đình, Hà Nội</span><span><i>📅</i>12 – 15/09/2026</span><span><i>🔒</i>Chỉ dành cho Top 32 điểm trình</span></div>
-            <div class="tc-foot">
-              <div class="stat"><span class="k">Giải thưởng</span><span class="v" style="color:var(--brand)">1.200.000.000₫</span></div>
-              <div class="stat"><span class="k">Suất</span><span class="v">32 cặp</span></div>
-              <div class="stat"><span class="k">Mở ĐK</span><span class="v">01/08/2026</span></div>
-              <div class="tc-act"><button class="btn btn-o btn-sm" onclick="event.stopPropagation()">🔔 Nhắc tôi</button></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="tc" onclick="go('detail')" style="opacity:.85">
-          <div class="tc-date" style="background:var(--bg-2)"><div class="mo">Th6</div><div class="dy">28</div><div class="yr">2026</div></div>
-          <div class="tc-img"><div class="bnr b6" style="filter:grayscale(.5)"><span class="paddle">🌾</span><div class="bt2">MEKONG<br>DELTA OPEN</div><div class="bs2">Đã kết thúc</div></div></div>
-          <div class="tc-body">
-            <div class="tc-top"><div class="tc-name">Mekong Delta Open 2026</div>
-              <div class="tags"><span class="tag done">ĐÃ KẾT THÚC</span></div></div>
-            <div class="tc-meta"><span><i>📍</i>NTĐ Cần Thơ</span><span><i>📅</i>28 – 29/06/2026</span>
-              <span><i>🏆</i>VĐ: <a class="p" onclick="event.stopPropagation();vdv('hien')">Trương Vinh Hiển</a> / <a class="p" onclick="event.stopPropagation();vdv('quan')">Đỗ Minh Quân</a></span></div>
-            <div class="tc-foot">
-              <div class="stat"><span class="k">VĐV</span><span class="v">216</span></div>
-              <div class="stat"><span class="k">Trận đã đấu</span><span class="v">184</span></div>
-              <div class="tc-act"><button class="btn btn-o btn-sm" onclick="event.stopPropagation();go('live')">Xem kết quả</button></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="pgn"><button>‹</button><button class="on">1</button><button>2</button><button>3</button><button>…</button><button>24</button><button>›</button></div>
-
-      <div class="note"><b>Đo thật trên SportConnect (DevTools, 13/07/2026):</b> HTML về trong <code>148ms</code> — server họ không chậm. Nhưng AJAX lấy nội dung mất <code>12.496ms</code>, nội dung đủ ở <b>giây thứ 14</b>. Trang Điểm trình: bảng chỉ nặng <code>86 KB</code> mà mất <code>8.255ms</code> — tức <b>8,2 giây là database ngồi nghĩ</b>. Đây là nguyên nhân gốc của "lag".</div>
+      <div class="tlist" id="tlist"></div>
+      <div class="note">Bản demo tương tác — dữ liệu lưu trong phiên trình duyệt. Tab, bộ lọc, tìm kiếm, đăng ký đều chạy thật. Thử đăng ký một giải để thấy nó xuất hiện ở tab "Giải của tôi".</div>
     </main>
   </div>
 </div>
 
+
 <!-- ========== CHI TIẾT GIẢI ========== -->
 <div class="page" id="detail">
-  <div class="crumb"><a onclick="go('home')">Giải đấu</a> › <a>TP.HCM</a> › <span style="color:var(--ink-2)">Vietnam Pickleball Open 2026</span>
-    <span class="url">/giai-dau/vietnam-open-2026</span></div>
-
+  <div class="crumb"><a onclick="go('home')">Giải đấu</a> › <span id="dCrumb" style="color:var(--ink-2)">—</span><span class="url" id="dUrl">/giai-dau/—</span></div>
   <div class="hero">
-    <div class="hero-band"><span class="bandtxt">Vietnam Pickleball Open · 2026</span></div>
+    <div class="hero-band"><span class="bandtxt" id="dBand">—</span></div>
     <div class="hero-b">
       <div class="hero-info">
-        <div style="display:flex;gap:7px;margin-bottom:8px;flex-wrap:wrap"><span class="tag live"><span class="dot"></span>ĐANG DIỄN RA</span><span class="tag lvl">CẤP QUỐC GIA</span><span class="tag gray">HỆ SỐ ĐIỂM ×1.0</span></div>
-        <h1>Vietnam Pickleball Open 2026</h1>
-        <div class="hero-meta"><span>📍 NTĐ Phú Thọ, 1 Lữ Gia, Q.11, TP.HCM</span><span>📅 18 – 21/07/2026</span><span>🏢 Liên đoàn Pickleball TP.HCM</span></div>
+        <div id="dTags" style="display:flex;gap:7px;margin-bottom:8px;flex-wrap:wrap"></div>
+        <h1 id="dName">—</h1>
+        <div class="hero-meta" id="dMeta"></div>
       </div>
-      <div class="hero-stats">
-        <div class="hs"><div class="k">Giải thưởng</div><div class="v g">500 triệu</div></div>
-        <div class="hs"><div class="k">Vận động viên</div><div class="v">512</div></div>
-        <div class="hs"><div class="k">Trận đã đấu</div><div class="v">148/247</div></div>
-        <div class="hs"><div class="k">Đang đánh</div><div class="v r">3</div></div>
-      </div>
-      <button class="btn btn-p btn-lg" onclick="go('live')">▶ Xem trực tiếp</button>
+      <div class="hero-stats" id="dStats"></div>
+      <button class="btn btn-p btn-lg" id="dCta">▶ Xem trực tiếp</button>
     </div>
   </div>
-
-  <div class="tabbar" style="margin-bottom:20px">
-    <button class="tb on">Tổng quan</button>
-    <button class="tb">Nội dung <span class="cnt">8</span></button>
-    <button class="tb">Danh sách ĐK <span class="cnt">512</span></button>
-    <button class="tb" onclick="go('live')">Sơ đồ &amp; Kết quả</button>
-    <button class="tb">Lịch thi đấu</button>
-  </div>
-
   <div class="dcols">
     <div>
-      <div class="box">
-        <div class="box-h">Nội dung thi đấu <a style="font-size:13px;color:var(--brand);font-weight:600;cursor:pointer">Xem tất cả</a></div>
-        <div class="ev" onclick="go('live')"><div><div class="ev-n">Đôi nam · Hạng mở (Open)</div><div class="ev-s">64 cặp · Knockout · Đang ở vòng Bán kết</div></div><div class="ev-r"><div class="ev-fee" style="color:var(--red)">● LIVE</div><div class="ev-cnt">Sân 1, 3, 4</div></div></div>
-        <div class="ev"><div><div class="ev-n">Đôi nam · Hạng 3.5 – 4.0</div><div class="ev-s">96 cặp · Vòng bảng + Knockout</div></div><div class="ev-r"><div class="ev-fee">14:30</div><div class="ev-cnt">Tứ kết</div></div></div>
-        <div class="ev"><div><div class="ev-n">Đôi nữ · Hạng mở</div><div class="ev-s">32 cặp · Knockout · Đã kết thúc</div></div><div class="ev-r"><div class="ev-fee" style="color:var(--green)">🏆 Xong</div><div class="ev-cnt">Lan / Mai VĐ</div></div></div>
-        <div class="ev"><div><div class="ev-n">Đôi nam nữ · Hạng 3.0 – 3.5</div><div class="ev-s">128 cặp · Vòng bảng + Knockout</div></div><div class="ev-r"><div class="ev-fee">Mai 08:00</div><div class="ev-cnt">Vòng 1/16</div></div></div>
-        <div class="ev"><div><div class="ev-n">Đơn nam · Hạng mở</div><div class="ev-s">48 VĐV · Knockout</div></div><div class="ev-r"><div class="ev-fee">Mai 10:00</div><div class="ev-cnt">Vòng 1/8</div></div></div>
-      </div>
-
-      <div class="box">
-        <div class="box-h">Lịch hôm nay — Thứ 7, 13/07 <span style="font-size:12.5px;color:var(--ink-3);font-weight:500">12 sân</span></div>
-        <div class="mr" onclick="go('live')">
-          <div class="mr-t" style="color:var(--red);font-weight:700">LIVE</div><div class="mr-c">Sân 3</div>
-          <div class="mr-m">
-            <div class="mr-p"><span>[2] <a class="p" onclick="event.stopPropagation();vdv('bao')">Trần Lê Bảo</a> / <a class="p" onclick="event.stopPropagation();vdv('trung')">Vũ Trung</a></span><b class="ld" id="dA">9</b></div>
-            <div class="mr-p"><span>[7] <a class="p" onclick="event.stopPropagation();vdv('kien')">Lê Kiên</a> / <a class="p" onclick="event.stopPropagation();vdv('son')">Ngô Sơn</a></span><b class="ld" id="dB">8</b></div>
-          </div>
-        </div>
-        <div class="mr" onclick="go('live')">
-          <div class="mr-t" style="color:var(--red);font-weight:700">LIVE</div><div class="mr-c">Sân 1</div>
-          <div class="mr-m">
-            <div class="mr-p w"><span>[1] <a class="p" onclick="event.stopPropagation();vdv('hien')">Trương V. Hiển</a> / <a class="p" onclick="event.stopPropagation();vdv('quan')">Đỗ M. Quân</a></span><b class="ld">11</b></div>
-            <div class="mr-p"><span>[5] <a class="p" onclick="event.stopPropagation();vdv('hoang')">Ng. Hoàng</a> / <a class="p" onclick="event.stopPropagation();vdv('dat')">Trần Đạt</a></span><b class="ld">7</b></div>
-          </div>
-        </div>
-        <div class="mr"><div class="mr-t">16:30</div><div class="mr-c">Sân 2</div>
-          <div class="mr-m"><div class="mr-p"><span class="tbdn">Thắng TK-3</span><b style="color:var(--ink-4)">–</b></div><div class="mr-p"><span class="tbdn">Thắng TK-4</span><b style="color:var(--ink-4)">–</b></div></div></div>
-        <div class="mr"><div class="mr-t">18:00</div><div class="mr-c" style="background:var(--gold-l);color:var(--gold)">🏆 TT</div>
-          <div class="mr-m"><div class="mr-p"><span class="tbdn">Chung kết Đôi nam Open</span><b style="color:var(--ink-4)">–</b></div><div class="mr-p"><span class="tbdn">—</span><b style="color:var(--ink-4)">–</b></div></div></div>
-      </div>
+      <div class="box"><div class="box-h">Nội dung thi đấu <span id="dEvCount" style="font-size:12.5px;color:var(--ink-3);font-weight:500"></span></div>
+        <div id="dEvents"></div></div>
     </div>
-
     <aside>
-      <div class="box"><div class="box-h">Thông tin</div><div class="box-b">
-        <dl class="kv">
-          <dt>Lệ phí</dt><dd>800.000₫ / cặp</dd>
-          <dt>Hạn đăng ký</dt><dd>10/07/2026</dd>
-          <dt>Thể thức</dt><dd>Knockout / Vòng bảng</dd>
-          <dt>Luật</dt><dd>Thắng 2/3 ván 11đ</dd>
-          <dt>Bóng thi đấu</dt><dd>Franklin X-40</dd>
-          <dt>Hệ số điểm trình</dt><dd style="color:var(--brand)">×1.0</dd>
-          <dt>Trọng tài</dt><dd>24 người</dd>
-        </dl></div></div>
-
-      <div class="box"><div class="box-h">Hạt giống — Đôi nam Open</div>
-        <table><tbody>
-          <tr class="cl" onclick="vdv('hien')"><td style="width:40px"><span class="medal m1">1</span></td><td><div class="pl"><div class="av">VH</div><div><div class="pn" style="font-size:13.5px">Hiển / Quân</div><div class="pc mono">ĐT trung bình 5.24</div></div></div></td></tr>
-          <tr class="cl" onclick="vdv('bao')"><td><span class="medal m2">2</span></td><td><div class="pl"><div class="av">TB</div><div><div class="pn" style="font-size:13.5px">Bảo / Trung</div><div class="pc mono">ĐT trung bình 4.81</div></div></div></td></tr>
-          <tr class="cl" onclick="vdv('vinh')"><td><span class="medal m3">3</span></td><td><div class="pl"><div class="av">NV</div><div><div class="pn" style="font-size:13.5px">Vinh / Tú</div><div class="pc mono">ĐT trung bình 4.66</div></div></div></td></tr>
-          <tr class="cl" onclick="vdv('long')"><td class="rk" style="padding-left:16px">4</td><td><div class="pl"><div class="av">LH</div><div><div class="pn" style="font-size:13.5px">Hùng / Phúc</div><div class="pc mono">ĐT trung bình 4.52</div></div></div></td></tr>
-        </tbody></table></div>
-
-      <div class="box"><div class="box-h">Nhà tài trợ</div><div class="box-b">
-        <div class="spon"><div>FACOLOS</div><div>JOOLA VN</div><div>SELKIRK</div><div>REVOLIN</div><div>PICKLE+</div></div></div></div>
+      <div class="box"><div class="box-h">Thông tin</div><div class="box-b"><dl class="kv" id="dInfo"></dl></div></div>
+      <div class="box"><div class="box-h">Nhà tài trợ</div><div class="box-b"><div class="spon" id="dSpon"></div></div></div>
     </aside>
   </div>
 </div>
+
 
 <!-- ========== SƠ ĐỒ LIVE ========== -->
 <div class="page" id="live">
@@ -1000,64 +867,24 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 
 <!-- ========== BẢNG XẾP HẠNG ========== -->
 <div class="page" id="rank">
-  <div class="crumb"><a onclick="go('home')">Trang chủ</a> › <span style="color:var(--ink-2)">Điểm trình</span><span class="url">/diem-trinh/doi-nam?tinh=hcm</span></div>
+  <div class="crumb"><a onclick="go('home')">Trang chủ</a> › <span style="color:var(--ink-2)">Điểm trình</span><span class="url">/diem-trinh</span></div>
   <h1>Bảng xếp hạng điểm trình</h1>
-  <div style="color:var(--ink-2);font-size:14px;margin:3px 0 18px">4.812 VĐV · cập nhật ngay sau mỗi trận · 13/07/2026</div>
-
+  <div id="rankSub" style="color:var(--ink-2);font-size:14px;margin:3px 0 18px">—</div>
   <div class="panel" style="padding:14px 17px;margin-bottom:16px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">
-    <select class="sel" style="width:auto"><option>Đôi nam</option><option>Đơn nam</option><option>Đôi nữ</option><option>Đôi nam nữ</option></select>
-    <select class="sel" style="width:auto"><option>Toàn quốc</option><option selected>TP. Hồ Chí Minh</option><option>Hà Nội</option></select>
-    <select class="sel" style="width:auto"><option>Mọi độ tuổi</option><option>U18</option><option>35+</option><option>50+</option></select>
-    <label class="chk" style="margin-left:6px"><input type="checkbox" checked>Chỉ VĐV có ≥10 trận</label>
-    <button class="btn btn-o btn-sm" style="margin-left:auto">⤓ Xuất Excel</button>
+    <select class="sel" id="rDisc" style="width:auto"><option value="dn">Đôi nam</option><option value="don">Đơn nam</option></select>
+    <select class="sel" id="rProv" style="width:auto"><option value="all">Toàn quốc</option><option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option><option value="Hà Nội">Hà Nội</option><option value="Đà Nẵng">Đà Nẵng</option><option value="Bình Dương">Bình Dương</option></select>
+    <label class="chk" style="margin-left:6px"><input type="checkbox" id="rMin10" checked>Chỉ VĐV có ≥10 trận</label>
+    <button class="btn btn-o btn-sm" style="margin-left:auto" onclick="alert('Xuất Excel — có trong bản đầy đủ.')">⤓ Xuất Excel</button>
   </div>
-
   <div class="panel" style="overflow:hidden">
     <table>
       <thead><tr><th style="width:56px">#</th><th>Vận động viên</th><th>Độ tin cậy</th><th class="r">Trận</th><th class="r">T–B</th><th class="r">30 ngày</th><th class="r">Điểm trình</th></tr></thead>
-      <tbody>
-        <tr class="cl" onclick="vdv('hien')"><td><span class="medal m1">1</span></td>
-          <td><div class="pl"><div class="av">VH</div><div><div class="pn">Trương Vinh Hiển</div><div class="pc">Hanoi Dinkers · Hà Nội</div></div></div></td>
-          <td><div class="rel"><span class="b"><i style="width:96%"></i></span><small>±.09</small></div></td>
-          <td class="r mono" style="color:var(--ink-2)">142</td><td class="r mono" style="color:var(--ink-2)">118–24</td><td class="r"><span class="mv u">▲ .12</span></td><td class="r"><span class="pt" style="color:var(--brand)">5.31</span></td></tr>
-
-        <tr class="cl" onclick="vdv('quan')"><td><span class="medal m2">2</span></td>
-          <td><div class="pl"><div class="av">MQ</div><div><div class="pn">Đỗ Minh Quân</div><div class="pc">Hanoi Dinkers · Hà Nội</div></div></div></td>
-          <td><div class="rel"><span class="b"><i style="width:93%"></i></span><small>±.11</small></div></td>
-          <td class="r mono" style="color:var(--ink-2)">128</td><td class="r mono" style="color:var(--ink-2)">103–25</td><td class="r"><span class="mv u">▲ .07</span></td><td class="r"><span class="pt" style="color:var(--brand)">5.18</span></td></tr>
-
-        <tr class="cl" onclick="vdv('nam')"><td><span class="medal m3">3</span></td>
-          <td><div class="pl"><div class="av">HN</div><div><div class="pn">Lý Hoàng Nam</div><div class="pc">Bình Dương PC · Bình Dương</div></div></div></td>
-          <td><div class="rel"><span class="b"><i class="mid" style="width:74%"></i></span><small>±.19</small></div></td>
-          <td class="r mono" style="color:var(--ink-2)">61</td><td class="r mono" style="color:var(--ink-2)">48–13</td><td class="r"><span class="mv f">— .00</span></td><td class="r"><span class="pt">5.02</span></td></tr>
-
-        <tr class="cl" onclick="vdv('phuc')"><td class="rk" style="padding-left:16px">4</td>
-          <td><div class="pl"><div class="av">TP</div><div><div class="pn">Nguyễn Trung Phúc</div><div class="pc">Saigon Smash · TP.HCM</div></div></div></td>
-          <td><div class="rel"><span class="b"><i style="width:88%"></i></span><small>±.13</small></div></td>
-          <td class="r mono" style="color:var(--ink-2)">97</td><td class="r mono" style="color:var(--ink-2)">70–27</td><td class="r"><span class="mv d">▼ .05</span></td><td class="r"><span class="pt">4.76</span></td></tr>
-
-        <tr class="cl" onclick="vdv('khoa')"><td class="rk" style="padding-left:16px">5</td>
-          <td><div class="pl"><div class="av">ĐK</div><div><div class="pn">Vũ Đăng Khoa</div><div class="pc">Đà Nẵng Rally · Đà Nẵng</div></div></div></td>
-          <td><div class="rel"><span class="b"><i class="low" style="width:46%"></i></span><small>±.34</small></div></td>
-          <td class="r mono" style="color:var(--ink-2)">23</td><td class="r mono" style="color:var(--ink-2)">17–6</td><td class="r"><span class="mv u">▲ .21</span></td><td class="r"><span class="pt">4.49</span></td></tr>
-
-        <tr class="cl" onclick="vdv('bao')"><td class="rk" style="padding-left:16px">6</td>
-          <td><div class="pl"><div class="av">TB</div><div><div class="pn">Trần Lê Bảo</div><div class="pc">Saigon Smash · TP.HCM</div></div></div></td>
-          <td><div class="rel"><span class="b"><i style="width:91%"></i></span><small>±.12</small></div></td>
-          <td class="r mono" style="color:var(--ink-2)">110</td><td class="r mono" style="color:var(--ink-2)">76–34</td><td class="r"><span class="mv u">▲ .03</span></td><td class="r"><span class="pt">4.41</span></td></tr>
-
-        <tr><td colspan="7" style="text-align:center;color:var(--ink-4);font-size:12.5px;padding:9px;background:var(--bg)">· · · hạng 7 – 213 · · ·</td></tr>
-
-        <tr class="cl me" onclick="vdv('toi')"><td class="rk" style="color:var(--brand);padding-left:16px">214</td>
-          <td><div class="pl"><div class="av" style="background:var(--brand);color:#fff">TH</div><div><div class="pn">Trần Minh Hoàng <span class="tag lvl" style="margin-left:3px">BẠN</span></div><div class="pc">Saigon Smash · TP.HCM</div></div></div></td>
-          <td><div class="rel"><span class="b"><i class="mid" style="width:68%"></i></span><small>±.25</small></div></td>
-          <td class="r mono" style="color:var(--ink-2)">18</td><td class="r mono" style="color:var(--ink-2)">11–7</td><td class="r"><span class="mv u">▲ .08</span></td><td class="r"><span class="pt" style="color:var(--brand)">3.42</span></td></tr>
-      </tbody>
+      <tbody id="rankBody"></tbody>
     </table>
   </div>
-
-  <div class="note">Cột <b>Độ tin cậy</b>: Vũ Đăng Khoa (4.49 · 23 trận · ±.34) và Trần Lê Bảo (4.41 · 110 trận · ±.12) — con số gần nhau nhưng <b>độ chắc chắn hoàn toàn khác</b>. BTC dùng cột này để xếp hạt giống chuẩn hơn.</div>
+  <div class="note">Cột <b>Độ tin cậy</b>: hai người điểm gần nhau nhưng số trận khác nhau thì độ chắc chắn khác nhau. Lọc theo nội dung và khu vực đều hoạt động.</div>
 </div>
+
 
 <!-- ========== HỒ SƠ VĐV ========== -->
 <div class="page" id="profile">
@@ -1201,6 +1028,27 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 
 </div>
 
+<!-- ===== MODAL ĐĂNG KÝ ===== -->
+<div class="modal-ov" id="regModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-h"><div><div class="modal-t" id="regTitle">Đăng ký giải</div><div class="modal-s" id="regSub">—</div></div>
+      <button class="modal-x" onclick="closeModal()">✕</button></div>
+    <div class="modal-b" id="regForm">
+      <div class="ff"><label>Nội dung thi đấu</label><select class="sel" id="regEvent" style="width:100%"></select></div>
+      <div class="ff"><label>Họ và tên <span class="req">*</span></label><input id="regName" class="inp" placeholder="Nguyễn Văn A"></div>
+      <div class="ff" id="regPartnerWrap"><label>Tên đồng đội <span class="req">*</span></label><input id="regPartner" class="inp" placeholder="Tên người đánh cặp"></div>
+      <div class="ff"><label>Số điện thoại <span class="req">*</span></label><input id="regPhone" class="inp" inputmode="numeric" placeholder="09xxxxxxxx"></div>
+      <div class="ferr" id="regErr"></div>
+      <div class="modal-foot"><button class="btn btn-o" onclick="closeModal()">Huỷ</button><button class="btn btn-p" onclick="submitReg()">Xác nhận đăng ký</button></div>
+    </div>
+    <div class="modal-b" id="regDone" style="display:none">
+      <div class="ok"><div class="ok-ic">✓</div><h3>Đăng ký thành công!</h3><div class="ok-msg" id="regDoneMsg"></div>
+        <div class="ok-note">Đây là bản demo — trong hệ thống thật bạn sẽ nhận SMS/Zalo xác nhận và link thanh toán lệ phí.</div>
+        <button class="btn btn-p" onclick="closeModal();goMine()">Xem ở "Giải của tôi" →</button></div>
+    </div>
+  </div>
+</div>
+
 <!-- ===== THANH ĐIỀU HƯỚNG DƯỚI — CHỈ MOBILE ===== -->
 <nav class="bnav"><div class="bnav-in">
   <a class="bn on" data-p="home">
@@ -1315,6 +1163,311 @@ Object.entries(EX).forEach(function(e,i){
        why:'Chênh <b>'+Math.abs(4.38-rv).toFixed(2)+'</b>. Thắng 2-0 → <span class="fx">+0.07</span>'}]};
 });
 
+
+/* ==================== DỮ LIỆU GIẢI ĐẤU ==================== */
+var TOURN=[
+ {id:'vn-open-2026',name:'Vietnam Pickleball Open 2026',bnr:'b1',pad:'🏓',mo:'Th7',dy:'18',yr:'2026',range:'18 – 21/07/2026',venue:'NTĐ Phú Thọ, Q.11, TP.HCM',prov:'TP. Hồ Chí Minh',org:'Liên đoàn Pickleball TP.HCM',level:'qg',status:'live',prize:500000000,liveM:3,vdv:512,band:'3.5+',
+   events:[{code:'dn',label:'Đôi nam · Open',band:'b40',fee:800000,cap:64,reg:64},{code:'dn',label:'Đôi nam · 3.5–4.0',band:'b3540',fee:700000,cap:96,reg:96},{code:'dnu',label:'Đôi nữ · Open',band:'b40',fee:700000,cap:32,reg:32},{code:'dnn',label:'Đôi nam nữ · 3.0–3.5',band:'b3035',fee:700000,cap:128,reg:128},{code:'don',label:'Đơn nam · Open',band:'b40',fee:500000,cap:48,reg:48}],
+   spon:['FACOLOS','JOOLA VN','SELKIRK','REVOLIN','PICKLE+'],champ:''},
+ {id:'hanoi-summer-2026',name:'Hanoi Summer Championship 2026',bnr:'b4',pad:'🏙️',mo:'Th7',dy:'12',yr:'2026',range:'12 – 13/07/2026',venue:'Cung TT Quần Ngựa, Ba Đình, Hà Nội',prov:'Hà Nội',org:'Hanoi Dinkers',level:'kv',status:'live',prize:80000000,liveM:2,vdv:224,band:'3.0+',
+   events:[{code:'dn',label:'Đôi nam · 3.5–4.0',band:'b3540',fee:500000,cap:64,reg:64},{code:'dnn',label:'Đôi nam nữ · 3.0–3.5',band:'b3035',fee:500000,cap:96,reg:96}],
+   spon:['KAIWIN','PREUS','JOOLA VN'],champ:''},
+ {id:'saigon-summer-slam',name:'Saigon Summer Slam 2026',bnr:'b2',pad:'☀️',mo:'Th7',dy:'25',yr:'2026',range:'25 – 27/07/2026',venue:'Pickle Center Thảo Điền, TP. Thủ Đức',prov:'TP. Hồ Chí Minh',org:'Saigon Smash',level:'kv',status:'open',prize:120000000,deadline:'22/07/2026',dl:22,
+   events:[{code:'dn',label:'Đôi nam · 3.5–4.0',band:'b3540',fee:600000,cap:96,reg:88},{code:'dnu',label:'Đôi nữ · 3.0–3.5',band:'b3035',fee:600000,cap:48,reg:40},{code:'dnn',label:'Đôi nam nữ · 3.0–3.5',band:'b3035',fee:600000,cap:48,reg:40}],
+   spon:['SELKIRK','FACOLOS'],champ:''},
+ {id:'danang-beach-cup',name:'Đà Nẵng Beach Pickleball Cup',bnr:'b3',pad:'🌊',mo:'Th8',dy:'02',yr:'2026',range:'02 – 03/08/2026',venue:'Bãi biển Mỹ Khê, Đà Nẵng',prov:'Đà Nẵng',org:'Đà Nẵng Rally',level:'kv',status:'open',prize:60000000,deadline:'28/07/2026',dl:28,
+   events:[{code:'dnn',label:'Đôi nam nữ · 3.0–3.5',band:'b3035',fee:450000,cap:64,reg:28},{code:'dnn',label:'Đôi nam nữ · 3.5–4.0',band:'b3540',fee:450000,cap:64,reg:26}],
+   spon:['REVOLIN','PICKLE+'],champ:''},
+ {id:'saigon-night-v12',name:'Saigon Night League — Vòng 12',bnr:'b4',pad:'🌙',mo:'Th7',dy:'16',yr:'2026',range:'Thứ 4 hằng tuần · 19:00–22:00',venue:'CLB Sài Gòn Smash, Q. Bình Thạnh',prov:'TP. Hồ Chí Minh',org:'Saigon Smash',level:'clb',status:'open',prize:0,deadline:'16/07/2026',dl:16,
+   events:[{code:'dn',label:'Đôi nam · Ladder',band:'b3035',fee:80000,cap:16,reg:16},{code:'dnn',label:'Đôi nam nữ · Ladder',band:'b3035',fee:80000,cap:16,reg:16}],
+   spon:['PICKLE+'],champ:''},
+ {id:'binhduong-open',name:'Bình Dương Open 2026',bnr:'b5',pad:'🔥',mo:'Th8',dy:'09',yr:'2026',range:'09 – 10/08/2026',venue:'NTĐ Bình Dương',prov:'Bình Dương',org:'Bình Dương PC',level:'kv',status:'open',prize:45000000,deadline:'04/08/2026',dl:4,
+   events:[{code:'dn',label:'Đôi nam · 3.0–3.5',band:'b3035',fee:400000,cap:64,reg:31},{code:'dn',label:'Đôi nam · 3.5–4.0',band:'b3540',fee:400000,cap:64,reg:22},{code:'don',label:'Đơn nam · Mở',band:'b40',fee:300000,cap:32,reg:12}],
+   spon:['KAIWIN'],champ:''},
+ {id:'cantho-riverside',name:'Cần Thơ Mekong Riverside Cup',bnr:'b3',pad:'🌾',mo:'Th8',dy:'16',yr:'2026',range:'16 – 17/08/2026',venue:'NTĐ Cần Thơ',prov:'Cần Thơ',org:'Mekong Pickleball',level:'clb',status:'open',prize:30000000,deadline:'12/08/2026',dl:12,
+   events:[{code:'dnn',label:'Đôi nam nữ · Dưới 3.0',band:'b30',fee:300000,cap:32,reg:12},{code:'dnn',label:'Đôi nam nữ · 3.0–3.5',band:'b3035',fee:300000,cap:32,reg:8}],
+   spon:['PICKLE+'],champ:''},
+ {id:'vpa-tour-finals',name:'VPA Tour Finals 2026',bnr:'b5',pad:'🏆',mo:'Th9',dy:'12',yr:'2026',range:'12 – 15/09/2026',venue:'Cung TT Quần Ngựa, Ba Đình, Hà Nội',prov:'Hà Nội',org:'VPA Tour',level:'qg',status:'soon',prize:1200000000,openDate:'01/08/2026',seats:'32 cặp',
+   events:[{code:'dn',label:'Đôi nam · Top 32',band:'b40',fee:0,cap:32,reg:0}],
+   spon:['FACOLOS','JOOLA VN','SELKIRK'],champ:''},
+ {id:'hcm-autumn-masters',name:'HCM Autumn Masters 2026',bnr:'b2',pad:'🍂',mo:'Th9',dy:'20',yr:'2026',range:'20 – 21/09/2026',venue:'NTĐ Phú Thọ, TP.HCM',prov:'TP. Hồ Chí Minh',org:'Liên đoàn Pickleball TP.HCM',level:'kv',status:'soon',prize:90000000,openDate:'15/08/2026',seats:'128 cặp',
+   events:[{code:'dn',label:'Đôi nam · 3.5–4.0',band:'b3540',fee:600000,cap:64,reg:0},{code:'dnu',label:'Đôi nữ · 3.0–3.5',band:'b3035',fee:600000,cap:32,reg:0}],
+   spon:['SELKIRK'],champ:''},
+ {id:'mekong-delta-open',name:'Mekong Delta Open 2026',bnr:'b6',pad:'🌾',mo:'Th6',dy:'28',yr:'2026',range:'28 – 29/06/2026',venue:'NTĐ Cần Thơ',prov:'Cần Thơ',org:'Mekong Pickleball',level:'kv',status:'done',prize:60000000,vdv:216,played:184,
+   events:[{code:'dn',label:'Đôi nam · Open',band:'b40',fee:500000,cap:64,reg:64}],
+   spon:['KAIWIN','PICKLE+'],champ:'Trương Vinh Hiển / Đỗ Minh Quân',champKeys:['hien','quan']},
+ {id:'hanoi-spring-cup',name:'Hanoi Spring Cup 2026',bnr:'b4',pad:'🌸',mo:'Th5',dy:'15',yr:'2026',range:'15 – 16/05/2026',venue:'Cung TT Quần Ngựa, Hà Nội',prov:'Hà Nội',org:'Hanoi Dinkers',level:'kv',status:'done',prize:50000000,vdv:180,played:152,
+   events:[{code:'dnn',label:'Đôi nam nữ · 3.5–4.0',band:'b3540',fee:450000,cap:64,reg:64}],
+   spon:['KAIWIN','PREUS'],champ:'Đỗ Minh Quân / Nguyễn Trung Phúc',champKeys:['quan','phuc']},
+ {id:'smash-ladder-v10',name:'Saigon Smash Ladder — Vòng 10',bnr:'b4',pad:'🌙',mo:'Th7',dy:'05',yr:'2026',range:'05/07/2026',venue:'CLB Sài Gòn Smash, Q. Bình Thạnh',prov:'TP. Hồ Chí Minh',org:'Saigon Smash',level:'clb',status:'done',prize:0,vdv:32,played:48,
+   events:[{code:'dn',label:'Đôi nam · Ladder',band:'b3035',fee:80000,cap:16,reg:16}],
+   spon:[],champ:'Trần Lê Bảo / Vũ Thành Trung',champKeys:['bao','trung']}
+];
+
+var MY_REGS=[];  // giải đã đăng ký trong phiên
+
+/* ==================== TIỆN ÍCH ==================== */
+function vnd(n){return n?n.toLocaleString('vi-VN')+'₫':'Miễn phí'}
+function discSet(t){var s={};t.events.forEach(function(e){s[e.code]=1});return Object.keys(s)}
+function bandSet(t){var s={};t.events.forEach(function(e){s[e.band]=1});return Object.keys(s)}
+function sumCap(t){return t.events.reduce(function(a,e){return a+e.cap},0)}
+function sumReg(t){return t.events.reduce(function(a,e){return a+e.reg},0)}
+function hasSlot(t){return t.status==='open'&&sumReg(t)<sumCap(t)}
+function isMine(t){return MY_REGS.some(function(r){return r.id===t.id})}
+
+/* ==================== TRẠNG THÁI LỌC ==================== */
+var UI={tab:'upcoming',q:''};
+function readFilters(){
+  var region=(document.getElementById('fRegion')||{}).value||'Toàn quốc';
+  var lv=[].map.call(document.querySelectorAll('.fLevel:checked'),function(x){return x.value});
+  var dc=[].map.call(document.querySelectorAll('.fDisc:checked'),function(x){return x.value});
+  var bd=[].map.call(document.querySelectorAll('.fBand:checked'),function(x){return x.value});
+  var slot=(document.getElementById('fSlot')||{}).checked;
+  return {region:region,lv:lv,dc:dc,bd:bd,slot:slot};
+}
+function passSidebar(t,f){
+  if(f.region!=='Toàn quốc'&&t.prov!==f.region)return false;
+  if(f.lv.indexOf(t.level)<0)return false;
+  if(!discSet(t).some(function(d){return f.dc.indexOf(d)>=0}))return false;
+  if(!bandSet(t).some(function(b){return f.bd.indexOf(b)>=0}))return false;
+  if(f.slot&&!hasSlot(t))return false;
+  if(UI.q){var q=UI.q.toLowerCase();if((t.name+' '+t.venue+' '+t.prov).toLowerCase().indexOf(q)<0)return false;}
+  return true;
+}
+function inTab(t,tab){
+  if(tab==='mine')return isMine(t);
+  if(tab==='upcoming')return t.status==='open'||t.status==='soon';
+  if(tab==='live')return t.status==='live';
+  if(tab==='done')return t.status==='done';
+  return true;
+}
+
+/* ==================== RENDER THẺ GIẢI ==================== */
+function cardHTML(t){
+  var lvTag=t.level==='qg'?'<span class="tag lvl">QUỐC GIA</span>':t.level==='kv'?'<span class="tag gray">KHU VỰC</span>':'<span class="tag gray">CLB · PHONG TRÀO</span>';
+  var content=discSet(t).map(function(d){return {dn:'Đôi nam',dnu:'Đôi nữ',dnn:'Đôi nam nữ',don:'Đơn'}[d]}).join(' · ');
+  var head,foot,dateCls='',statusTag='';
+  if(t.status==='live'){dateCls=' live';statusTag='<span class="tag live"><span class="dot"></span>ĐANG DIỄN RA</span>';}
+  else if(t.status==='open')statusTag='<span class="tag open">MỞ ĐĂNG KÝ</span>';
+  else if(t.status==='soon')statusTag='<span class="tag soon">SẮP MỞ ĐK</span>';
+  else statusTag='<span class="tag done">ĐÃ KẾT THÚC</span>';
+
+  if(t.status==='live'){
+    foot='<div class="stat"><span class="k">Giải thưởng</span><span class="v">'+(t.prize?vnd(t.prize):'—')+'</span></div>'
+      +'<div class="stat"><span class="k">VĐV</span><span class="v">'+t.vdv+'</span></div>'
+      +'<div class="stat"><span class="k">Đang đánh</span><span class="v" style="color:var(--red)">'+t.liveM+' trận</span></div>'
+      +'<div class="tc-act"><button class="btn btn-o btn-sm" onclick="event.stopPropagation();go(\'live\')">Xem sơ đồ</button>'
+      +'<button class="btn btn-p btn-sm" onclick="event.stopPropagation();go(\'live\')">▶ Trực tiếp</button></div>';
+  } else if(t.status==='open'){
+    var r=sumReg(t),c=sumCap(t),pct=Math.round(r/c*100),full=r>=c;
+    var bar=full?'full':pct>=85?'warn':'';
+    var slotHTML='<div class="slot"><div style="display:flex;justify-content:space-between;font-size:11px"><span style="color:var(--ink-3);font-weight:700;letter-spacing:.04em">ĐÃ ĐĂNG KÝ</span><span class="mono" style="font-weight:700'+(full?';color:var(--red)':pct>=85?';color:var(--amber)':'')+'">'+r+' / '+c+'</span></div><div class="bar"><i class="'+bar+'" style="width:'+pct+'%"></i></div></div>';
+    var act=full?'<button class="btn btn-o btn-sm" onclick="event.stopPropagation()">+ Danh sách chờ</button>'
+      :'<button class="btn btn-p btn-sm" onclick="event.stopPropagation();openReg(\''+t.id+'\')">Đăng ký</button>';
+    var mineB=isMine(t)?'<span class="reg-badge">✓ Đã đăng ký</span>':'<span style="font-size:12px;color:'+(t.dl<=4?'var(--amber)':'var(--ink-3)')+';font-weight:600">Hạn '+t.deadline+'</span>';
+    foot='<div class="stat"><span class="k">Giải thưởng</span><span class="v">'+(t.prize?vnd(t.prize):'—')+'</span></div>'+slotHTML+'<div class="tc-act">'+mineB+act+'</div>';
+  } else if(t.status==='soon'){
+    foot='<div class="stat"><span class="k">Giải thưởng</span><span class="v" style="color:var(--brand)">'+vnd(t.prize)+'</span></div>'
+      +'<div class="stat"><span class="k">Suất</span><span class="v">'+t.seats+'</span></div>'
+      +'<div class="stat"><span class="k">Mở ĐK</span><span class="v">'+t.openDate+'</span></div>'
+      +'<div class="tc-act"><button class="btn btn-o btn-sm" onclick="event.stopPropagation();alert(\'Đã bật nhắc — bản thật sẽ gửi thông báo khi mở đăng ký.\')">🔔 Nhắc tôi</button></div>';
+  } else {
+    var champHTML=t.champKeys?t.champ.split(' / ').map(function(nm,i){return '<a class="p" onclick="event.stopPropagation();vdv(\''+t.champKeys[i]+'\')">'+nm+'</a>'}).join(' / '):t.champ;
+    foot='<div class="stat"><span class="k">VĐV</span><span class="v">'+t.vdv+'</span></div>'
+      +'<div class="stat"><span class="k">Trận đã đấu</span><span class="v">'+t.played+'</span></div>'
+      +'<div class="tc-act"><button class="btn btn-o btn-sm" onclick="event.stopPropagation();go(\'live\')">Xem kết quả</button></div>';
+    var champLine=t.champ?'<span><i>🏆</i>VĐ: '+champHTML+'</span>':'';
+  }
+
+  var metaExtra=t.status==='done'&&t.champ?'<span><i>🏆</i>VĐ: '+(t.champKeys?t.champ.split(' / ').map(function(nm,i){return '<a class="p" onclick="event.stopPropagation();vdv(\''+t.champKeys[i]+'\')">'+nm+'</a>'}).join(' / '):t.champ)+'</span>':'<span><i>🏓</i>'+content+'</span>';
+
+  return '<div class="tc'+(t.status==='done'?'" style="opacity:.9':'')+'" onclick="openDetail(\''+t.id+'\')">'
+    +'<div class="tc-date'+dateCls+(t.status==='done'?'" style="background:var(--bg-2)':'')+'"><div class="mo">'+t.mo+'</div><div class="dy">'+t.dy+'</div><div class="yr">'+t.yr+'</div></div>'
+    +'<div class="tc-img"><div class="bnr '+t.bnr+'"'+(t.status==='done'?' style="filter:grayscale(.5)"':'')+'><span class="paddle">'+t.pad+'</span>'+(t.status==='live'?'<span class="ovl tag live"><span class="dot"></span>LIVE</span>':'')+'<div class="bt2">'+t.name.toUpperCase().slice(0,22)+'</div><div class="bs2">'+t.prov+'</div></div></div>'
+    +'<div class="tc-body"><div class="tc-top"><div class="tc-name">'+t.name+'</div><div class="tags">'+statusTag+lvTag+'</div></div>'
+    +'<div class="tc-meta"><span><i>📍</i>'+t.venue+'</span><span><i>📅</i>'+t.range+'</span>'+metaExtra+'</div>'
+    +'<div class="tc-foot">'+foot+'</div></div></div>';
+}
+
+/* ==================== RENDER DANH SÁCH ==================== */
+function renderTournaments(){
+  var f=readFilters();
+  var list=TOURN.filter(function(t){return inTab(t,UI.tab)&&passSidebar(t,f)});
+  var sort=(document.getElementById('sortSel')||{}).value||'date';
+  var mo={'Th5':5,'Th6':6,'Th7':7,'Th8':8,'Th9':9};
+  list.sort(function(a,b){
+    if(sort==='prize')return b.prize-a.prize;
+    if(sort==='deadline')return (a.dl||99)-(b.dl||99);
+    return (mo[a.mo]*100+ +a.dy)-(mo[b.mo]*100+ +b.dy);
+  });
+  var el=document.getElementById('tlist');
+  if(!list.length){
+    el.innerHTML='<div class="empty"><div class="ei">🔍</div><h3>Không có giải nào khớp bộ lọc</h3><p>Thử bỏ bớt bộ lọc hoặc đổi khu vực/tab.</p></div>';
+  } else el.innerHTML=list.map(cardHTML).join('');
+  // sub text
+  var sub=document.getElementById('homeSub');
+  var tabName={upcoming:'sắp diễn ra',live:'đang diễn ra',done:'đã kết thúc',mine:'bạn đã đăng ký'}[UI.tab];
+  sub.textContent=list.length+' giải '+tabName+(f.region!=='Toàn quốc'?' tại '+f.region:' trên toàn quốc')+' · cập nhật 13/07/2026';
+  updateBadges();
+}
+function updateBadges(){
+  var f=readFilters();
+  function cnt(tab){return TOURN.filter(function(t){return inTab(t,tab)&&passSidebar(t,f)}).length}
+  document.getElementById('bUp').textContent=cnt('upcoming');
+  document.getElementById('bLive').textContent=cnt('live');
+  document.getElementById('bDone').textContent=cnt('done');
+  document.getElementById('bMine').textContent=MY_REGS.length;
+  // đếm theo cấp độ (bỏ qua filter cấp độ)
+  function lvCnt(lv){return TOURN.filter(function(t){return t.level===lv}).length}
+  document.getElementById('cLqg').textContent=lvCnt('qg');
+  document.getElementById('cLkv').textContent=lvCnt('kv');
+  document.getElementById('cLclb').textContent=lvCnt('clb');
+}
+
+/* ==================== CHI TIẾT GIẢI ==================== */
+function openDetail(id){
+  var t=TOURN.find(function(x){return x.id===id}); if(!t)return;
+  var $=function(i){return document.getElementById(i)};
+  $('dCrumb').textContent=t.name; $('dUrl').textContent='/giai-dau/'+t.id;
+  $('dBand').textContent=t.name+' · '+t.yr;
+  $('dName').textContent=t.name;
+  var lvTag=t.level==='qg'?'CẤP QUỐC GIA':t.level==='kv'?'CẤP KHU VỰC':'GIẢI CLB';
+  var stTag=t.status==='live'?'<span class="tag live"><span class="dot"></span>ĐANG DIỄN RA</span>':t.status==='open'?'<span class="tag open">MỞ ĐĂNG KÝ</span>':t.status==='soon'?'<span class="tag soon">SẮP MỞ ĐK</span>':'<span class="tag done">ĐÃ KẾT THÚC</span>';
+  $('dTags').innerHTML=stTag+'<span class="tag lvl">'+lvTag+'</span><span class="tag gray">HỆ SỐ ĐIỂM '+(t.level==='clb'?'×0.7':'×1.0')+'</span>';
+  $('dMeta').innerHTML='<span>📍 '+t.venue+'</span><span>📅 '+t.range+'</span><span>🏢 '+t.org+'</span>';
+  var stats='';
+  if(t.prize)stats+='<div class="hs"><div class="k">Giải thưởng</div><div class="v g">'+(t.prize>=1e9?(t.prize/1e9)+' tỷ':(t.prize/1e6)+' triệu')+'</div></div>';
+  if(t.status==='done'){stats+='<div class="hs"><div class="k">Vận động viên</div><div class="v">'+t.vdv+'</div></div><div class="hs"><div class="k">Trận đã đấu</div><div class="v">'+t.played+'</div></div>';}
+  else if(t.status==='live'){stats+='<div class="hs"><div class="k">Vận động viên</div><div class="v">'+t.vdv+'</div></div><div class="hs"><div class="k">Đang đánh</div><div class="v r">'+t.liveM+'</div></div>';}
+  else{stats+='<div class="hs"><div class="k">Nội dung</div><div class="v">'+t.events.length+'</div></div><div class="hs"><div class="k">Đã đăng ký</div><div class="v">'+sumReg(t)+'/'+sumCap(t)+'</div></div>';}
+  $('dStats').innerHTML=stats;
+  var cta=$('dCta');
+  if(t.status==='live'||t.status==='done'){cta.style.display='';cta.textContent=t.status==='live'?'▶ Xem trực tiếp':'Xem kết quả';cta.onclick=function(){go('live')};}
+  else if(t.status==='open'){cta.style.display='';cta.textContent='Đăng ký ngay';cta.onclick=function(){openReg(t.id)};}
+  else{cta.style.display='';cta.textContent='🔔 Nhắc tôi khi mở ĐK';cta.onclick=function(){alert('Đã bật nhắc.')};}
+  $('dEvCount').textContent=t.events.length+' nội dung';
+  $('dEvents').innerHTML=t.events.map(function(e){
+    var right;
+    if(t.status==='open'){var pct=Math.round(e.reg/e.cap*100);right='<div class="ev-fee">'+vnd(e.fee)+'</div><div class="ev-cnt">'+e.reg+'/'+e.cap+' · '+pct+'%</div>';}
+    else if(t.status==='live')right='<div class="ev-fee" style="color:var(--red)">● LIVE</div><div class="ev-cnt">'+e.cap+' cặp</div>';
+    else if(t.status==='done')right='<div class="ev-fee" style="color:var(--green)">🏆 Xong</div>';
+    else right='<div class="ev-fee">'+vnd(e.fee)+'</div><div class="ev-cnt">'+e.cap+' suất</div>';
+    var click=t.status==='open'?' onclick="openReg(\''+t.id+'\')"':t.status==='live'?' onclick="go(\'live\')"':'';
+    return '<div class="ev"'+click+'><div><div class="ev-n">'+e.label+'</div><div class="ev-s">'+{dn:'Đôi nam',dnu:'Đôi nữ',dnn:'Đôi nam nữ',don:'Đơn'}[e.code]+' · Loại trực tiếp</div></div><div class="ev-r">'+right+'</div></div>';
+  }).join('');
+  var info='<dt>Cấp độ</dt><dd>'+lvTag+'</dd><dt>Đơn vị</dt><dd>'+t.org+'</dd><dt>Thời gian</dt><dd>'+t.range+'</dd>';
+  if(t.status==='open')info+='<dt>Hạn đăng ký</dt><dd>'+t.deadline+'</dd>';
+  info+='<dt>Luật</dt><dd>Thắng 2/3 ván 11đ</dd><dt>Hệ số điểm trình</dt><dd style="color:var(--brand)">'+(t.level==='clb'?'×0.7':'×1.0')+'</dd>';
+  $('dInfo').innerHTML=info;
+  $('dSpon').innerHTML=t.spon.length?t.spon.map(function(s){return '<div>'+s+'</div>'}).join(''):'<div style="color:var(--ink-4)">Chưa có nhà tài trợ</div>';
+  go('detail');
+}
+
+/* ==================== ĐĂNG KÝ GIẢI ==================== */
+var regTid=null;
+function openReg(id){
+  var t=TOURN.find(function(x){return x.id===id}); if(!t)return;
+  regTid=id;
+  document.getElementById('regTitle').textContent='Đăng ký · '+t.name;
+  document.getElementById('regSub').textContent=t.venue+' · '+t.range;
+  var sel=document.getElementById('regEvent');
+  sel.innerHTML=t.events.map(function(e,i){var full=e.reg>=e.cap;return '<option value="'+i+'"'+(full?' disabled':'')+'>'+e.label+' — '+vnd(e.fee)+(full?' (Hết chỗ)':' ('+(e.cap-e.reg)+' chỗ)')+'</option>'}).join('');
+  document.getElementById('regName').value='';
+  document.getElementById('regPartner').value='';
+  document.getElementById('regPhone').value='';
+  document.getElementById('regErr').textContent='';
+  ['regName','regPartner','regPhone'].forEach(function(i){document.getElementById(i).classList.remove('bad')});
+  togglePartner();
+  sel.onchange=togglePartner;
+  document.getElementById('regForm').style.display='';
+  document.getElementById('regDone').style.display='none';
+  document.getElementById('regModal').classList.add('on');
+}
+function togglePartner(){
+  var t=TOURN.find(function(x){return x.id===regTid}); if(!t)return;
+  var e=t.events[+document.getElementById('regEvent').value||0];
+  var isDouble=e&&e.code!=='don';
+  document.getElementById('regPartnerWrap').style.display=isDouble?'':'none';
+}
+function submitReg(){
+  var t=TOURN.find(function(x){return x.id===regTid}); if(!t)return;
+  var ei=+document.getElementById('regEvent').value||0, e=t.events[ei];
+  var name=document.getElementById('regName').value.trim();
+  var partner=document.getElementById('regPartner').value.trim();
+  var phone=document.getElementById('regPhone').value.trim();
+  var isDouble=e.code!=='don';
+  var err='', badId=null;
+  ['regName','regPartner','regPhone'].forEach(function(i){document.getElementById(i).classList.remove('bad')});
+  if(name.length<2){err='Vui lòng nhập họ tên hợp lệ.';badId='regName';}
+  else if(isDouble&&partner.length<2){err='Vui lòng nhập tên đồng đội.';badId='regPartner';}
+  else if(!/^0\d{9}$/.test(phone)){err='Số điện thoại phải gồm 10 số, bắt đầu bằng 0.';badId='regPhone';}
+  if(err){document.getElementById('regErr').textContent='⚠ '+err;if(badId)document.getElementById(badId).classList.add('bad');return;}
+  e.reg=Math.min(e.cap,e.reg+1);
+  MY_REGS.push({id:t.id,name:t.name,ev:e.label,player:name,partner:isDouble?partner:'',phone:phone});
+  document.getElementById('regDoneMsg').innerHTML='Bạn đã đăng ký <b>'+e.label+'</b> tại <b>'+t.name+'</b>.<br>Lệ phí: <b>'+vnd(e.fee)+'</b>'+(isDouble?'<br>Cặp: <b>'+name+' / '+partner+'</b>':'<br>VĐV: <b>'+name+'</b>')+'<br>SĐT: <b>'+phone+'</b>';
+  document.getElementById('regForm').style.display='none';
+  document.getElementById('regDone').style.display='';
+  updateBadges();
+}
+function closeModal(){document.getElementById('regModal').classList.remove('on');}
+function goMine(){UI.tab='mine';document.querySelectorAll('#homeTabs .tb').forEach(function(b){b.classList.toggle('on',b.dataset.tab==='mine')});renderTournaments();go('home');}
+
+/* ==================== BẢNG XẾP HẠNG ==================== */
+var RANK=[
+ {key:'hien',name:'Trương Vinh Hiển',club:'Hanoi Dinkers',prov:'Hà Nội',rel:96,relTxt:'±.09',relCls:'',m:142,wl:'118–24',mv:'▲ .12',mvc:'u',r:5.31,r2:5.04},
+ {key:'quan',name:'Đỗ Minh Quân',club:'Hanoi Dinkers',prov:'Hà Nội',rel:93,relTxt:'±.11',relCls:'',m:128,wl:'103–25',mv:'▲ .07',mvc:'u',r:5.18,r2:4.88},
+ {key:'nam',name:'Lý Hoàng Nam',club:'Bình Dương PC',prov:'Bình Dương',rel:74,relTxt:'±.19',relCls:'mid',m:61,wl:'48–13',mv:'— .00',mvc:'f',r:5.02,r2:5.24},
+ {key:'phuc',name:'Nguyễn Trung Phúc',club:'Saigon Smash',prov:'TP. Hồ Chí Minh',rel:88,relTxt:'±.13',relCls:'',m:97,wl:'70–27',mv:'▼ .05',mvc:'d',r:4.76,r2:4.40},
+ {key:'khoa',name:'Vũ Đăng Khoa',club:'Đà Nẵng Rally',prov:'Đà Nẵng',rel:46,relTxt:'±.34',relCls:'low',m:23,wl:'17–6',mv:'▲ .21',mvc:'u',r:4.49,r2:4.20},
+ {key:'bao',name:'Trần Lê Bảo',club:'Saigon Smash',prov:'TP. Hồ Chí Minh',rel:91,relTxt:'±.12',relCls:'',m:110,wl:'76–34',mv:'▲ .03',mvc:'u',r:4.41,r2:4.15},
+ {key:'toi',name:'Trần Minh Hoàng',club:'Saigon Smash',prov:'TP. Hồ Chí Minh',rel:68,relTxt:'±.25',relCls:'mid',m:18,wl:'11–7',mv:'▲ .08',mvc:'u',r:3.42,r2:3.16,me:true}
+];
+function renderRank(){
+  var disc=(document.getElementById('rDisc')||{}).value||'dn';
+  var prov=(document.getElementById('rProv')||{}).value||'all';
+  var min10=(document.getElementById('rMin10')||{}).checked;
+  var list=RANK.filter(function(p){return (prov==='all'||p.prov===prov)&&(!min10||p.m>=10)});
+  list.sort(function(a,b){return (disc==='dn'?b.r:b.r2)-(disc==='dn'?a.r:a.r2)});
+  var body=document.getElementById('rankBody');
+  body.innerHTML=list.map(function(p,i){
+    var rk=i+1;
+    var rkCell=rk<=3?'<td><span class="medal m'+rk+'">'+rk+'</span></td>':'<td class="rk" style="padding-left:16px">'+rk+'</td>';
+    var rt=(disc==='dn'?p.r:p.r2).toFixed(2);
+    var av='<div class="av"'+(p.me?' style="background:var(--brand);color:#fff"':'')+'>'+p.name.split(' ').slice(-2).map(function(x){return x[0]}).join('').toUpperCase()+'</div>';
+    return '<tr class="cl'+(p.me?' me':'')+'" onclick="vdv(\''+p.key+'\')">'+rkCell
+      +'<td><div class="pl">'+av+'<div><div class="pn">'+p.name+(p.me?' <span class="tag lvl" style="margin-left:3px">BẠN</span>':'')+'</div><div class="pc">'+p.club+' · '+p.prov+'</div></div></div></td>'
+      +'<td><div class="rel"><span class="b"><i class="'+p.relCls+'" style="width:'+p.rel+'%"></i></span><small>'+p.relTxt+'</small></div></td>'
+      +'<td class="r mono" style="color:var(--ink-2)">'+p.m+'</td><td class="r mono" style="color:var(--ink-2)">'+p.wl+'</td>'
+      +'<td class="r"><span class="mv '+p.mvc+'">'+p.mv+'</span></td><td class="r"><span class="pt"'+(p.me?' style="color:var(--brand)"':(rk===1?' style="color:var(--brand)"':''))+'>'+rt+'</span></td></tr>';
+  }).join('');
+  var sub=document.getElementById('rankSub');
+  if(sub)sub.textContent=list.length+' VĐV · '+({dn:'Đôi nam',don:'Đơn nam'}[disc])+(prov==='all'?' · toàn quốc':' · '+prov)+' · cập nhật sau mỗi trận';
+}
+
+/* ==================== KHỞI TẠO ==================== */
+function initApp(){
+  // tab
+  document.querySelectorAll('#homeTabs .tb').forEach(function(b){b.addEventListener('click',function(){
+    document.querySelectorAll('#homeTabs .tb').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+    UI.tab=b.dataset.tab;renderTournaments();
+  })});
+  // bộ lọc
+  ['fRegion','fSlot','sortSel'].forEach(function(i){var e=document.getElementById(i);if(e)e.addEventListener('change',renderTournaments)});
+  document.querySelectorAll('.fLevel,.fDisc,.fBand').forEach(function(x){x.addEventListener('change',renderTournaments)});
+  var cf=document.getElementById('clearFilters');
+  if(cf)cf.addEventListener('click',function(){
+    document.getElementById('fRegion').value='Toàn quốc';
+    document.querySelectorAll('.fLevel,.fDisc,.fBand').forEach(function(x){x.checked=true});
+    document.getElementById('fSlot').checked=false;renderTournaments();
+  });
+  // tìm kiếm
+  var gs=document.getElementById('globalSearch');
+  if(gs)gs.addEventListener('input',function(){UI.q=this.value;if(this.value)go('home');renderTournaments()});
+  // rank
+  ['rDisc','rProv','rMin10'].forEach(function(i){var e=document.getElementById(i);if(e)e.addEventListener('change',renderRank)});
+  renderTournaments();renderRank();
+}
+
 function go(p){
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('on')});
   document.getElementById(p).classList.add('on');
@@ -1393,6 +1546,7 @@ setInterval(function(){sec++;var c=document.getElementById('clk');
   if(c)c.textContent='18:'+String(42+Math.floor(sec/60)%18).padStart(2,'0')},1000);
 
 sync();
+initApp();
 </script>
 </body>
 </html>
