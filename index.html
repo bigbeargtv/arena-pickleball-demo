@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ARENA — Hệ thống giải đấu Pickleball Việt Nam</title>
+<title>RALLY — Hệ thống giải đấu Pickleball Việt Nam</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
 :root{
   --ink:#0F1620; --ink-2:#48566A; --ink-3:#7A879A; --ink-4:#A6B1C0; --ink-5:#C9D1DB;
   --bg:#F5F7F9; --bg-2:#EDF1F5; --card:#FFFFFF; --line:#E3E8EE; --line-2:#EFF2F6;
-  --brand:#0B5FD9; --brand-d:#084BAD; --brand-l:#EAF2FE; --brand-ll:#F5F9FF;
+  --brand:#1C7C8C; --brand-d:#14606D; --brand-l:#E4F3F5; --brand-ll:#F2FAFB;
   --green:#0E7C45; --green-l:#E6F6EC;
   --red:#D5262C; --red-l:#FDECEC;
   --amber:#A66A02; --amber-l:#FEF4E2;
@@ -40,7 +40,7 @@ a{color:inherit;text-decoration:none}
 header{background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:60}
 .hd{display:flex;align-items:center;height:64px;gap:26px}
 .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:20px;letter-spacing:-.025em;flex-shrink:0;cursor:pointer}
-.logo .ic{width:31px;height:31px;border-radius:9px;background:linear-gradient(145deg,#1470F0,#0B5FD9 60%,#084BAD);display:grid;place-items:center;color:#fff;font-size:15px;box-shadow:0 2px 6px rgba(11,95,217,.28),inset 0 1px 0 rgba(255,255,255,.25)}
+.logo .ic{width:31px;height:31px;border-radius:9px;background:linear-gradient(145deg,#2AA6B8,#1C7C8C 60%,#14606D);display:grid;place-items:center;color:#fff;font-size:15px;box-shadow:0 2px 6px rgba(28,124,140,.28),inset 0 1px 0 rgba(255,255,255,.25)}
 .logo small{font-size:9px;font-weight:700;color:var(--ink-3);letter-spacing:.13em;display:block;line-height:1;margin-top:2px}
 nav.main{display:flex;height:100%}
 nav.main a{display:flex;align-items:center;padding:0 14px;font-size:14.5px;font-weight:600;color:var(--ink-2);border-bottom:2.5px solid transparent;transition:color .16s var(--e),border-color .16s var(--e)}
@@ -51,8 +51,8 @@ nav.main a.on{color:var(--brand);border-bottom-color:var(--brand)}
 .srch:focus-within{border-color:var(--brand);background:#fff;box-shadow:0 0 0 3.5px var(--brand-l)}
 .srch input{border:0;background:0;outline:0;font-family:var(--f);font-size:13.5px;width:100%;color:var(--ink)}
 .btn{font-family:var(--f);font-weight:600;font-size:14px;border-radius:9px;padding:9px 16px;border:1px solid transparent;cursor:pointer;transition:.16s var(--e);white-space:nowrap;display:inline-flex;align-items:center;gap:7px;line-height:1.3}
-.btn-p{background:var(--brand);color:#fff;box-shadow:0 1px 2px rgba(11,95,217,.24),inset 0 1px 0 rgba(255,255,255,.16)}
-.btn-p:hover{background:var(--brand-d);box-shadow:0 3px 10px -2px rgba(11,95,217,.4)}
+.btn-p{background:var(--brand);color:#fff;box-shadow:0 1px 2px rgba(28,124,140,.24),inset 0 1px 0 rgba(255,255,255,.16)}
+.btn-p:hover{background:var(--brand-d);box-shadow:0 3px 10px -2px rgba(28,124,140,.4)}
 .btn-p:active{transform:translateY(.5px)}
 .btn-o{background:#fff;color:var(--ink);border-color:var(--line);box-shadow:var(--s1)}
 .btn-o:hover{border-color:var(--ink-5);background:#FCFDFE}
@@ -128,7 +128,7 @@ select.sel:focus{border-color:var(--brand);box-shadow:0 0 0 3.5px var(--brand-l)
 .bs2{position:relative;z-index:2;color:rgba(255,255,255,.75);font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
 .paddle{position:absolute;right:-9px;top:-7px;font-size:54px;opacity:.15;z-index:1;transform:rotate(-12deg)}
 .ovl{position:absolute;top:7px;left:7px;z-index:3}
-.b1{background:linear-gradient(135deg,#0A1E3D,#0B5FD9 55%,#2E8FEA)}
+.b1{background:linear-gradient(135deg,#0A1E3D,#1C7C8C 55%,#3FB0C2)}
 .b2{background:linear-gradient(135deg,#6E2A0C,#E0620D 60%,#F7A31B)}
 .b3{background:linear-gradient(135deg,#04463A,#0D9488 55%,#2CCFB0)}
 .b4{background:linear-gradient(135deg,#2A2870,#5B21B6 60%,#9068F0)}
@@ -144,7 +144,7 @@ select.sel:focus{border-color:var(--brand);box-shadow:0 0 0 3.5px var(--brand-l)
 .tag.open{background:var(--green-l);color:var(--green);box-shadow:inset 0 0 0 1px rgba(14,124,69,.14)}
 .tag.soon{background:var(--amber-l);color:var(--amber);box-shadow:inset 0 0 0 1px rgba(166,106,2,.14)}
 .tag.done{background:var(--bg-2);color:var(--ink-3)}
-.tag.lvl{background:var(--brand-l);color:var(--brand);box-shadow:inset 0 0 0 1px rgba(11,95,217,.14)}
+.tag.lvl{background:var(--brand-l);color:var(--brand);box-shadow:inset 0 0 0 1px rgba(28,124,140,.14)}
 .tag.gray{background:var(--bg-2);color:var(--ink-2)}
 .tc-meta{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;color:var(--ink-2);margin-bottom:11px}
 .tc-meta i{font-style:normal;color:var(--ink-4);margin-right:5px}
@@ -153,13 +153,13 @@ select.sel:focus{border-color:var(--brand);box-shadow:0 0 0 3.5px var(--brand-l)
 .stat .v{font-size:13.5px;font-weight:700;font-variant-numeric:tabular-nums}
 .slot{flex:1;min-width:132px;max-width:206px}
 .bar{height:5px;background:var(--bg-2);border-radius:3px;overflow:hidden;margin-top:5px}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),#3B8AF0);border-radius:3px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),#3FB0C2);border-radius:3px}
 .bar i.warn{background:linear-gradient(90deg,var(--amber),#E09A24)}
 .bar i.full{background:linear-gradient(90deg,var(--red),#EE5A5A)}
 .tc-act{margin-left:auto;display:flex;gap:8px;align-items:center}
 
 .hero{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--s2);margin-bottom:20px}
-.hero-band{height:116px;background:linear-gradient(105deg,#08234A,#0B5FD9 50%,#0E7C45);position:relative;display:flex;align-items:center;padding:0 24px}
+.hero-band{height:116px;background:linear-gradient(105deg,#0C4A54,#1C7C8C 50%,#0E7C45);position:relative;display:flex;align-items:center;padding:0 24px}
 .hero-band .bandtxt{color:#fff;font-weight:800;font-size:13px;letter-spacing:.24em;opacity:.5;text-transform:uppercase;position:relative;z-index:2}
 .hero-band::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,transparent 0 24px,rgba(255,255,255,.05) 24px 48px)}
 .hero-b{padding:20px 24px;display:flex;gap:26px;align-items:flex-end;flex-wrap:wrap}
@@ -239,14 +239,14 @@ tbody tr:last-child td{border-bottom:0}
 tbody tr.cl{cursor:pointer;transition:background .14s}
 tbody tr.cl:hover{background:var(--brand-ll)}
 tbody tr.me{background:var(--brand-l)}
-tbody tr.me:hover{background:#DEEAFD}
+tbody tr.me:hover{background:#D3ECEF}
 .rk{font-family:var(--m);font-weight:700;color:var(--ink-3);width:36px;font-variant-numeric:tabular-nums}
 .medal{display:inline-grid;place-items:center;width:23px;height:23px;border-radius:7px;font-size:11px;font-weight:800;color:#fff}
 .m1{background:linear-gradient(145deg,#E8B923,#B7891B)}
 .m2{background:linear-gradient(145deg,#C3CCD6,#93A0AD)}
 .m3{background:linear-gradient(145deg,#C98A55,#A06636)}
 .pl{display:flex;align-items:center;gap:10px}
-.av{width:33px;height:33px;border-radius:50%;background:var(--brand-l);color:var(--brand);display:grid;place-items:center;font-size:11.5px;font-weight:800;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(11,95,217,.12)}
+.av{width:33px;height:33px;border-radius:50%;background:var(--brand-l);color:var(--brand);display:grid;place-items:center;font-size:11.5px;font-weight:800;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(28,124,140,.12)}
 .pn{font-weight:600;line-height:1.3}
 .pc{font-size:12px;color:var(--ink-3)}
 .pt{font-family:var(--m);font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
@@ -260,13 +260,13 @@ tbody tr.me:hover{background:#DEEAFD}
 .rel small{font-size:11px;color:var(--ink-4);font-family:var(--m)}
 
 .pf{display:flex;gap:20px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--s2);margin-bottom:18px;position:relative;overflow:hidden}
-.pf::before{content:"";position:absolute;inset:0;background:radial-gradient(650px 130px at 12% 0%,rgba(11,95,217,.06),transparent 70%)}
+.pf::before{content:"";position:absolute;inset:0;background:radial-gradient(650px 130px at 12% 0%,rgba(28,124,140,.06),transparent 70%)}
 .pf>*{position:relative;z-index:1}
-.pf-av{width:80px;height:80px;border-radius:50%;background:linear-gradient(145deg,#1470F0,#0B5FD9 60%,#084BAD);color:#fff;display:grid;place-items:center;font-size:27px;font-weight:800;flex-shrink:0;box-shadow:0 4px 14px -3px rgba(11,95,217,.42),inset 0 1px 0 rgba(255,255,255,.22)}
+.pf-av{width:80px;height:80px;border-radius:50%;background:linear-gradient(145deg,#2AA6B8,#1C7C8C 60%,#14606D);color:#fff;display:grid;place-items:center;font-size:27px;font-weight:800;flex-shrink:0;box-shadow:0 4px 14px -3px rgba(28,124,140,.42),inset 0 1px 0 rgba(255,255,255,.22)}
 .rcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(192px,1fr));gap:12px;margin-bottom:18px}
 .rc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--s1);transition:.18s var(--e)}
 .rc:hover{box-shadow:var(--s2);transform:translateY(-1px)}
-.rc.pri{border-color:#C4D8F8;background:linear-gradient(158deg,var(--brand-l),#fff 66%)}
+.rc.pri{border-color:#B6DBDF;background:linear-gradient(158deg,var(--brand-l),#fff 66%)}
 .rc .k{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)}
 .rc .v{font-family:var(--m);font-size:34px;font-weight:700;letter-spacing:-.025em;line-height:1.15;margin:6px 0 3px;font-variant-numeric:tabular-nums}
 .rc.pri .v{color:var(--brand);font-size:41px}
@@ -303,13 +303,13 @@ tbody tr.me:hover{background:#DEEAFD}
 .rf-sync{background:rgba(255,193,7,.16);color:#FFC94D;font-size:9.5px;font-weight:700;padding:4px 8px;border-radius:20px;display:flex;align-items:center;gap:4px;white-space:nowrap}
 .tmrow{display:flex;align-items:center;gap:12px;padding:20px 15px;cursor:pointer;transition:background .14s;position:relative}
 .tmrow:active{background:var(--bg-2)}
-.tmrow.srv{background:linear-gradient(90deg,rgba(11,95,217,.055),transparent)}
+.tmrow.srv{background:linear-gradient(90deg,rgba(28,124,140,.055),transparent)}
 .tmrow.srv::before{content:"";position:absolute;left:0;top:15px;bottom:15px;width:4px;background:var(--brand);border-radius:0 4px 4px 0}
 .tmn{flex:1;min-width:0}
 .tmn .nn{font-size:15.5px;font-weight:700;line-height:1.35}
 .tmn .sv{font-size:10.5px;color:var(--brand);font-weight:700;margin-top:3px}
 .tmsc{font-family:var(--m);font-size:52px;font-weight:700;line-height:1;letter-spacing:-.045em;font-variant-numeric:tabular-nums;min-width:64px;text-align:right;transition:transform .25s var(--e)}
-.tap{width:52px;height:52px;border-radius:15px;background:var(--brand);color:#fff;border:0;font-size:25px;font-weight:300;cursor:pointer;flex-shrink:0;box-shadow:0 3px 10px -2px rgba(11,95,217,.45);transition:.12s;font-family:var(--f)}
+.tap{width:52px;height:52px;border-radius:15px;background:var(--brand);color:#fff;border:0;font-size:25px;font-weight:300;cursor:pointer;flex-shrink:0;box-shadow:0 3px 10px -2px rgba(28,124,140,.45);transition:.12s;font-family:var(--f)}
 .tap:active{transform:scale(.92)}
 .tap.g{background:var(--green);box-shadow:0 3px 10px -2px rgba(14,124,69,.45)}
 .rf-div{height:1px;background:var(--line);margin:0 15px}
@@ -354,6 +354,67 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 .bnav a.on{color:var(--brand)}
 .bnav a.on svg{stroke-width:2.3}
 .bnav a:active{background:var(--bg-2)}
+
+
+/* ===================== LANDING ===================== */
+#intro{padding:0 0 64px}
+.lp-hero{position:relative;overflow:hidden;border-radius:0 0 26px 26px;margin:0 -20px;padding:60px 20px 68px;background:linear-gradient(158deg,#0C4A54 0%,#1C7C8C 54%,#0E7C45 130%);color:#fff}
+.lp-hero::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(118deg,transparent 0 26px,rgba(255,255,255,.045) 26px 52px);pointer-events:none}
+.lp-hero-in{max-width:1160px;margin:0 auto;position:relative;z-index:2}
+.lp-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);color:#fff;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:99px}
+.lp-h1{font-size:clamp(30px,5.2vw,54px);font-weight:800;letter-spacing:-.035em;line-height:1.08;margin:20px 0 0;max-width:16ch}
+.lp-h1 .hl{color:#CFF5A8}
+.lp-sub{font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);margin-top:20px;max-width:58ch;line-height:1.6}
+.lp-strip{margin-top:18px;font-size:13px;font-weight:600;letter-spacing:.02em;color:rgba(255,255,255,.78)}
+.lp-cta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.lp-btn{border:0;border-radius:11px;padding:14px 24px;font-family:var(--f);font-size:15.5px;font-weight:700;cursor:pointer;transition:.16s var(--e);display:inline-flex;align-items:center;gap:8px}
+.lp-btn.p{background:#fff;color:#0C4A54;box-shadow:0 6px 20px -6px rgba(0,0,0,.4)}
+.lp-btn.p:hover{transform:translateY(-2px);box-shadow:0 10px 26px -6px rgba(0,0,0,.5)}
+.lp-btn.g{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.3)}
+.lp-btn.g:hover{background:rgba(255,255,255,.18)}
+.lp-kpis{display:flex;gap:34px;margin-top:42px;flex-wrap:wrap}
+.lp-kpi .n{font-family:var(--m);font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.lp-kpi .l{font-size:12.5px;color:rgba(255,255,255,.72);margin-top:6px;max-width:20ch}
+.lp-sec{max-width:1160px;margin:0 auto;padding:56px 20px 0}
+.lp-tag{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--brand)}
+.lp-h2{font-size:clamp(23px,3.4vw,33px);font-weight:800;letter-spacing:-.03em;line-height:1.18;margin:10px 0 0;max-width:24ch}
+.lp-lead{font-size:15.5px;color:var(--ink-2);margin-top:12px;max-width:64ch;line-height:1.65}
+.lp-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+.lp-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--s1);transition:.18s var(--e)}
+.lp-card:hover{box-shadow:var(--s3);transform:translateY(-2px)}
+.lp-card .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:21px;margin-bottom:14px}
+.lp-card h3{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.lp-card p{font-size:13.5px;color:var(--ink-2);line-height:1.65;margin-top:7px}
+.lp-card .fig{font-family:var(--m);font-size:12px;font-weight:700;color:var(--red);margin-top:10px;display:inline-block;background:var(--red-l);padding:3px 9px;border-radius:6px}
+.lp-card .ic.r{background:var(--red-l);color:var(--red)} .lp-card .ic.a{background:var(--amber-l);color:var(--amber)} .lp-card .ic.b{background:var(--brand-l);color:var(--brand)} .lp-card .ic.g{background:var(--green-l);color:var(--green)}
+.cmp{margin-top:28px;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--s1);background:var(--card)}
+.cmp table{width:100%;border-collapse:collapse}
+.cmp th{padding:15px 18px;text-align:left;font-size:13px;font-weight:700;background:var(--bg);border-bottom:2px solid var(--line)}
+.cmp th.us{color:var(--brand);background:var(--brand-l)}
+.cmp th.them{color:var(--ink-3)}
+.cmp td{padding:13px 18px;border-bottom:1px solid var(--line-2);font-size:13.5px;vertical-align:top}
+.cmp td.feat{font-weight:600;color:var(--ink);width:32%}
+.cmp td.us{background:var(--brand-ll);color:var(--ink);font-weight:600}
+.cmp td.them{color:var(--ink-2)}
+.cmp tr:last-child td{border-bottom:0}
+.cmp .yes{color:var(--green);font-weight:700} .cmp .no{color:var(--red);font-weight:700}
+.cmp .eq{color:var(--ink-3);font-size:11.5px;font-weight:700;background:var(--bg-2);padding:1px 7px;border-radius:5px}
+.biz{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.biz-card{border-radius:14px;padding:24px;border:1px solid var(--line)}
+.biz-card.them{background:var(--card)}
+.biz-card.us{background:linear-gradient(158deg,var(--brand-l),#fff 70%);border-color:#B6DBDF}
+.biz-card .lbl{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.biz-card .big{font-family:var(--m);font-size:44px;font-weight:700;letter-spacing:-.03em;line-height:1;margin:10px 0 4px}
+.biz-card.them .big{color:var(--red)} .biz-card.us .big{color:var(--brand)}
+.biz-card .money{font-family:var(--m);font-size:14px;font-weight:700;margin-top:14px;padding-top:14px;border-top:1px solid var(--line-2)}
+.biz-card ul{list-style:none;margin-top:12px;font-size:13px;color:var(--ink-2);line-height:1.9}
+.biz-card li::before{content:"— ";color:var(--ink-4)}
+.lp-final{max-width:1160px;margin:56px auto 0;padding:44px 24px;background:linear-gradient(155deg,#0F1620,#183A40);border-radius:20px;text-align:center;color:#fff;position:relative;overflow:hidden}
+.lp-final::after{content:"";position:absolute;inset:0;background:radial-gradient(600px 200px at 50% 0,rgba(28,124,140,.4),transparent 70%)}
+.lp-final>*{position:relative;z-index:2}
+.lp-final h2{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.lp-final p{color:rgba(255,255,255,.75);margin-top:10px;font-size:15px;max-width:52ch;margin-left:auto;margin-right:auto}
+@media(max-width:820px){.lp-grid3{grid-template-columns:1fr}.biz{grid-template-columns:1fr}.cmp{overflow-x:auto}.cmp table{min-width:520px}.lp-kpis{gap:22px}}
 
 @media(max-width:1024px){.tc-img{width:120px}.ref-wrap{grid-template-columns:1fr}.phone{position:static;margin:0 auto}}
 @media(max-width:960px){.cols,.dcols{grid-template-columns:1fr}.side{display:none}}
@@ -460,9 +521,10 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 </div></div>
 
 <header><div class="wrap hd">
-  <div class="logo" onclick="go('home')"><div class="ic">🏓</div><div>ARENA<small>PICKLEBALL VN</small></div></div>
+  <div class="logo" onclick="go('intro')"><div class="ic">R</div><div>RALLY<small>PICKLEBALL VN</small></div></div>
   <nav class="main">
-    <a href="#" class="nv on" data-p="home">Giải đấu</a>
+    <a href="#" class="nv on" data-p="intro">Giới thiệu</a>
+    <a href="#" class="nv" data-p="home">Giải đấu</a>
     <a href="#" class="nv" data-p="rank">Điểm trình</a>
     <a href="#" class="nv" data-p="live">Trực tiếp</a>
     <a href="#" class="nv" data-p="ref">Trọng tài</a>
@@ -511,8 +573,115 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 
 <div class="wrap">
 
+
+<!-- ================= GIỚI THIỆU / LANDING ================= -->
+<div class="page on" id="intro">
+  <div class="lp-hero"><div class="lp-hero-in">
+    <span class="lp-eyebrow">🏓 Hạ tầng thi đấu Pickleball Việt Nam</span>
+    <h1 class="lp-h1">Điểm trình <span class="hl">minh bạch</span>. Giải đấu <span class="hl">mượt mà</span>. Chi phí <span class="hl">một phần năm</span>.</h1>
+    <p class="lp-sub">Nền tảng thế hệ mới cho pickleball Việt Nam — nơi mỗi thay đổi điểm trình đều giải thích được, mọi vận động viên có một trang hồ sơ chia sẻ được, và ban tổ chức không còn phải trích 10% doanh thu.</p>
+    <div class="lp-strip">Phân trình độ VĐV · Xem giải đấu trực tiếp · Lịch sử đấu đầy đủ</div>
+    <div class="lp-cta">
+      <button class="lp-btn p" onclick="go('home')">Khám phá demo trực tiếp →</button>
+      <button class="lp-btn g" onclick="vdv('toi')">Xem cách tính điểm trình</button>
+    </div>
+    <div class="lp-kpis">
+      <div class="lp-kpi"><div class="n">&lt;1,2s</div><div class="l">Thời gian tải trang (SSR)</div></div>
+      <div class="lp-kpi"><div class="n">100%</div><div class="l">Tên VĐV bấm được, có URL riêng</div></div>
+      <div class="lp-kpi"><div class="n">2%</div><div class="l">Phí nền tảng — thay vì 10%</div></div>
+      <div class="lp-kpi"><div class="n">0đ</div><div class="l">Chi phí phần cứng livestream</div></div>
+    </div>
+  </div></div>
+
+  <div class="lp-sec">
+    <span class="lp-tag">Vấn đề đang tồn tại</span>
+    <h2 class="lp-h2">Người chơi Việt Nam đang chịu ba nỗi đau — đã đo bằng số liệu thật</h2>
+    <p class="lp-lead">Không phải cảm tính. Chúng tôi đo trực tiếp nền tảng đang chiếm thị phần lớn nhất bằng công cụ DevTools, ngày 13/07/2026.</p>
+    <div class="lp-grid3">
+      <div class="lp-card"><div class="ic r">🐌</div><h3>Chậm tê liệt</h3>
+        <p>Server phản hồi trong 148ms, nhưng nội dung phải chờ AJAX tải xong. Trang giải đấu: đủ nội dung ở <b>giây thứ 14</b>. Bảng điểm chỉ nặng 86KB mà mất 8,2 giây — database ngồi nghĩ.</p>
+        <span class="fig">Nội dung hiện đủ: ~14 giây</span></div>
+      <div class="lp-card"><div class="ic a">🚫</div><h3>Ngõ cụt khắp nơi</h3>
+        <p>Hồ sơ VĐV mở dạng popup, không URL — không chia sẻ được, Google không index. Trong lịch sử trận có <b>231 ô chứa tên VĐV, 0 ô bấm được</b>. Thứ duy nhất bấm được là ảnh đại diện.</p>
+        <span class="fig">231 tên · 0 bấm được</span></div>
+      <div class="lp-card"><div class="ic r">💸</div><h3>Phí 10% ăn vào lợi nhuận BTC</h3>
+        <p>Ban tổ chức phải trích <b>10% tổng lệ phí</b> cho nền tảng. Giải 200 VĐV × 500k = 100 triệu → mất <b>10 triệu</b> mỗi giải, trong khi mọi chi phí khác đã cố định.</p>
+        <span class="fig">−10 triệu / giải 200 VĐV</span></div>
+    </div>
+  </div>
+
+  <div class="lp-sec">
+    <span class="lp-tag">Cách chúng tôi khác biệt</span>
+    <h2 class="lp-h2">Không phải "đẹp hơn". Là được thiết kế đúng từ nền móng.</h2>
+    <div class="lp-grid3">
+      <div class="lp-card"><div class="ic b">🔍</div><h3>Điểm trình giải thích được</h3>
+        <p>Mỗi trận cho biết chính xác <b>±bao nhiêu điểm và vì sao</b>: đối thủ mấy chấm, xác suất thắng dự kiến, hệ số giải. Thuật toán Glicko-2 công khai, ai cũng kiểm chứng được. Đây là câu trả lời cho nạn "loạn điểm trình".</p></div>
+      <div class="lp-card"><div class="ic g">⚡</div><h3>Nhanh &amp; trực tiếp thật</h3>
+        <p>Trang tải dưới 1,2 giây nhờ SSR. Sơ đồ thi đấu cập nhật realtime qua WebSocket (180ms), không phải polling. Google index được từng giải, từng VĐV.</p></div>
+      <div class="lp-card"><div class="ic b">🔗</div><h3>Mạng lưới, không ngõ cụt</h3>
+        <p>Mọi tên VĐV bấm được, dẫn sang hồ sơ có URL riêng (<span class="mono" style="font-size:12px">/vdv/ten-vdv</span>), chia sẻ lên Facebook được. Bấm tiếp tên đối thủ trong hồ sơ → sang hồ sơ khác, không bao giờ cụt.</p></div>
+      <div class="lp-card"><div class="ic g">📱</div><h3>Trọng tài không cần đăng nhập</h3>
+        <p>Quét QR ở cột lưới là vào thẳng trận. Chạy được khi mất mạng (sân trong nhà sóng yếu). Hai đội trưởng cùng ký xác nhận — chữ ký khiến điểm trình không ai cãi được.</p></div>
+      <div class="lp-card"><div class="ic a">📹</div><h3>Livestream không cần phần cứng</h3>
+        <p>Đối thủ đặt điện thoại cố định ở từng sân — tốn tiền, giới hạn số sân. Chúng tôi biến điện thoại của chính người chơi thành máy quay: kẹp chân máy, bật app, tỉ số tự chèn, đẩy thẳng lên YouTube. <b>Chi phí phần cứng: 0đ.</b></p></div>
+      <div class="lp-card"><div class="ic b">🏆</div><h3>Trọn vòng đời một giải</h3>
+        <p>Tạo giải &lt;15 phút, bốc thăm có seeding theo điểm trình, sắp lịch sân tự động, nhập điểm tại sân, sơ đồ live, và điểm trình tự cập nhật sau mỗi trận có xác nhận.</p></div>
+    </div>
+  </div>
+
+  <div class="lp-sec">
+    <span class="lp-tag">So sánh trực tiếp</span>
+    <h2 class="lp-h2">RALLY và nền tảng hiện tại</h2>
+    <div class="cmp"><table>
+      <thead><tr><th>Tiêu chí</th><th class="us">RALLY</th><th class="them">Nền tảng hiện tại</th></tr></thead>
+      <tbody>
+        <tr><td class="feat">Thời gian hiện nội dung</td><td class="us">Dưới 1,2 giây (SSR)</td><td class="them">~14 giây (đo thật)</td></tr>
+        <tr><td class="feat">Hồ sơ VĐV chia sẻ được</td><td class="us"><span class="yes">✓</span> URL riêng, Google index</td><td class="them"><span class="no">✗</span> popup, không URL</td></tr>
+        <tr><td class="feat">Bấm tên VĐV để khám phá</td><td class="us"><span class="yes">✓</span> mọi tên bấm được</td><td class="them"><span class="no">✗</span> 0/231 ô bấm được</td></tr>
+        <tr><td class="feat">Điểm trình giải thích từng trận</td><td class="us"><span class="yes">✓</span> ±điểm &amp; lý do</td><td class="them"><span class="no">✗</span> chỉ hiện con số</td></tr>
+        <tr><td class="feat">Cập nhật sơ đồ trực tiếp</td><td class="us"><span class="yes">✓</span> WebSocket 180ms</td><td class="them">polling, chậm</td></tr>
+        <tr><td class="feat">Trọng tài nhập điểm tại sân</td><td class="us"><span class="yes">✓</span> + offline + QR</td><td class="them"><span class="eq">CÓ (bấm từng điểm)</span></td></tr>
+        <tr><td class="feat">Livestream trận đấu</td><td class="us"><span class="yes">✓</span> dùng ĐT người chơi, 0đ HW</td><td class="them"><span class="eq">CÓ (phần cứng tại sân)</span></td></tr>
+        <tr><td class="feat">Phí nền tảng</td><td class="us"><b>2%</b> (hoặc phí cố định)</td><td class="them"><b style="color:var(--red)">10%</b> tổng lệ phí</td></tr>
+      </tbody>
+    </table></div>
+    <p class="lp-lead" style="margin-top:14px;font-size:13px;color:var(--ink-3)">Các mục ghi "CÓ" là nơi đối thủ đã làm tốt — chúng tôi trung thực về điều đó. Lợi thế của RALLY nằm ở kiến trúc và cấu trúc chi phí, không phải ở việc phủ nhận điểm mạnh của họ.</p>
+  </div>
+
+  <div class="lp-sec">
+    <span class="lp-tag">Mô hình kinh doanh</span>
+    <h2 class="lp-h2">Chúng tôi rẻ hơn vì cấu trúc, không phải vì chịu lỗ</h2>
+    <p class="lp-lead">Đối thủ thu 10% để nuôi hạ tầng phần cứng đặt tại sân. Chúng tôi dùng điện thoại của chính người chơi — cấu trúc chi phí thấp hơn về bản chất, nên có thể thu 2% mà vẫn lời.</p>
+    <div class="biz">
+      <div class="biz-card them">
+        <div class="lbl">Nền tảng hiện tại</div>
+        <div class="big">10%</div>
+        <div style="font-size:13px;color:var(--ink-3)">tổng lệ phí · bắt buộc · trọn gói</div>
+        <div class="money" style="color:var(--red)">Giải 200 VĐV → BTC mất 10.000.000₫</div>
+        <ul><li>Bắt buộc cả gói dù không cần livestream</li><li>Phần cứng tại sân giới hạn số sân</li><li>BTC tự gánh, ăn vào lợi nhuận</li></ul>
+      </div>
+      <div class="biz-card us">
+        <div class="lbl" style="color:var(--brand)">RALLY</div>
+        <div class="big">2%</div>
+        <div style="font-size:13px;color:var(--ink-2)">hoặc phí cố định nhỏ · tách gói</div>
+        <div class="money" style="color:var(--brand)">Giải 200 VĐV → BTC chỉ mất 2.000.000₫</div>
+        <ul><li>Phần mềm miễn phí / phí nhỏ, livestream tuỳ chọn</li><li>Thanh toán thu đúng giá vốn (~2%)</li><li>BTC giữ lại 8.000.000₫ mỗi giải</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="lp-final">
+    <h2>Xem toàn bộ hệ thống hoạt động</h2>
+    <p>Bản demo đầy đủ: hệ thống giải đấu, sơ đồ trực tiếp, điểm trình giải thích được, và màn hình nhập điểm cho trọng tài.</p>
+    <div class="lp-cta" style="justify-content:center;margin-top:24px">
+      <button class="lp-btn p" onclick="go('home')">Vào demo →</button>
+      <button class="lp-btn g" onclick="go('ref')">Xem màn hình trọng tài</button>
+    </div>
+  </div>
+</div>
+
 <!-- ========== TRANG CHỦ ========== -->
-<div class="page on" id="home">
+<div class="page" id="home">
   <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px">
     <div><h1>Giải đấu Pickleball</h1>
       <div style="color:var(--ink-2);font-size:14px;margin-top:3px">142 giải đang mở đăng ký trên toàn quốc · cập nhật 13/07/2026</div></div>
@@ -922,7 +1091,7 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
   <div class="box"><div class="box-h">Diễn biến điểm trình <span style="font-size:12.5px;font-weight:500;color:var(--ink-3)">12 tháng gần nhất</span></div>
     <div class="box-b">
       <svg viewBox="0 0 700 150" style="width:100%;height:150px;display:block">
-        <defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0B5FD9" stop-opacity=".14"/><stop offset="100%" stop-color="#0B5FD9" stop-opacity="0"/></linearGradient></defs>
+        <defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1C7C8C" stop-opacity=".14"/><stop offset="100%" stop-color="#1C7C8C" stop-opacity="0"/></linearGradient></defs>
         <line x1="36" y1="20" x2="700" y2="20" stroke="#EFF2F6"/><line x1="36" y1="60" x2="700" y2="60" stroke="#EFF2F6"/>
         <line x1="36" y1="100" x2="700" y2="100" stroke="#EFF2F6"/><line x1="36" y1="140" x2="700" y2="140" stroke="#EFF2F6"/>
         <text x="2" y="17" font-size="9.5" fill="#A6B1C0" font-family="Roboto Mono" id="ax1">3.6</text>
@@ -930,8 +1099,8 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
         <text x="2" y="97" font-size="9.5" fill="#A6B1C0" font-family="Roboto Mono" id="ax3">3.2</text>
         <text x="2" y="137" font-size="9.5" fill="#A6B1C0" font-family="Roboto Mono" id="ax4">3.0</text>
         <path d="M46,104 L104,98 L162,102 L220,88 L278,84 L336,90 L394,74 L452,66 L510,70 L568,58 L626,52 L690,44 L690,72 L626,80 L568,84 L510,98 L452,94 L394,102 L336,118 L278,112 L220,116 L162,130 L104,126 L46,132 Z" fill="url(#gg)"/>
-        <polyline points="46,118 104,112 162,116 220,102 278,98 336,104 394,88 452,80 510,84 568,72 626,66 690,58" fill="none" stroke="#0B5FD9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="690" cy="58" r="4.2" fill="#0B5FD9"/><circle cx="690" cy="58" r="8.5" fill="#0B5FD9" opacity=".16"/>
+        <polyline points="46,118 104,112 162,116 220,102 278,98 336,104 394,88 452,80 510,84 568,72 626,66 690,58" fill="none" stroke="#1C7C8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="690" cy="58" r="4.2" fill="#1C7C8C"/><circle cx="690" cy="58" r="8.5" fill="#1C7C8C" opacity=".16"/>
       </svg>
       <div style="font-size:11.5px;color:var(--ink-3);text-align:center;margin-top:2px">Vùng xanh nhạt = khoảng tin cậy, thu hẹp dần khi đánh nhiều trận hơn</div>
     </div>
@@ -1054,7 +1223,7 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
 <footer><div class="wrap">
   <div class="ft">
     <div style="min-width:190px">
-      <div class="logo" style="margin-bottom:9px" onclick="go('home')"><div class="ic">🏓</div><div>ARENA<small>PICKLEBALL VN</small></div></div>
+      <div class="logo" style="margin-bottom:9px" onclick="go('home')"><div class="ic">R</div><div>RALLY<small>PICKLEBALL VN</small></div></div>
       <div style="line-height:1.7">Hạ tầng thi đấu pickleball<br>cho người Việt.</div>
     </div>
     <div><b>Giải đấu</b><a onclick="go('home')">Sắp diễn ra</a><a onclick="go('live')">Đang diễn ra</a><a>Kết quả</a><a>Đăng giải</a></div>
@@ -1063,7 +1232,7 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0;ma
     <div><b>Hỗ trợ</b><a>Trung tâm trợ giúp</a><a>Liên hệ</a></div>
   </div>
   <div style="margin-top:26px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-4)">
-    © 2026 ARENA — bản demo giao diện. Dữ liệu là ví dụ minh hoạ, không phải dữ liệu thật.
+    © 2026 RALLY — bản demo giao diện. Dữ liệu là ví dụ minh hoạ, không phải dữ liệu thật.
   </div>
 </div></footer>
 
