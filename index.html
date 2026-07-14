@@ -705,6 +705,29 @@ textarea.inp{min-height:66px;resize:vertical;font-family:var(--f);line-height:1.
 .pev.all{background:var(--bg-2);color:var(--ink-3)}
 @media(max-width:560px){.pzrow{grid-template-columns:1fr 1fr}.pzrow .pzR{grid-column:span 2}.pzrow .evX{grid-column:span 2}}
 
+
+/* bốc thăm */
+.drnote{font-size:12.5px;color:var(--ink-2);background:var(--bg);border-radius:9px;padding:9px 12px;margin-bottom:12px}
+.drko{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px}
+.drm{display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;flex-wrap:wrap}
+.drm.bye{background:var(--bg);border-style:dashed}
+.drmn{font-size:10.5px;font-weight:800;color:var(--ink-4);width:44px;flex-shrink:0}
+.drs{flex:1;min-width:100px;padding:6px 7px;font-size:12.5px}
+.drvs{font-size:10.5px;font-weight:800;color:var(--ink-4);flex-shrink:0}
+.drbye{font-size:10px;font-weight:700;color:var(--green);background:var(--green-l);padding:2px 7px;border-radius:5px;width:100%;text-align:center;margin-top:2px}
+.drgrps{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.drg{background:var(--card);border:1px solid var(--line);border-radius:11px;overflow:hidden}
+.drg-h{background:var(--brand-l);color:var(--brand);font-weight:800;font-size:12.5px;padding:8px 12px;display:flex;justify-content:space-between}
+.drg-h span{font-weight:600;color:var(--ink-3);font-size:11px}
+.drg-t{display:flex;align-items:center;gap:6px;padding:7px 10px;border-bottom:1px solid var(--line-2)}
+.drg-n{flex:1;min-width:0;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drs2{width:96px;padding:5px 6px;font-size:11.5px;flex-shrink:0}
+.drg-ms{padding:9px 10px;background:var(--bg)}
+.drg-lb{font-size:10px;font-weight:800;color:var(--ink-4);text-transform:uppercase;margin-bottom:4px}
+.drg-mx{font-size:11.5px;color:var(--ink-2);padding:2px 0}
+.drg-m0{font-size:11.5px;color:var(--ink-4)}
+.pubgrps{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+
 @media(max-width:1024px){.tc-img{width:120px}.ref-wrap{grid-template-columns:1fr}.phone{position:static;margin:0 auto}}
 @media(max-width:960px){.cols,.dcols{grid-template-columns:1fr}.side{display:none}}
 
@@ -1064,7 +1087,7 @@ textarea.inp{min-height:66px;resize:vertical;font-family:var(--f);line-height:1.
     <div><h1 id="brkTitle">Sơ đồ thi đấu — Đôi nam Open</h1>
       <div id="brkSub" style="color:var(--ink-2);font-size:14px;margin-top:3px">64 cặp · Loại trực tiếp · Thắng 2/3 ván 11 điểm</div></div>
     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-      <select class="sel" style="width:auto"><option>Đôi nam Open</option><option>Đôi nam 3.5–4.0</option><option>Đôi nữ Open</option><option>Đôi nam nữ 3.0–3.5</option></select>
+      <select class="sel" id="brkEvSel" style="width:auto" onchange="_brkEvi=+this.value;openBracket(_brkCur)"></select>
       <button class="btn btn-o btn-sm" onclick="window.print()">⤓ Tải PDF</button>
       <button class="btn btn-o btn-sm" onclick="shareLink()">🔗 Chia sẻ</button>
     </div>
@@ -1265,6 +1288,26 @@ textarea.inp{min-height:66px;resize:vertical;font-family:var(--f);line-height:1.
     <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-o" onclick="openEditCur()">✏ Chỉnh sửa thông tin</button><button class="btn btn-p" onclick="alert('Đã lưu thay đổi (demo).')">💾 Lưu</button></div>
   </div>
   <div class="mgstats" id="mgStats"></div>
+  <div style="font-weight:700;font-size:16px;margin:24px 0 12px">Bốc thăm &amp; Thể thức thi đấu</div>
+  <div class="box"><div class="box-b">
+    <div class="f2">
+      <div class="ff"><label>Nội dung</label><select class="sel" id="drEv" onchange="_drEvi=+this.value;renderDraw()"></select></div>
+      <div class="ff"><label>Thể thức</label><select class="sel" id="drFmt" onchange="document.getElementById('drGrpOpts').style.display=this.value==='grp'?'':'none'">
+        <option value="ko">Loại trực tiếp — Playoff (có BYE vào vòng 2)</option>
+        <option value="grp">Chia bảng + Loại trực tiếp</option></select></div>
+    </div>
+    <div class="f2" id="drGrpOpts" style="display:none">
+      <div class="ff"><label>Số bảng</label><input class="inp" id="drNG" value="4" inputmode="numeric"></div>
+      <div class="ff"><label>Số đội đi tiếp mỗi bảng</label><select class="sel" id="drAdv"><option>1</option><option selected>2</option></select></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:2px">
+      <button class="btn btn-p btn-sm" onclick="doDraw('rand')">🎲 Bốc thăm ngẫu nhiên</button>
+      <button class="btn btn-o btn-sm" onclick="doDraw('seed')">🏅 Xếp theo hạt giống (điểm trình)</button>
+      <button class="btn btn-o btn-sm" onclick="saveDraw()">💾 Lưu sơ đồ</button>
+    </div>
+    <div id="drResult" style="margin-top:14px"></div>
+  </div></div>
+
   <div style="font-weight:700;font-size:16px;margin:22px 0 12px">Danh sách đăng ký &amp; thu phí</div>
   <div id="mgEvents"></div>
   <div class="note">Bấm <b>"Đánh dấu đã nộp"</b> để xác nhận cặp đó đã chuyển lệ phí. Ở bản thật, cổng ngân hàng tự đối soát và tự tick — BTC chỉ cần chỉnh tay các trường hợp đặc biệt.</div>
@@ -1995,6 +2038,8 @@ function generateBracket(t){
     thirds:[sf[0].teams[1-sf[0].winner],sf[1].teams[1-sf[1].winner]]};
 }
 function renderBracket(t){
+  var _d=DRAWS[dkey(t.id,_brkEvi||0)];
+  if(_d){renderDrawPublic(t,_d);return;}
   var b=generateBracket(t),courts=['Sân 1','Sân 2','Sân 3','Sân 4'];
   function row(m,idx,tm,sc,winFlag){
     if(!tm)return '<div class="bt"><span class="seed">–</span><span class="bnm tbdn">Chờ đối thủ</span><span class="bg-"></span><span class="bsc tbd">–</span></div>';
@@ -2254,6 +2299,9 @@ function renderManage(t){
     html+='<div class="box"><div class="box-h">'+e.label+' <span style="font-size:12.5px;color:var(--ink-3);font-weight:500">'+e.reg+' cặp đăng ký</span></div>'+body+(extra>0?'<div class="ent-more">+ '+extra+' cặp khác (hiển thị '+rows.length+' đăng ký gần nhất)</div>':'')+'</div>';
   });
   $('mgEvents').innerHTML=html;
+  var de=$('drEv');
+  if(de){de.innerHTML=t.events.map(function(e,i){return '<option value="'+i+'">'+e.label+'</option>'}).join('');
+    if(_drEvi>=t.events.length)_drEvi=0; de.value=_drEvi; renderDraw();}
 }
 function togglePaid(ix){var arr=ENTRANTS[_mgId];if(!arr||!arr[ix])return;arr[ix].paid=!arr[ix].paid;var t=TOURN.find(function(x){return x.id===_mgId});renderManage(t);}
 function openEditCur(){var t=TOURN.find(function(x){return x.id===_mgId});if(t)openEdit(t);}
@@ -2280,6 +2328,152 @@ function openEdit(t){
   document.getElementById('createDone').style.display='none';
   document.getElementById('createForm').style.display='';
   document.getElementById('createModal').classList.add('on');
+}
+
+
+/* ==================== BỐC THĂM & THỂ THỨC ==================== */
+var DRAWS={}, _drEvi=0, _brkEvi=0;
+function dkey(tid,evi){return tid+'|'+evi;}
+function _ln(n){return n.split(' ').slice(-1)[0];}
+function teamsOf(t,evi){
+  return getEntrants(t).filter(function(x){return x.evi===evi}).slice(0,16).map(function(x,i){
+    return {i:i, name:(x.name2?(_ln(x.name)+' / '+_ln(x.name2)):x.name),
+            full:(x.name2?(x.name+' / '+x.name2):x.name),
+            rating:((x.r1||0)+(x.r2||0))};
+  });
+}
+function seedOrder(n){var a=[1];while(a.length<n){var m=a.length*2+1,b=[];a.forEach(function(x){b.push(x);b.push(m-x)});a=b;}return a;}
+function shuffle(arr,rng){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(rng()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+function doDraw(mode){
+  var t=TOURN.find(function(x){return x.id===_mgId}); if(!t)return;
+  _drEvi=+document.getElementById('drEv').value||0;
+  var fmt=document.getElementById('drFmt').value;
+  var teams=teamsOf(t,_drEvi);
+  if(teams.length<2){alert('Nội dung này chưa đủ đội để bốc thăm.');return;}
+  var rng=_seed(hashStr(t.id+_drEvi+mode+Date.now()));
+  var ord = mode==='seed' ? teams.slice().sort(function(a,b){return b.rating-a.rating}) : shuffle(teams,rng);
+  var d;
+  if(fmt==='ko'){
+    var size=2; while(size<ord.length)size*=2;
+    var so=seedOrder(size), slots=[];
+    for(var i=0;i<size;i++){var si=so[i]-1; slots.push(si<ord.length?ord[si].i:null);}
+    d={fmt:'ko',teams:teams,order:ord.map(function(x){return x.i}),slots:slots,mode:mode};
+  } else {
+    var nG=Math.max(2,Math.min(8,parseInt(document.getElementById('drNG').value,10)||4));
+    var adv=parseInt(document.getElementById('drAdv').value,10)||2;
+    var groups=[]; for(var g=0;g<nG;g++)groups.push([]);
+    ord.forEach(function(tm,idx){ // rắn bò: 0,1,2,3,3,2,1,0…
+      var row=Math.floor(idx/nG), pos=idx%nG, gi=(row%2===0)?pos:(nG-1-pos);
+      groups[gi].push(tm.i);
+    });
+    d={fmt:'grp',teams:teams,groups:groups,nG:nG,adv:adv,mode:mode};
+  }
+  DRAWS[dkey(t.id,_drEvi)]=d;
+  renderDraw();
+}
+function slotSel(d,pos){
+  var v=d.slots[pos];
+  var o='<option value="-1"'+(v==null?' selected':'')+'>— BYE (miễn vòng 1) —</option>';
+  o+=d.teams.map(function(tm){return '<option value="'+tm.i+'"'+(v===tm.i?' selected':'')+'>'+tm.name+'</option>'}).join('');
+  return '<select class="sel drs" onchange="changeSlot('+pos+',this.value)">'+o+'</select>';
+}
+function changeSlot(pos,val){
+  var d=DRAWS[dkey(_mgId,_drEvi)]; if(!d)return;
+  var v=parseInt(val,10); v=(v<0)?null:v;
+  if(v!=null){var old=d.slots.indexOf(v); if(old>=0&&old!==pos)d.slots[old]=d.slots[pos];}
+  d.slots[pos]=v; renderDraw();
+}
+function grpSel(d,ti){
+  var cur=0; d.groups.forEach(function(g,gi){if(g.indexOf(ti)>=0)cur=gi});
+  var o=''; for(var g=0;g<d.nG;g++)o+='<option value="'+g+'"'+(g===cur?' selected':'')+'>Bảng '+String.fromCharCode(65+g)+'</option>';
+  return '<select class="sel drs2" onchange="changeGroup('+ti+',this.value)">'+o+'</select>';
+}
+function changeGroup(ti,g){
+  var d=DRAWS[dkey(_mgId,_drEvi)]; if(!d)return;
+  g=parseInt(g,10);
+  d.groups.forEach(function(gr){var k=gr.indexOf(ti); if(k>=0)gr.splice(k,1);});
+  d.groups[g].push(ti); renderDraw();
+}
+function rrMatches(g,d){
+  if(g.length<2)return '<div class="drg-m0">Chưa đủ đội</div>';
+  var h='';
+  for(var i=0;i<g.length;i++)for(var j=i+1;j<g.length;j++)
+    h+='<div class="drg-mx">'+d.teams[g[i]].name+' <b>vs</b> '+d.teams[g[j]].name+'</div>';
+  return h;
+}
+function renderDraw(){
+  var t=TOURN.find(function(x){return x.id===_mgId}); if(!t)return;
+  var d=DRAWS[dkey(_mgId,_drEvi)], el=document.getElementById('drResult');
+  if(!el)return;
+  if(!d){el.innerHTML='<div style="color:var(--ink-3);font-size:13.5px;padding:8px 0">Chưa bốc thăm nội dung này. Chọn thể thức rồi bấm <b>Bốc thăm ngẫu nhiên</b> hoặc <b>Xếp theo hạt giống</b>. Sau khi bốc, bạn vẫn đổi được từng cặp theo ý muốn.</div>';return;}
+  if(d.fmt==='ko'){
+    var byes=d.slots.filter(function(x){return x==null}).length;
+    var h='<div class="drnote">Sơ đồ <b>'+d.slots.length+'</b> vị trí · <b>'+d.teams.length+'</b> đội · <b>'+byes+'</b> suất BYE (vào thẳng vòng 2) · '+(d.mode==='seed'?'Xếp theo hạt giống':'Bốc thăm ngẫu nhiên')+'</div><div class="drko">';
+    for(var i=0;i<d.slots.length;i+=2){
+      var bye=(d.slots[i]==null||d.slots[i+1]==null);
+      h+='<div class="drm'+(bye?' bye':'')+'"><span class="drmn">Trận '+(i/2+1)+'</span>'+slotSel(d,i)+'<span class="drvs">vs</span>'+slotSel(d,i+1)+(bye?'<span class="drbye">→ vào vòng 2</span>':'')+'</div>';
+    }
+    el.innerHTML=h+'</div>';
+  } else {
+    var h='<div class="drnote"><b>'+d.nG+'</b> bảng · <b>'+d.adv+'</b> đội đi tiếp mỗi bảng · <b>'+d.teams.length+'</b> đội · '+(d.mode==='seed'?'Xếp theo hạt giống':'Bốc thăm ngẫu nhiên')+'</div><div class="drgrps">';
+    d.groups.forEach(function(g,gi){
+      h+='<div class="drg"><div class="drg-h">Bảng '+String.fromCharCode(65+gi)+' <span>'+g.length+' đội</span></div>';
+      g.forEach(function(ti){h+='<div class="drg-t"><span class="drg-n">'+d.teams[ti].name+'</span>'+grpSel(d,ti)+'</div>';});
+      h+='<div class="drg-ms"><div class="drg-lb">Lịch vòng bảng</div>'+rrMatches(g,d)+'</div></div>';
+    });
+    el.innerHTML=h+'</div>';
+  }
+}
+function saveDraw(){
+  var d=DRAWS[dkey(_mgId,_drEvi)];
+  if(!d){alert('Chưa có sơ đồ để lưu.');return;}
+  alert('Đã lưu sơ đồ. Người chơi xem được ngay ở mục "Sơ đồ & Kết quả" của giải.');
+}
+
+/* ---------- hiển thị sơ đồ đã bốc cho người xem ---------- */
+function renderDrawPublic(t,d){
+  var mount=document.getElementById('brkMount'), pod=document.getElementById('brkPodium');
+  pod.innerHTML='';
+  if(d.fmt==='grp'){
+    var h='<div class="pubgrps">';
+    d.groups.forEach(function(g,gi){
+      h+='<div class="box" style="margin:0"><div class="box-h">Bảng '+String.fromCharCode(65+gi)+' <span style="font-size:12px;color:var(--ink-3);font-weight:500">'+d.adv+' đội đi tiếp</span></div>';
+      h+='<table><thead><tr><th style="width:34px">#</th><th>Đội</th><th class="r">Thắng</th><th class="r">Điểm</th></tr></thead><tbody>';
+      g.forEach(function(ti,k){h+='<tr'+(k<d.adv?' style="background:var(--green-l)"':'')+'><td class="rk" style="padding-left:16px">'+(k+1)+'</td><td style="font-weight:600">'+d.teams[ti].name+'</td><td class="r mono">–</td><td class="r mono">–</td></tr>';});
+      h+='</tbody></table><div style="padding:11px 16px;border-top:1px solid var(--line-2);font-size:12px;color:var(--ink-3)">'+rrMatches(g,d).replace(/<div class="drg-mx">/g,'<div style="padding:3px 0">')+'</div></div>';
+    });
+    mount.innerHTML=h+'</div>';
+    return;
+  }
+  // knockout
+  var rounds=[], size=d.slots.length;
+  var r1=[]; for(var i=0;i<size;i+=2)r1.push([d.slots[i],d.slots[i+1]]);
+  rounds.push(r1);
+  var n=r1.length; while(n>1){n=n/2; rounds.push(new Array(n).fill(null));}
+  var names=['Vòng 1','Vòng 2','Tứ kết','Bán kết','🏆 Chung kết'];
+  var lbl=function(idx,total){ if(idx===total-1)return '🏆 Chung kết'; if(idx===total-2)return 'Bán kết'; if(idx===total-3)return 'Tứ kết'; return 'Vòng '+(idx+1); };
+  var h='<div class="brk">';
+  rounds.forEach(function(rd,ri){
+    h+='<div class="rd"><div class="rd-h">'+lbl(ri,rounds.length)+'</div>';
+    if(ri===0){
+      rd.forEach(function(m,mi){
+        var a=m[0],b=m[1], bye=(a==null||b==null);
+        var nm=function(x){return x==null?'<span class="bnm tbdn">BYE</span>':'<span class="bnm">'+d.teams[x].name+'</span>';};
+        h+='<div class="bm'+(bye?' done':'')+'"><div class="bm-h"><span>Trận '+(mi+1)+'</span><span>'+(bye?'Miễn đấu':'Chưa đấu')+'</span></div>'
+          +'<div class="bt'+(bye&&a!=null?' w':'')+'"><span class="seed">'+(mi*2+1)+'</span>'+nm(a)+'<span class="bg-"></span><span class="bsc tbd">'+(bye&&a!=null?'W':'–')+'</span></div>'
+          +'<div class="bt'+(bye&&b!=null?' w':'')+'"><span class="seed">'+(mi*2+2)+'</span>'+nm(b)+'<span class="bg-"></span><span class="bsc tbd">'+(bye&&b!=null?'W':'–')+'</span></div></div>';
+      });
+    } else {
+      for(var k=0;k<rd.length;k++){
+        h+='<div class="bm"><div class="bm-h"><span>Trận '+(k+1)+'</span><span>Chờ</span></div>'
+          +'<div class="bt"><span class="seed">–</span><span class="bnm tbdn">Thắng '+(ri===1?'trận '+(k*2+1):'vòng trước')+'</span><span class="bg-"></span><span class="bsc tbd">–</span></div>'
+          +'<div class="bt"><span class="seed">–</span><span class="bnm tbdn">Thắng '+(ri===1?'trận '+(k*2+2):'vòng trước')+'</span><span class="bg-"></span><span class="bsc tbd">–</span></div></div>';
+      }
+    }
+    h+='</div>';
+  });
+  mount.innerHTML=h+'</div>';
 }
 
 function initApp(){
@@ -2323,8 +2517,12 @@ function showPage(p){
 function go(p){ showPage(p); rec({t:'go',p:p}); }
 
 /* ==================== SƠ ĐỒ + KẾT QUẢ ==================== */
+var _brkCur=null;
 function openBracket(id){
-  var t=TOURN.find(function(x){return x.id===id}); if(!t)return;
+  var t=TOURN.find(function(x){return x.id===id}); if(!t)return; _brkCur=id;
+  var _es=document.getElementById('brkEvSel');
+  if(_es){ if(_brkEvi>=t.events.length)_brkEvi=0;
+    _es.innerHTML=t.events.map(function(e,i){return '<option value="'+i+'">'+e.label+'</option>'}).join(''); _es.value=_brkEvi; }
   var live=document.getElementById('live');
   document.getElementById('brkTitle').textContent='Sơ đồ — '+t.name;
   var _bc=document.getElementById('brkCrumb'); if(_bc)_bc.textContent=t.name;
