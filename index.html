@@ -728,6 +728,17 @@ textarea.inp{min-height:66px;resize:vertical;font-family:var(--f);line-height:1.
 .drg-m0{font-size:11.5px;color:var(--ink-4)}
 .pubgrps{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
 
+
+/* sửa bốc thăm bảng */
+select.drs2{width:104px;flex-shrink:0;padding:5px 6px;font-size:11.5px}
+.drg-t{display:flex;align-items:center;gap:7px;padding:7px 9px;border-bottom:1px solid var(--line-2)}
+.drg-t.q{background:var(--green-l)}
+.drg-t.w{background:var(--amber-l)}
+.drg-r{width:16px;text-align:center;font-family:var(--m);font-size:11px;font-weight:700;color:var(--ink-4);flex-shrink:0}
+.drg-t.q .drg-r{color:var(--green)}
+.drg-t.w .drg-r{color:var(--amber)}
+.drg-n{flex:1;min-width:0;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
 @media(max-width:1024px){.tc-img{width:120px}.ref-wrap{grid-template-columns:1fr}.phone{position:static;margin:0 auto}}
 @media(max-width:960px){.cols,.dcols{grid-template-columns:1fr}.side{display:none}}
 
@@ -1299,11 +1310,14 @@ textarea.inp{min-height:66px;resize:vertical;font-family:var(--f);line-height:1.
     </div>
     <div class="f2" id="drGrpOpts" style="display:none">
       <div class="ff"><label>Số bảng</label><input class="inp" id="drNG" value="4" inputmode="numeric"></div>
-      <div class="ff"><label>Số đội đi tiếp mỗi bảng</label><select class="sel" id="drAdv"><option>1</option><option selected>2</option></select></div>
+      <div class="ff"><label>Lấy mấy đội nhất mỗi bảng</label><select class="sel" id="drAdv"><option>1</option><option selected>2</option><option>3</option></select></div>
+      <div class="ff"><label>Đội vớt (thành tích tốt nhất)</label><select class="sel" id="drWild"><option selected>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
     </div>
+    <div id="drCalc" style="display:none"></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:2px">
       <button class="btn btn-p btn-sm" onclick="doDraw('rand')">🎲 Bốc thăm ngẫu nhiên</button>
       <button class="btn btn-o btn-sm" onclick="doDraw('seed')">🏅 Xếp theo hạt giống (điểm trình)</button>
+      <button class="btn btn-o btn-sm" onclick="suggestGroups()">⚙ Tự động đề xuất</button>
       <button class="btn btn-o btn-sm" onclick="saveDraw()">💾 Lưu sơ đồ</button>
     </div>
     <div id="drResult" style="margin-top:14px"></div>
@@ -2369,12 +2383,13 @@ function doDraw(mode){
   } else {
     var nG=Math.max(2,Math.min(8,parseInt(document.getElementById('drNG').value,10)||4));
     var adv=parseInt(document.getElementById('drAdv').value,10)||2;
+    var wild=parseInt(document.getElementById('drWild').value,10)||0;
     var groups=[]; for(var g=0;g<nG;g++)groups.push([]);
     ord.forEach(function(tm,idx){ // rắn bò: 0,1,2,3,3,2,1,0…
       var row=Math.floor(idx/nG), pos=idx%nG, gi=(row%2===0)?pos:(nG-1-pos);
       groups[gi].push(tm.i);
     });
-    d={fmt:'grp',teams:teams,groups:groups,nG:nG,adv:adv,mode:mode};
+    d={fmt:'grp',teams:teams,groups:groups,nG:nG,adv:adv,wild:wild,mode:mode};
   }
   DRAWS[dkey(t.id,_drEvi)]=d;
   renderDraw();
@@ -2423,14 +2438,54 @@ function renderDraw(){
     }
     el.innerHTML=h+'</div>';
   } else {
-    var h='<div class="drnote"><b>'+d.nG+'</b> bảng · <b>'+d.adv+'</b> đội đi tiếp mỗi bảng · <b>'+d.teams.length+'</b> đội · '+(d.mode==='seed'?'Xếp theo hạt giống':'Bốc thăm ngẫu nhiên')+'</div><div class="drgrps">';
+    var h=grpSummary(d)+'<div class="drgrps">';
     d.groups.forEach(function(g,gi){
       h+='<div class="drg"><div class="drg-h">Bảng '+String.fromCharCode(65+gi)+' <span>'+g.length+' đội</span></div>';
-      g.forEach(function(ti){h+='<div class="drg-t"><span class="drg-n">'+d.teams[ti].name+'</span>'+grpSel(d,ti)+'</div>';});
-      h+='<div class="drg-ms"><div class="drg-lb">Lịch vòng bảng</div>'+rrMatches(g,d)+'</div></div>';
+      g.forEach(function(ti,k){
+        var cls=k<d.adv?' q':(k===d.adv&&d.wild?' w':'');
+        h+='<div class="drg-t'+cls+'"><span class="drg-r">'+(k+1)+'</span><span class="drg-n">'+d.teams[ti].name+'</span>'+grpSel(d,ti)+'</div>';
+      });
+      h+='<div class="drg-ms"><div class="drg-lb">Lịch vòng bảng ('+(g.length*(g.length-1)/2)+' trận)</div>'+rrMatches(g,d)+'</div></div>';
     });
     el.innerHTML=h+'</div>';
   }
+}
+function isPow2(n){return n>0&&(n&(n-1))===0;}
+function koRoundName(q){return {2:'Chung kết',4:'Bán kết',8:'Tứ kết',16:'Vòng 1/8',32:'Vòng 1/16'}[q]||(q+' đội');}
+function grpSummary(d){
+  var sizes=d.groups.map(function(g){return g.length}).join('-');
+  var wild=d.wild||0, q=d.nG*d.adv+wild;
+  var uneven=d.groups.some(function(g){return g.length!==d.groups[0].length});
+  var warn=isPow2(q)?'':' <span style="color:var(--amber);font-weight:700">→ '+q+' không phải 2ⁿ, vòng knock-out sẽ có BYE</span>';
+  return '<div class="drnote"><b>'+d.teams.length+'</b> đội · <b>'+d.nG+'</b> bảng ('+sizes+' đội'+(uneven?' — bảng lẻ':'')+') · '+(d.mode==='seed'?'xếp hạt giống':'bốc ngẫu nhiên')+'<br>'
+    +'Lấy <b>'+d.adv+'</b> đội nhất mỗi bảng'+(wild?' + <b>'+wild+'</b> đội vớt (hạng '+(d.adv+1)+' có thành tích tốt nhất)':'')
+    +' = <b style="color:var(--brand)">'+q+' đội</b> vào <b>'+koRoundName(q)+'</b>'+warn+'</div>';
+}
+function suggestGroups(){
+  var t=TOURN.find(function(x){return x.id===_mgId}); if(!t)return;
+  _drEvi=+document.getElementById('drEv').value||0;
+  var n=teamsOf(t,_drEvi).length;
+  if(n<4){alert('Cần ít nhất 4 đội.');return;}
+  var best=null;
+  for(var g=2;g<=8;g++){
+    var size=n/g; if(size<3||size>6)continue;
+    for(var adv=1;adv<=3;adv++){
+      var q0=g*adv; if(q0>n)continue;
+      var target=1; while(target<q0)target*=2;
+      if(target>n)continue;
+      var wild=target-q0; if(wild<0||wild>g-adv)continue;
+      var score=Math.abs(4.5-size)*2 + wild*0.5 + Math.abs(adv-2)*0.8;
+      if(!best||score<best.score)best={g:g,adv:adv,wild:wild,target:target,score:score};
+    }
+  }
+  if(!best){alert('Không tìm được cấu hình bảng hợp lý cho '+n+' đội. Hãy chọn thủ công.');return;}
+  document.getElementById('drFmt').value='grp';
+  document.getElementById('drGrpOpts').style.display='';
+  document.getElementById('drNG').value=best.g;
+  document.getElementById('drAdv').value=best.adv;
+  document.getElementById('drWild').value=best.wild;
+  doDraw('seed');
+  alert('Đề xuất cho '+n+' đội:\n• '+best.g+' bảng\n• Lấy '+best.adv+' đội nhất mỗi bảng'+(best.wild?'\n• + '+best.wild+' đội vớt (hạng '+(best.adv+1)+' tốt nhất)':'')+'\n→ '+best.target+' đội vào '+koRoundName(best.target)+'\n\nBạn vẫn đổi được số bảng / đội vớt theo ý muốn.');
 }
 function saveDraw(){
   var d=DRAWS[dkey(_mgId,_drEvi)];
@@ -2443,9 +2498,9 @@ function renderDrawPublic(t,d){
   var mount=document.getElementById('brkMount'), pod=document.getElementById('brkPodium');
   pod.innerHTML='';
   if(d.fmt==='grp'){
-    var h='<div class="pubgrps">';
+    var h=grpSummary(d)+'<div class="pubgrps">';
     d.groups.forEach(function(g,gi){
-      h+='<div class="box" style="margin:0"><div class="box-h">Bảng '+String.fromCharCode(65+gi)+' <span style="font-size:12px;color:var(--ink-3);font-weight:500">'+d.adv+' đội đi tiếp</span></div>';
+      h+='<div class="box" style="margin:0"><div class="box-h">Bảng '+String.fromCharCode(65+gi)+' <span style="font-size:12px;color:var(--ink-3);font-weight:500">'+g.length+' đội · lấy '+d.adv+'</span></div>';
       h+='<table><thead><tr><th style="width:34px">#</th><th>Đội</th><th class="r">Thắng</th><th class="r">Điểm</th></tr></thead><tbody>';
       g.forEach(function(ti,k){h+='<tr'+(k<d.adv?' style="background:var(--green-l)"':'')+'><td class="rk" style="padding-left:16px">'+(k+1)+'</td><td style="font-weight:600">'+d.teams[ti].name+'</td><td class="r mono">–</td><td class="r mono">–</td></tr>';});
       h+='</tbody></table><div style="padding:11px 16px;border-top:1px solid var(--line-2);font-size:12px;color:var(--ink-3)">'+rrMatches(g,d).replace(/<div class="drg-mx">/g,'<div style="padding:3px 0">')+'</div></div>';
