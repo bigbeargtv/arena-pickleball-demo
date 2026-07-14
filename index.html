@@ -666,6 +666,19 @@ textarea.inp{min-height:66px;resize:vertical;font-family:var(--f);line-height:1.
 .rlist li{margin-bottom:3px}
 @media(max-width:520px){.prz{flex-direction:column;gap:2px}.prz .pp{min-width:0}}
 
+
+/* thanh toán lệ phí */
+.regstatus.paid{background:var(--green-l);color:var(--green)}
+.epay{text-align:center;flex-shrink:0;width:84px;border-left:1px solid var(--line);padding-left:12px}
+.pchip{font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:6px;white-space:nowrap;display:inline-block}
+.pchip.ok{background:var(--green-l);color:var(--green)}
+.pchip.no{background:var(--amber-l);color:var(--amber)}
+.epay-f{font-family:var(--m);font-size:11px;color:var(--ink-3);margin-top:5px}
+.payamt{font-family:var(--m);font-size:32px;font-weight:700;color:var(--brand);letter-spacing:-.02em;margin:2px 0 4px}
+.qr{display:flex;justify-content:center;margin:6px 0}
+.qr-in{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:var(--s1)}
+@media(max-width:640px){.epay{width:70px;padding-left:9px}.epay .pchip{font-size:9.5px;padding:2px 6px}}
+
 @media(max-width:1024px){.tc-img{width:120px}.ref-wrap{grid-template-columns:1fr}.phone{position:static;margin:0 auto}}
 @media(max-width:960px){.cols,.dcols{grid-template-columns:1fr}.side{display:none}}
 
@@ -1252,6 +1265,29 @@ textarea.inp{min-height:66px;resize:vertical;font-family:var(--f);line-height:1.
   </div>
 </div>
 
+<!-- ===== MODAL THANH TOÁN ===== -->
+<div class="modal-ov" id="payModal" onclick="if(event.target===this)this.classList.remove('on')">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-h"><div><div class="modal-t">Thanh toán lệ phí</div><div class="modal-s" id="paySub">—</div></div>
+      <button class="modal-x" onclick="document.getElementById('payModal').classList.remove('on')">✕</button></div>
+    <div class="modal-b" style="text-align:center">
+      <div class="payamt" id="payAmt">—</div>
+      <div style="font-size:12.5px;color:var(--ink-3);margin-bottom:14px">Quét mã VietQR để chuyển khoản</div>
+      <div class="qr"><div class="qr-in">
+        <svg viewBox="0 0 100 100" width="150" height="150"><rect x="4" y="4" width="21" height="21" fill="#111"/><rect x="7" y="7" width="15" height="15" fill="#fff"/><rect x="10" y="10" width="9" height="9" fill="#111"/><rect x="75" y="4" width="21" height="21" fill="#111"/><rect x="78" y="7" width="15" height="15" fill="#fff"/><rect x="81" y="10" width="9" height="9" fill="#111"/><rect x="4" y="75" width="21" height="21" fill="#111"/><rect x="7" y="78" width="15" height="15" fill="#fff"/><rect x="10" y="81" width="9" height="9" fill="#111"/><rect x="42" y="0" width="6" height="6" fill="#111"/><rect x="54" y="0" width="6" height="6" fill="#111"/><rect x="66" y="6" width="6" height="6" fill="#111"/><rect x="42" y="12" width="6" height="6" fill="#111"/><rect x="48" y="12" width="6" height="6" fill="#111"/><rect x="54" y="12" width="6" height="6" fill="#111"/><rect x="66" y="12" width="6" height="6" fill="#111"/><rect x="36" y="18" width="6" height="6" fill="#111"/><rect x="66" y="18" width="6" height="6" fill="#111"/><rect x="36" y="24" width="6" height="6" fill="#111"/><rect x="42" y="24" width="6" height="6" fill="#111"/><rect x="54" y="24" width="6" height="6" fill="#111"/><rect x="6" y="30" width="6" height="6" fill="#111"/><rect x="24" y="30" width="6" height="6" fill="#111"/><rect x="42" y="30" width="6" height="6" fill="#111"/><rect x="48" y="30" width="6" height="6" fill="#111"/><rect x="60" y="30" width="6" height="6" fill="#111"/><rect x="66" y="30" width="6" height="6" fill="#111"/><rect x="72" y="30" width="6" height="6" fill="#111"/><rect x="78" y="30" width="6" height="6" fill="#111"/><rect x="90" y="30" width="6" height="6" fill="#111"/><rect x="6" y="36" width="6" height="6" fill="#111"/><rect x="30" y="36" width="6" height="6" fill="#111"/><rect x="36" y="36" width="6" height="6" fill="#111"/><rect x="42" y="36" width="6" height="6" fill="#111"/><rect x="48" y="36" width="6" height="6" fill="#111"/><rect x="60" y="36" width="6" height="6" fill="#111"/><rect x="66" y="36" width="6" height="6" fill="#111"/><rect x="72" y="36" width="6" height="6" fill="#111"/><rect x="84" y="36" width="6" height="6" fill="#111"/><rect x="90" y="36" width="6" height="6" fill="#111"/><rect x="0" y="42" width="6" height="6" fill="#111"/><rect x="12" y="42" width="6" height="6" fill="#111"/><rect x="18" y="42" width="6" height="6" fill="#111"/><rect x="24" y="42" width="6" height="6" fill="#111"/><rect x="30" y="42" width="6" height="6" fill="#111"/><rect x="48" y="42" width="6" height="6" fill="#111"/><rect x="84" y="42" width="6" height="6" fill="#111"/><rect x="6" y="48" width="6" height="6" fill="#111"/><rect x="24" y="48" width="6" height="6" fill="#111"/><rect x="30" y="48" width="6" height="6" fill="#111"/><rect x="36" y="48" width="6" height="6" fill="#111"/><rect x="42" y="48" width="6" height="6" fill="#111"/><rect x="66" y="48" width="6" height="6" fill="#111"/><rect x="72" y="48" width="6" height="6" fill="#111"/><rect x="6" y="54" width="6" height="6" fill="#111"/><rect x="36" y="54" width="6" height="6" fill="#111"/><rect x="42" y="54" width="6" height="6" fill="#111"/><rect x="48" y="54" width="6" height="6" fill="#111"/><rect x="60" y="54" width="6" height="6" fill="#111"/><rect x="66" y="54" width="6" height="6" fill="#111"/><rect x="78" y="54" width="6" height="6" fill="#111"/><rect x="84" y="54" width="6" height="6" fill="#111"/><rect x="90" y="54" width="6" height="6" fill="#111"/><rect x="96" y="54" width="6" height="6" fill="#111"/><rect x="18" y="60" width="6" height="6" fill="#111"/><rect x="90" y="60" width="6" height="6" fill="#111"/><rect x="96" y="60" width="6" height="6" fill="#111"/><rect x="30" y="66" width="6" height="6" fill="#111"/><rect x="36" y="66" width="6" height="6" fill="#111"/><rect x="78" y="66" width="6" height="6" fill="#111"/><rect x="96" y="66" width="6" height="6" fill="#111"/><rect x="30" y="72" width="6" height="6" fill="#111"/><rect x="42" y="72" width="6" height="6" fill="#111"/><rect x="54" y="72" width="6" height="6" fill="#111"/><rect x="60" y="72" width="6" height="6" fill="#111"/><rect x="66" y="72" width="6" height="6" fill="#111"/><rect x="72" y="72" width="6" height="6" fill="#111"/><rect x="96" y="72" width="6" height="6" fill="#111"/><rect x="30" y="78" width="6" height="6" fill="#111"/><rect x="36" y="78" width="6" height="6" fill="#111"/><rect x="54" y="78" width="6" height="6" fill="#111"/><rect x="60" y="78" width="6" height="6" fill="#111"/><rect x="66" y="78" width="6" height="6" fill="#111"/><rect x="72" y="78" width="6" height="6" fill="#111"/><rect x="78" y="78" width="6" height="6" fill="#111"/><rect x="84" y="78" width="6" height="6" fill="#111"/><rect x="60" y="84" width="6" height="6" fill="#111"/><rect x="66" y="84" width="6" height="6" fill="#111"/><rect x="78" y="84" width="6" height="6" fill="#111"/><rect x="84" y="84" width="6" height="6" fill="#111"/><rect x="90" y="84" width="6" height="6" fill="#111"/><rect x="54" y="90" width="6" height="6" fill="#111"/><rect x="60" y="90" width="6" height="6" fill="#111"/><rect x="66" y="90" width="6" height="6" fill="#111"/><rect x="78" y="90" width="6" height="6" fill="#111"/><rect x="84" y="90" width="6" height="6" fill="#111"/><rect x="96" y="90" width="6" height="6" fill="#111"/><rect x="30" y="96" width="6" height="6" fill="#111"/><rect x="36" y="96" width="6" height="6" fill="#111"/><rect x="42" y="96" width="6" height="6" fill="#111"/><rect x="60" y="96" width="6" height="6" fill="#111"/><rect x="72" y="96" width="6" height="6" fill="#111"/><rect x="78" y="96" width="6" height="6" fill="#111"/><rect x="96" y="96" width="6" height="6" fill="#111"/></svg>
+      </div></div>
+      <dl class="kv" style="text-align:left;margin:16px 4px 6px;font-size:13px">
+        <dt>Ngân hàng</dt><dd>Vietcombank</dd>
+        <dt>Số TK</dt><dd>0123 456 789</dd>
+        <dt>Chủ TK</dt><dd>CTY RALLY SPORT</dd>
+        <dt>Nội dung</dt><dd id="payNote">—</dd>
+      </dl>
+      <div class="ok-note" style="margin:10px 0 16px">Sau khi chuyển khoản, bấm nút bên dưới. Hệ thống thật sẽ tự đối soát giao dịch qua cổng ngân hàng.</div>
+      <div class="modal-foot"><button class="btn btn-o" onclick="document.getElementById('payModal').classList.remove('on')">Để sau</button><button class="btn btn-p" onclick="confirmPay()">Tôi đã chuyển khoản</button></div>
+    </div>
+  </div>
+</div>
+
 <!-- ===== MODAL ĐĂNG NHẬP ===== -->
 <div class="modal-ov" id="loginModal" onclick="if(event.target===this)this.classList.remove('on')">
   <div class="modal" style="max-width:400px">
@@ -1650,6 +1686,9 @@ function openDetail(id){
   }).join('');
   var info='<dt>Cấp độ</dt><dd>'+lvTag+'</dd><dt>Đơn vị</dt><dd>'+t.org+'</dd><dt>Thời gian</dt><dd>'+t.range+'</dd>';
   if(t.status==='open')info+='<dt>Hạn đăng ký</dt><dd>'+t.deadline+'</dd>';
+  var collected=0,due=0;
+  t.events.forEach(function(e){var p=Math.round(e.reg*0.78);collected+=p*e.fee;due+=(e.reg-p)*e.fee;});
+  if(collected||due)info+='<dt>Lệ phí đã thu</dt><dd style="color:var(--green)">'+vnd(collected)+'</dd><dt>Còn phải thu</dt><dd style="color:var(--amber)">'+vnd(due)+'</dd>';
   info+='<dt>Luật</dt><dd>Thắng 2/3 ván 11đ</dd><dt>Hệ số điểm trình</dt><dd style="color:var(--brand)">'+(t.level==='clb'?'×0.7':'×1.0')+'</dd>';
   $('dInfo').innerHTML=info;
   // ---- giới thiệu ----
@@ -1716,7 +1755,7 @@ function submitReg(){
   else if(!/^0\d{9}$/.test(phone)){err='Số điện thoại phải gồm 10 số, bắt đầu bằng 0.';badId='regPhone';}
   if(err){document.getElementById('regErr').textContent='⚠ '+err;if(badId)document.getElementById(badId).classList.add('bad');return;}
   e.reg=Math.min(e.cap,e.reg+1);
-  MY_REGS.push({id:t.id,name:t.name,ev:e.label,player:name,partner:isDouble?partner:'',phone:phone});
+  MY_REGS.push({id:t.id,name:t.name,ev:e.label,player:name,partner:isDouble?partner:'',phone:phone,fee:e.fee,paid:false});
   document.getElementById('regDoneMsg').innerHTML='Bạn đã đăng ký <b>'+e.label+'</b> tại <b>'+t.name+'</b>.<br>Lệ phí: <b>'+vnd(e.fee)+'</b>'+(isDouble?'<br>Cặp: <b>'+name+' / '+partner+'</b>':'<br>VĐV: <b>'+name+'</b>')+'<br>SĐT: <b>'+phone+'</b>';
   document.getElementById('regForm').style.display='none';
   document.getElementById('regDone').style.display='';
@@ -2064,6 +2103,7 @@ function renderEntrants(t){
     if(sub.length<6)sub=pool.slice();
     sub=sub.slice().sort(function(){return rng()-0.5});
     var used={},show=Math.min(8,e.reg),rows='';
+    var paidTot=Math.round(e.reg*0.78);
     function pkNear(target){var c=sub.filter(function(p){return !used[p.key]});if(!c.length)c=sub;c=c.slice().sort(function(a,b){return Math.abs(a.r-target)-Math.abs(b.r-target)});var p=c[0];used[p.key]=1;return p;}
     function pk(){var c=sub.filter(function(p){return !used[p.key]});if(!c.length)c=sub;var p=c[Math.floor(rng()*c.length)];used[p.key]=1;return p;}
     for(var i=0;i<show;i++){
@@ -2074,11 +2114,14 @@ function renderEntrants(t){
       var total=single?a.r:(a.r+b.r);
       var over=cap!=null&&total>cap+0.001;
       var tag=cap==null?'<div class="etag mo">Mở</div>':(over?'<div class="etag over">⚠ Vượt trình</div>':'<div class="etag ok">✓ Hợp lệ</div>');
+      var paid=(i%9)!==3&&(i%7)!==5;
+      var payc=paid?'<span class="pchip ok">✓ Đã nộp</span>':'<span class="pchip no">⏳ Chưa nộp</span>';
       rows+='<div class="epair"><div class="erank">'+(i+1)+'</div><div class="eplayers">'+prow(a)+(single?'':prow(b))+'</div>'
-        +'<div class="etot"><div class="etot-n '+(over?'over':'ok')+'">'+total.toFixed(2)+'</div><div class="etot-l">'+(single?'Điểm đơn':'Điểm đôi')+'</div>'+tag+'</div></div>';
+        +'<div class="etot"><div class="etot-n '+(over?'over':'ok')+'">'+total.toFixed(2)+'</div><div class="etot-l">'+(single?'Điểm đơn':'Điểm đôi')+'</div>'+tag+'</div>'
+        +'<div class="epay">'+payc+'<div class="epay-f">'+vnd(e.fee)+'</div></div></div>';
     }
     var more=e.reg-show, capTxt=cap==null?'Mở · không giới hạn':'Giới hạn điểm đôi ≤ '+cap.toFixed(1);
-    html+='<div class="ent-grp"><div class="ent-h">'+e.label+' <span>'+capTxt+' · '+e.reg+'/'+e.cap+'</span></div>'+rows+(more>0?'<div class="ent-more">+ '+more+' cặp khác đã đăng ký</div>':'')+'</div>';
+    html+='<div class="ent-grp"><div class="ent-h">'+e.label+' <span>'+capTxt+' · ĐK '+e.reg+'/'+e.cap+' · <b style="color:var(--green)">Đã nộp '+paidTot+'</b>/<b>'+e.reg+'</b></span></div>'+rows+(more>0?'<div class="ent-more">+ '+more+' cặp khác đã đăng ký</div>':'')+'</div>';
   });
   list.innerHTML=html;
 }
@@ -2175,13 +2218,32 @@ function renderMine(){
 }
 function regRow(r,i){
   var who=r.partner?(r.player+' / '+r.partner):r.player;
+  var st=r.paid?'<span class="regstatus paid">✓ Đã thanh toán</span>'
+               :'<span class="regstatus">⏳ Chưa nộp · '+vnd(r.fee)+'</span>';
+  var pay=r.paid?'':'<button class="btn btn-p btn-sm" onclick="openPay('+i+')">Thanh toán</button>';
   return '<div class="regc"><div class="rin">'
     +'<div class="rname" onclick="openDetail(\''+r.id+'\')">'+r.name+'</div>'
-    +'<div class="rev">'+r.ev+'</div>'
+    +'<div class="rev">'+r.ev+' · Lệ phí '+vnd(r.fee)+'</div>'
     +'<div class="rmeta"><span>👤 <b>'+who+'</b></span><span>📞 <b>'+r.phone+'</b></span></div></div>'
-    +'<span class="regstatus">⏳ Chờ thanh toán lệ phí</span>'
-    +'<div class="ract"><button class="btn btn-o btn-sm" onclick="openDetail(\''+r.id+'\')">Xem giải</button>'
+    +st
+    +'<div class="ract">'+pay
+    +'<button class="btn btn-o btn-sm" onclick="openDetail(\''+r.id+'\')">Xem giải</button>'
     +'<button class="btn btn-o btn-sm" onclick="cancelReg('+i+')">Huỷ</button></div></div>';
+}
+var payIdx=null;
+function openPay(i){
+  var r=MY_REGS[i]; if(!r)return; payIdx=i;
+  document.getElementById('payAmt').textContent=vnd(r.fee);
+  document.getElementById('paySub').textContent=r.name+' · '+r.ev;
+  document.getElementById('payNote').textContent='RALLY '+r.phone;
+  document.getElementById('payModal').classList.add('on');
+}
+function confirmPay(){
+  if(payIdx==null)return;
+  MY_REGS[payIdx].paid=true;
+  document.getElementById('payModal').classList.remove('on');
+  renderMine();
+  alert('Đã ghi nhận thanh toán. Hệ thống thật sẽ tự đối soát giao dịch trong 1–2 phút và gửi xác nhận qua Zalo.');
 }
 function cancelReg(i){
   var r=MY_REGS[i]; if(!r)return;
