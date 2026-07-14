@@ -697,6 +697,14 @@ textarea.inp{min-height:66px;resize:vertical;font-family:var(--f);line-height:1.
 @media(max-width:820px){.mgstats{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.mgr-f{display:none}}
 
+
+/* bảng thưởng động */
+.pzrow{display:grid;grid-template-columns:1fr 1fr 1.5fr 32px;gap:6px;margin-bottom:7px;align-items:center}
+.pzrow .inp,.pzrow .sel{padding:8px;font-size:12.5px;width:100%}
+.pev{display:inline-block;font-size:10.5px;font-weight:700;background:var(--brand-l);color:var(--brand);padding:2px 7px;border-radius:5px;margin-left:6px;white-space:nowrap}
+.pev.all{background:var(--bg-2);color:var(--ink-3)}
+@media(max-width:560px){.pzrow{grid-template-columns:1fr 1fr}.pzrow .pzR{grid-column:span 2}.pzrow .evX{grid-column:span 2}}
+
 @media(max-width:1024px){.tc-img{width:120px}.ref-wrap{grid-template-columns:1fr}.phone{position:static;margin:0 auto}}
 @media(max-width:960px){.cols,.dcols{grid-template-columns:1fr}.side{display:none}}
 
@@ -1362,9 +1370,9 @@ textarea.inp{min-height:66px;resize:vertical;font-family:var(--f);line-height:1.
 
       <div class="fsec">④ Cơ cấu giải thưởng</div>
       <div class="ff"><label>Tổng giải thưởng (₫) <span style="font-weight:400;color:var(--ink-3);font-size:11px">— để trống nếu không có tiền mặt</span></label><input id="cvPrize" class="inp" inputmode="numeric" placeholder="120000000"></div>
-      <div class="f2"><div class="ff"><label>🥇 Vô địch</label><input id="cvP1" class="inp" placeholder="Tiền / cúp / quà"></div>
-        <div class="ff"><label>🥈 Á quân</label><input id="cvP2" class="inp" placeholder="Tiền / quà"></div>
-        <div class="ff"><label>🥉 Hạng 3</label><input id="cvP3" class="inp" placeholder="Tiền / quà"></div></div>
+      <div class="ff"><label>Chi tiết phần thưởng <span style="font-weight:400;color:var(--ink-3);font-size:11px">— chọn áp dụng cho nội dung nào</span></label>
+        <div id="cvPrizes"></div>
+        <button class="btn btn-o btn-sm" type="button" onclick="addPrizeRow()" style="margin-top:6px">+ Thêm mức thưởng</button></div>
 
       <div class="fsec">⑤ Nhà tài trợ</div>
       <div class="ff"><label>Đơn vị tài trợ <span style="font-weight:400;color:var(--ink-3);font-size:11px">— cách nhau bởi dấu phẩy</span></label><input id="cvSpon" class="inp" placeholder="FACOLOS, JOOLA VN, Selkirk, Revolin"></div>
@@ -1745,7 +1753,7 @@ function openDetail(id){
   if(!pb&&t.prize){pb=[{p:'🥇 Vô địch',r:vnd(Math.round(t.prize*0.4))+' + Cúp vô địch + HCV'},{p:'🥈 Á quân',r:vnd(Math.round(t.prize*0.22))+' + HCB'},{p:'🥉 Đồng hạng 3 (×2 đội)',r:vnd(Math.round(t.prize*0.09))+'/đội + HCĐ'}];}
   if(!pb&&!t.prize)pb=[{p:'🥇 Vô địch',r:'Cúp vô địch + HCV + quà tài trợ'},{p:'🥈 Á quân',r:'HCB + quà tài trợ'},{p:'🥉 Đồng hạng 3',r:'HCĐ'}];
   $('dPrizeTot').textContent=t.prize?'Tổng '+vnd(t.prize):'Huy chương + hiện vật';
-  $('dPrize').innerHTML=pb.map(function(x){return '<div class="prz"><div class="pp">'+x.p+'</div><div class="pr">'+x.r+'</div></div>'}).join('');
+  $('dPrize').innerHTML=pb.map(function(x){return '<div class="prz"><div class="pp">'+x.p+'</div><div class="pr">'+x.r+(x.ev?' <span class="pev">'+x.ev+'</span>':(t.events.length>1?' <span class="pev all">mỗi nội dung</span>':''))+'</div></div>'}).join('');
   // ---- liên hệ ----
   var hot=t.hotline||('0903 '+(100+hashStr(t.id)%900)+' '+(100+hashStr(t.id+'x')%900));
   $('dContact').innerHTML='<dl class="kv"><dt>BTC</dt><dd>'+t.org+'</dd><dt>Hotline</dt><dd><a href="tel:'+hot.replace(/ /g,'')+'" style="color:var(--brand)">'+hot+'</a></dd><dt>Zalo</dt><dd><a onclick="alert(\'Mở Zalo BTC (demo)\')" style="color:var(--brand);cursor:pointer">Nhắn tin</a></dd><dt>Khu vực</dt><dd>'+t.prov+'</dd></dl>';
@@ -2075,8 +2083,33 @@ function addEventRow(){
     +'<input class="inp evC" inputmode="numeric" placeholder="Số cặp">'
     +'<button type="button" class="evX" title="Xoá" onclick="this.closest(\'.evrow\').remove()">×</button>';
   wrap.appendChild(div);
+  if(typeof refreshPrizeEvents==='function')refreshPrizeEvents();
 }
-function openCreate(){_editId=null;var _ct=document.getElementById('createTitle');if(_ct)_ct.textContent='Tạo giải đấu mới';document.getElementById('cvEvents').innerHTML='';document.getElementById('createErr').textContent='';var ev=document.getElementById('cvEvents');if(ev&&!ev.children.length){addEventRow();addEventRow();}document.getElementById('createModal').classList.add('on');document.getElementById('createDone').style.display='none';document.getElementById('createForm').style.display='';}
+function refreshPrizeEvents(){
+  var evs=[].map.call(document.querySelectorAll('#cvEvents .evrow'),function(r){
+    var d={dn:'Đôi nam',dnu:'Đôi nữ',dnn:'Đôi nam nữ',don:'Đơn'}[r.querySelector('.evD').value];
+    var lim=(r.querySelector('.evB').value||'').trim();
+    return d+(lim?' · '+lim:' · Mở');
+  });
+  [].forEach.call(document.querySelectorAll('#cvPrizes .pzE'),function(sel){
+    var cur=sel.value;
+    sel.innerHTML='<option value="">Tất cả nội dung</option>'+evs.map(function(x){return '<option value="'+x+'">'+x+'</option>'}).join('');
+    if(cur)sel.value=cur;
+  });
+}
+function addPrizeRow(place,ev,reward){
+  var wrap=document.getElementById('cvPrizes'); if(!wrap)return;
+  var div=document.createElement('div'); div.className='pzrow';
+  div.innerHTML='<input class="inp pzP" placeholder="Hạng (VD: Vô địch)" value="'+(place||'').replace(/"/g,'')+'">'
+    +'<select class="sel pzE"></select>'
+    +'<input class="inp pzR" placeholder="Phần thưởng (VD: 20.000.000₫ + Cúp + HCV)" value="'+(reward||'').replace(/"/g,'')+'">'
+    +'<button type="button" class="evX" title="Xoá" onclick="this.closest(\'.pzrow\').remove()">×</button>';
+  wrap.appendChild(div);
+  refreshPrizeEvents();
+  if(ev)div.querySelector('.pzE').value=ev;
+}
+function openCreate(){_editId=null;var _ct=document.getElementById('createTitle');if(_ct)_ct.textContent='Tạo giải đấu mới';document.getElementById('cvEvents').innerHTML='';var _pz=document.getElementById('cvPrizes');if(_pz)_pz.innerHTML='';document.getElementById('createErr').textContent='';var ev=document.getElementById('cvEvents');if(ev&&!ev.children.length){addEventRow();addEventRow();}
+  var pz=document.getElementById('cvPrizes');if(pz&&!pz.children.length){addPrizeRow('🥇 Vô địch');addPrizeRow('🥈 Á quân');addPrizeRow('🥉 Đồng hạng 3');}document.getElementById('createModal').classList.add('on');document.getElementById('createDone').style.display='none';document.getElementById('createForm').style.display='';}
 function submitCreate(){
   var nm=document.getElementById('cvName').value.trim(),ve=document.getElementById('cvVenue').value.trim(),
       pr=document.getElementById('cvProv').value,dt=document.getElementById('cvDate').value.trim();
@@ -2099,7 +2132,10 @@ function submitCreate(){
   var gv=function(i){var e=document.getElementById(i);return e?e.value.trim():'';};
   var lvl=gv('cvLevel')||'clb', prize=parseInt((gv('cvPrize')||'').replace(/\D/g,''),10)||0;
   var pk=[];
-  if(gv('cvP1'))pk.push({p:'🥇 Vô địch',r:gv('cvP1')}); if(gv('cvP2'))pk.push({p:'🥈 Á quân',r:gv('cvP2')}); if(gv('cvP3'))pk.push({p:'🥉 Đồng hạng 3',r:gv('cvP3')});
+  [].forEach.call(document.querySelectorAll('#cvPrizes .pzrow'),function(r){
+    var p=r.querySelector('.pzP').value.trim(), rw=r.querySelector('.pzR').value.trim(), ev=r.querySelector('.pzE').value;
+    if(p&&rw)pk.push({p:p,r:rw,ev:ev||''});
+  });
   var dd=dt.split('/'),mo='Th'+parseInt(dd[1],10);
   var id='tao-'+Date.now();
   var bank={bank:gv('cvBank')||'Vietcombank',acc:gv('cvAcc')||'—',name:gv('cvAccName')||'BTC'};
@@ -2232,11 +2268,14 @@ function openEdit(t){
   sv('cvDate',t.range.split('–').pop().trim().length>6?t.dy+'/'+({Th5:'05',Th6:'06',Th7:'07',Th8:'08',Th9:'09'}[t.mo]||'09')+'/'+t.yr:t.range); 
   sv('cvDeadline',t.deadline); sv('cvHotline',t.hotline); sv('cvDesc',t.desc);
   sv('cvFormat',t.format); sv('cvGames',t.games); sv('cvBall',t.ball); sv('cvPrize',t.prize||'');
-  if(t.prizeBreak){sv('cvP1',(t.prizeBreak[0]||{}).r);sv('cvP2',(t.prizeBreak[1]||{}).r);sv('cvP3',(t.prizeBreak[2]||{}).r);}
+  var pzw=document.getElementById('cvPrizes'); if(pzw){pzw.innerHTML='';}
   sv('cvSpon',(t.spon||[]).join(', '));
   if(t.bank){sv('cvBank',t.bank.bank);sv('cvAcc',t.bank.acc);sv('cvAccName',t.bank.name);}
   var wrap=document.getElementById('cvEvents'); wrap.innerHTML='';
   (t.events||[]).forEach(function(e){addEventRow();var r=wrap.lastChild;r.querySelector('.evD').value=e.code;r.querySelector('.evB').value=e.lim!=null?e.lim:'';r.querySelector('.evF').value=e.fee||'';r.querySelector('.evC').value=e.cap||'';});
+  refreshPrizeEvents();
+  if(t.prizeBreak&&t.prizeBreak.length)t.prizeBreak.forEach(function(x){addPrizeRow(x.p,x.ev||'',x.r)});
+  else {addPrizeRow('🥇 Vô địch');addPrizeRow('🥈 Á quân');addPrizeRow('🥉 Đồng hạng 3');}
   document.getElementById('createErr').textContent='';
   document.getElementById('createDone').style.display='none';
   document.getElementById('createForm').style.display='';
