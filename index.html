@@ -1057,6 +1057,7 @@ textarea.inp{min-height:66px;resize:vertical;font-family:var(--f);line-height:1.
       </div>
       <div class="hero-stats" id="dStats"></div>
       <button class="btn btn-o btn-lg" id="dMng" style="display:none" onclick="openManage(_dCur)">⚙ Quản lý giải</button>
+      <button class="btn btn-o btn-lg" onclick="openBracket(_dCur)">🗺 Sơ đồ thi đấu</button>
       <button class="btn btn-p btn-lg" id="dCta">▶ Xem trực tiếp</button>
     </div>
   </div>
@@ -2040,6 +2041,12 @@ function generateBracket(t){
 function renderBracket(t){
   var _d=DRAWS[dkey(t.id,_brkEvi||0)];
   if(_d){renderDrawPublic(t,_d);return;}
+  if(t.status==='open'||t.status==='soon'){
+    document.getElementById('brkPodium').innerHTML='';
+    document.getElementById('brkMount').innerHTML='<div class="empty"><div class="ei">🗺</div><h3>Chưa bốc thăm nội dung này</h3><p>Ban tổ chức sẽ bốc thăm và công bố sơ đồ trước ngày thi đấu.<br>Bạn sẽ nhận thông báo ngay khi sơ đồ được công bố.</p>'
+      +(t.owned?'<button class="btn btn-p" style="margin-top:14px" onclick="openManage(\''+t.id+'\')">⚙ Bốc thăm ngay</button>':'')+'</div>';
+    return;
+  }
   var b=generateBracket(t),courts=['Sân 1','Sân 2','Sân 3','Sân 4'];
   function row(m,idx,tm,sc,winFlag){
     if(!tm)return '<div class="bt"><span class="seed">–</span><span class="bnm tbdn">Chờ đối thủ</span><span class="bg-"></span><span class="bsc tbd">–</span></div>';
@@ -2533,9 +2540,17 @@ function openBracket(id){
     var ch=t.champKeys?t.champ.split(' / ').map(function(n,i){return '<a class="p" onclick="vdv(\''+t.champKeys[i]+'\')">'+n+'</a>'}).join(' / '):t.champ;
     st.innerHTML='<span class="tag done">ĐÃ KẾT THÚC</span><span style="font-size:14px">🏆 Vô địch: <b>'+ch+'</b></span>'+(t.ru?'<span style="font-size:13px;color:var(--ink-2)">🥈 Á quân: '+t.ru+'</span>':'')+'<span style="margin-left:auto;font-size:12px;color:var(--ink-3)">'+(t.vdv||'')+' VĐV · '+(t.played||'')+' trận</span>';
     renderBracket(t);
-  } else {
+  } else if(t.status==='live'){
     live.classList.remove('brkdone');
     st.innerHTML='<span class="tag live"><span class="dot"></span>'+(t.liveM||3)+' TRẬN ĐANG ĐÁNH</span><span style="font-size:13.5px;color:var(--ink-2)">👁 <b class="mono">1.284</b> đang xem</span><span style="margin-left:auto;font-family:var(--m);font-size:11.5px;color:var(--green);display:flex;align-items:center;gap:6px"><span class="dot" style="color:var(--green)"></span>WebSocket · 180ms</span>';
+    renderBracket(t);
+  } else {
+    live.classList.remove('brkdone');
+    var _dw=DRAWS[dkey(t.id,_brkEvi||0)];
+    st.innerHTML=(_dw
+      ? '<span class="tag open">ĐÃ BỐC THĂM</span><span style="font-size:13.5px;color:var(--ink-2)">Sơ đồ chính thức · thi đấu ngày <b>'+t.range+'</b></span>'
+      : '<span class="tag soon">CHƯA BỐC THĂM</span><span style="font-size:13.5px;color:var(--ink-2)">BTC sẽ công bố sơ đồ trước ngày thi đấu</span>')
+      +'<span style="margin-left:auto;font-size:12px;color:var(--ink-3)">ĐK '+sumReg(t)+'/'+sumCap(t)+' cặp</span>';
     renderBracket(t);
   }
   showPage('live'); rec({t:'brk',id:id});
