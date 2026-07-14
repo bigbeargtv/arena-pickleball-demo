@@ -1457,7 +1457,7 @@ select.drs2{width:104px;flex-shrink:0;padding:5px 6px;font-size:11.5px}
 
       <div class="fsec">③ Thể lệ thi đấu</div>
       <div class="f2"><div class="ff"><label>Thể thức</label><select class="sel" id="cvFormat"><option>Vòng bảng + Loại trực tiếp</option><option>Loại trực tiếp</option><option>Vòng tròn tính điểm</option><option>Swiss</option><option>Ladder (CLB)</option></select></div>
-        <div class="ff"><label>Luật ván</label><select class="sel" id="cvGames"><option>Thắng 2/3 ván · 11 điểm</option><option>Thắng 1 ván · 15 điểm</option><option>Thắng 1 ván · 21 điểm</option><option>Thắng 3/5 ván · 11 điểm</option></select></div></div>
+        <div class="ff"><label>Luật ván</label><select class="sel" id="cvGames"><option>Thắng 1 ván · 15 điểm</option><option>Thắng 1 ván · 11 điểm</option><option>Thắng 1 ván · 21 điểm</option><option>Thắng 2/3 ván · 11 điểm</option><option>Thắng 3/5 ván · 11 điểm</option></select></div></div>
       <div class="ff"><label>Bóng thi đấu</label><input id="cvBall" class="inp" value="Franklin X-40"></div>
 
       <div class="fsec">④ Cơ cấu giải thưởng</div>
@@ -1638,13 +1638,13 @@ var TOURN=[
  {id:'hanoi-summer-2026',name:'Hanoi Summer Championship 2026',bnr:'b4',pad:'🏙️',mo:'Th7',dy:'12',yr:'2026',range:'12 – 13/07/2026',venue:'Cung TT Quần Ngựa, Ba Đình, Hà Nội',prov:'Hà Nội',org:'Hanoi Dinkers',level:'kv',status:'live',prize:80000000,liveM:2,vdv:224,band:'3.0+',
    events:[{code:'dn',label:'Đôi nam · 3.5–4.0',band:'b3540',fee:500000,cap:64,reg:64},{code:'dnn',label:'Đôi nam nữ · 3.0–3.5',band:'b3035',fee:500000,cap:96,reg:96}],
    spon:['KAIWIN','PREUS','JOOLA VN'],champ:''},
- {id:'saigon-summer-slam',name:'Saigon Summer Slam 2026',bnr:'b2',pad:'☀️',mo:'Th7',dy:'25',yr:'2026',range:'25 – 27/07/2026',venue:'Pickle Center Thảo Điền, TP. Thủ Đức',prov:'TP. Hồ Chí Minh',org:'Saigon Smash',level:'kv',status:'open',prize:120000000,deadline:'22/07/2026',dl:22,owned:true,bank:{bank:'Techcombank',acc:'1903 8888 6666',name:'CLB SAIGON SMASH'},
+ {id:'saigon-summer-slam',name:'Saigon Summer Slam 2026',bnr:'b2',pad:'☀️',mo:'Th7',dy:'25',yr:'2026',range:'25 – 27/07/2026',venue:'Pickle Center Thảo Điền, TP. Thủ Đức',prov:'TP. Hồ Chí Minh',org:'Saigon Smash',games:'Thắng 1 ván · 15 điểm',level:'kv',status:'open',prize:120000000,deadline:'22/07/2026',dl:22,owned:true,bank:{bank:'Techcombank',acc:'1903 8888 6666',name:'CLB SAIGON SMASH'},
    events:[{code:'dn',label:'Đôi nam · 3.5–4.0',band:'b3540',fee:600000,cap:96,reg:88},{code:'dnu',label:'Đôi nữ · 3.0–3.5',band:'b3035',fee:600000,cap:48,reg:40},{code:'dnn',label:'Đôi nam nữ · 3.0–3.5',band:'b3035',fee:600000,cap:48,reg:40}],
    spon:['SELKIRK','FACOLOS'],champ:''},
  {id:'danang-beach-cup',name:'Đà Nẵng Beach Pickleball Cup',bnr:'b3',pad:'🌊',mo:'Th8',dy:'02',yr:'2026',range:'02 – 03/08/2026',venue:'Bãi biển Mỹ Khê, Đà Nẵng',prov:'Đà Nẵng',org:'Đà Nẵng Rally',level:'kv',status:'open',prize:60000000,deadline:'28/07/2026',dl:28,
    events:[{code:'dnn',label:'Đôi nam nữ · 3.0–3.5',band:'b3035',fee:450000,cap:64,reg:28},{code:'dnn',label:'Đôi nam nữ · 3.5–4.0',band:'b3540',fee:450000,cap:64,reg:26}],
    spon:['REVOLIN','PICKLE+'],champ:''},
- {id:'saigon-night-v12',name:'Saigon Night League — Vòng 12',bnr:'b4',pad:'🌙',mo:'Th7',dy:'16',yr:'2026',range:'Thứ 4 hằng tuần · 19:00–22:00',venue:'CLB Sài Gòn Smash, Q. Bình Thạnh',prov:'TP. Hồ Chí Minh',org:'Saigon Smash',level:'clb',status:'open',prize:0,deadline:'16/07/2026',dl:16,owned:true,bank:{bank:'MB Bank',acc:'0011 2233 4455',name:'CLB SAIGON SMASH'},
+ {id:'saigon-night-v12',name:'Saigon Night League — Vòng 12',bnr:'b4',pad:'🌙',mo:'Th7',dy:'16',yr:'2026',range:'Thứ 4 hằng tuần · 19:00–22:00',venue:'CLB Sài Gòn Smash, Q. Bình Thạnh',prov:'TP. Hồ Chí Minh',org:'Saigon Smash',games:'Thắng 1 ván · 15 điểm',level:'clb',status:'open',prize:0,deadline:'16/07/2026',dl:16,owned:true,bank:{bank:'MB Bank',acc:'0011 2233 4455',name:'CLB SAIGON SMASH'},
    events:[{code:'dn',label:'Đôi nam · Ladder',band:'b3035',fee:80000,cap:16,reg:16},{code:'dnn',label:'Đôi nam nữ · Ladder',band:'b3035',fee:80000,cap:16,reg:16}],
    spon:['PICKLE+'],champ:''},
  {id:'binhduong-open',name:'Bình Dương Open 2026',bnr:'b5',pad:'🔥',mo:'Th8',dy:'09',yr:'2026',range:'09 – 10/08/2026',venue:'NTĐ Bình Dương',prov:'Bình Dương',org:'Bình Dương PC',level:'kv',status:'open',prize:45000000,deadline:'04/08/2026',dl:4,
@@ -2580,6 +2580,8 @@ function renderDrawPublic(t,d){
 
 /* ==================== ENGINE THI ĐẤU ==================== */
 var MATCHES={};
+function boOf(t){var g=(t.games||'');if(/1 v\u00e1n/.test(g))return 1;if(/3\/5/.test(g))return 3;return 2;}
+function maxG(bo){return bo===1?1:bo*2-1;}
 function mkey(tid,evi){return tid+'|'+evi;}
 function _pow2(n){var s=2;while(s<n)s*=2;return s;}
 
@@ -2602,7 +2604,7 @@ function removeUnpaid(){
 /* --- xây lịch thi đấu từ sơ đồ bốc thăm --- */
 function buildMatches(t,evi){
   var d=DRAWS[dkey(t.id,evi)]; if(!d)return null;
-  var M={fmt:d.fmt,teams:d.teams,groups:d.groups||null,nG:d.nG,adv:d.adv,wild:d.wild||0,matches:[],koBuilt:false};
+  var M={fmt:d.fmt,teams:d.teams,groups:d.groups||null,nG:d.nG,adv:d.adv,wild:d.wild||0,matches:[],koBuilt:false,bo:boOf(t)};
   var no=1;
   if(d.fmt==='grp'){
     d.groups.forEach(function(g,gi){
@@ -2732,21 +2734,22 @@ function renderScores(){
 function scoreRow(M,m){
   var nm=function(ti){return ti==null?'<i style="color:var(--ink-4)">Chờ đội</i>':M.teams[ti].name;};
   if(m.st==='bye')return '<div class="scm bye"><div class="scm-h"><b>'+m.code+'</b> · Miễn đấu (BYE)</div><div class="scm-r"><span class="scm-n">'+nm(m.w===0?m.a:m.b)+'</span><span class="pchip ok">Vào thẳng vòng sau</span></div></div>';
-  var done=m.st==='done';
-  var g=[[m.g[0]?m.g[0][0]:'',m.g[0]?m.g[0][1]:''],[m.g[1]?m.g[1][0]:'',m.g[1]?m.g[1][1]:''],[m.g[2]?m.g[2][0]:'',m.g[2]?m.g[2][1]:'']];
-  var inp=function(r,c){return '<input class="scin" id="sc_'+m.id+'_'+r+'_'+c+'" inputmode="numeric" value="'+(g[r][c]===''?'':g[r][c])+'"'+(done?' disabled':'')+'>';};
+  var done=m.st==='done', ng=maxG(M.bo||2);
+  var val=function(r,c){return (m.g[r]&&m.g[r][c]!=null)?m.g[r][c]:'';};
+  var inp=function(r,c){return '<input class="scin" id="sc_'+m.id+'_'+r+'_'+c+'" inputmode="numeric" value="'+val(r,c)+'"'+(done?' disabled':'')+'>';};
+  var row=function(c){var o='';for(var r=0;r<ng;r++)o+=inp(r,c);return o;};
   var ready=(m.a!=null&&m.b!=null);
   return '<div class="scm'+(done?' done':'')+'">'
-    +'<div class="scm-h"><b>'+m.code+'</b> · '+m.court+(done?' <span class="pchip ok">✓ Đã có kết quả</span>':(ready?' <span class="pchip no">Chưa đấu</span>':' <span class="pchip no">Chờ đội</span>'))+'</div>'
-    +'<div class="scm-r'+(done&&m.w===0?' win':'')+'"><span class="scm-n">'+nm(m.a)+'</span>'+inp(0,0)+inp(1,0)+inp(2,0)+'</div>'
-    +'<div class="scm-r'+(done&&m.w===1?' win':'')+'"><span class="scm-n">'+nm(m.b)+'</span>'+inp(0,1)+inp(1,1)+inp(2,1)+'</div>'
+    +'<div class="scm-h"><b>'+m.code+'</b> · '+m.court+' · '+(M.bo===1?'1 ván':(M.bo===2?'Thắng 2/3 ván':'Thắng 3/5 ván'))+(done?' <span class="pchip ok">✓ Đã có kết quả</span>':(ready?' <span class="pchip no">Chưa đấu</span>':' <span class="pchip no">Chờ đội</span>'))+'</div>'
+    +'<div class="scm-r'+(done&&m.w===0?' win':'')+'"><span class="scm-n">'+nm(m.a)+'</span>'+row(0)+'</div>'
+    +'<div class="scm-r'+(done&&m.w===1?' win':'')+'"><span class="scm-n">'+nm(m.b)+'</span>'+row(1)+'</div>'
     +(done?'<button class="btn btn-o btn-sm" onclick="editScore(\''+m.id+'\')">✏ Sửa</button>':(ready?'<button class="btn btn-p btn-sm" onclick="saveScore(\''+m.id+'\')">💾 Lưu tỉ số</button>':''))
     +'</div>';
 }
 function saveScore(mid){
   var M=MATCHES[mkey(_mgId,_drEvi)],m=M.matches.filter(function(x){return x.id===mid})[0]; if(!m)return;
-  var gs=[],aw=0,bw=0;
-  for(var r=0;r<3;r++){
+  var gs=[],aw=0,bw=0,ng=maxG(M.bo||2);
+  for(var r=0;r<ng;r++){
     var A=document.getElementById('sc_'+mid+'_'+r+'_0').value.trim();
     var B=document.getElementById('sc_'+mid+'_'+r+'_1').value.trim();
     if(A===''&&B==='')continue;
@@ -2794,8 +2797,11 @@ function renderPlayPublic(t,M){
       h+='<div class="rd"><div class="rd-h">'+koRoundName(M.koSize/Math.pow(2,rd))+'</div>';
       M.matches.filter(function(m){return m.type==='ko'&&m.rd===rd}).forEach(function(m){
         var done=m.st==='done', bye=m.st==='bye';
-        var gtxt=done?m.g.map(function(x){return x[0]+'-'+x[1]}).join(' '):'';
-        var sa=done?(m.w===0?'2':'0'):(bye&&m.w===0?'W':'–'), sb=done?(m.w===1?'2':'0'):(bye&&m.w===1?'W':'–');
+        var one=(M.bo===1);
+        var gtxt=(done&&!one)?m.g.map(function(x){return x[0]+'-'+x[1]}).join(' '):'';
+        var ga=0,gb=0; if(done)m.g.forEach(function(x){if(x[0]>x[1])ga++;else gb++;});
+        var sa=done?(one?String(m.g[0][0]):String(ga)):(bye&&m.w===0?'W':'–');
+        var sb=done?(one?String(m.g[0][1]):String(gb)):(bye&&m.w===1?'W':'–');
         h+='<div class="bm'+(done||bye?' done':'')+'"><div class="bm-h"><span>'+m.code+'</span><span>'+(done?'Xong':bye?'BYE':'Chưa đấu')+'</span></div>'
           +'<div class="bt'+((done&&m.w===0)||(bye&&m.w===0)?' w':'')+'"><span class="seed">–</span>'+nm(m.a)+'<span class="bg-">'+(m.w===0?gtxt:'')+'</span><span class="bsc'+(done||bye?'':' tbd')+'">'+sa+'</span></div>'
           +'<div class="bt'+((done&&m.w===1)||(bye&&m.w===1)?' w':'')+'"><span class="seed">–</span>'+nm(m.b)+'<span class="bg-">'+(m.w===1?gtxt:'')+'</span><span class="bsc'+(done||bye?'':' tbd')+'">'+sb+'</span></div></div>';
